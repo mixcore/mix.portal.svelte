@@ -29,5 +29,8 @@
 	"type": "module",
 	"engines": {
 		"node": ">= 12.17.0"
+	},
+	"dependencies": {
+		"carbon-components": "^10.31.0"
 	}
 }
