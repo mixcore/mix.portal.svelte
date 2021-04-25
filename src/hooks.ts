@@ -1,9 +1,17 @@
-import cookie from 'cookie';
+// import cookie from 'cookie';
 import { v4 as uuid } from '@lukeed/uuid';
 import type { GetContext, Handle } from '@sveltejs/kit';
 
+const parseCookie = (cookieString) => cookieString
+	.split(';')
+	.map(value => value.split('='))
+	.reduce((acc, value) => {
+	  acc[decodeURIComponent(value[0].trim())] = decodeURIComponent(value[1].trim());
+	  return acc;
+	}, {})
+
 export const getContext: GetContext = (request) => {
-	const cookies = cookie.parse(request.headers.cookie || '');
+	const cookies = parseCookie(request.headers.cookie || '');
 
 	return {
 		is_new: !cookies.userid,
