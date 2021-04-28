@@ -18,7 +18,7 @@
 
 
 <main>
-	<h1>Settings - Huy</h1>
+	<h1>Settings - Hello!!!</h1>
 
 	<Counter />
 	<p>Visit <a href="https://svelte.dev">svelte.dev</a> to learn how to build Svelte apps.</p>
@@ -66,7 +66,7 @@
 			<SelectItem value="option-3" text="Option 3" />
 		  </Select>
 		</FormGroup>
-		<Button type="submit">Submit</Button>
+		<Button type="submit">Submit button</Button>
 	  </Form>
 </main>
 		
