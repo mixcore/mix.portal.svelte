@@ -10,12 +10,12 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
-		"@sveltejs/adapter-node": "next",
+		"@sveltejs/adapter-static": "next",
 		"@sveltejs/kit": "next",
 		"@typescript-eslint/eslint-plugin": "^4.22.0",
 		"@typescript-eslint/parser": "^4.22.0",
-		"carbon-components-svelte": "^0.31.1",
 		"carbon-components": "10.33.0",
+		"carbon-components-svelte": "^0.31.1",
 		"eslint": "^7.25.0",
 		"eslint-config-prettier": "^8.3.0",
 		"eslint-plugin-svelte3": "^3.2.0",
@@ -32,6 +32,5 @@
 	"engines": {
 		"node": ">= 12.17.0"
 	},
-	"dependencies": {
-	}
+	"dependencies": {}
 }
