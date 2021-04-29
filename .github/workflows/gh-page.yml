@@ -34,4 +34,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add .
           # git commit -m "[GH Action] Add changes" -a
-          git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin main)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "[GH Action] Add changes"; git push origin main)
