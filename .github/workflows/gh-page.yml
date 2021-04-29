@@ -33,4 +33,5 @@ jobs:
           git config --local user.email "i.love.to.smile.around@gmail.com"
           git config --local user.name "GitHub Action"
           git add .
-          git commit -m "[GH Action] Add changes" -a
+          # git commit -m "[GH Action] Add changes" -a
+          git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin main)
