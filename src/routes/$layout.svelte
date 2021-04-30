@@ -95,7 +95,7 @@
 </script>
 <!-- <Loading /> -->
 <Header 
-	persistentHamburgerMenu={true}
+	persistentHamburgerMenu={false}
 	company="Mixcore" platformName="CMS" bind:isSideNavOpen>
 	<div slot="skip-to-content">
 	  <SkipToContent />
@@ -124,15 +124,15 @@
 	  <HeaderAction bind:isOpen transition={transitions[selected].value}>
 		<HeaderPanelLinks>
 		  <HeaderPanelDivider>Website apps</HeaderPanelDivider>
+		  <HeaderPanelLink href="/blogs">Blogs</HeaderPanelLink>
 		  <HeaderPanelLink href="/website-builder">Website Builder</HeaderPanelLink>
 		  <HeaderPanelLink href="/ecommerce">eCommerce</HeaderPanelLink>
-		  <HeaderPanelLink href="/blogs">Blogs</HeaderPanelLink>
 		</HeaderPanelLinks>
 	  </HeaderAction>
 	</HeaderUtilities>
   </Header>
   
-  <SideNav bind:isOpen={isSideNavOpen}>
+  <!-- <SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
 	  <SideNavLink href="/settings" text="Settings" />
 	  <SideNavLink text="Link 2" />
@@ -143,7 +143,7 @@
 		<SideNavMenuItem href="/" text="Link 3" />
 	  </SideNavMenu>
 	</SideNavItems>
-  </SideNav>
+  </SideNav> -->
   
   <Content>
 	<Grid>
