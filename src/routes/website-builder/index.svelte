@@ -1,14 +1,11 @@
 <script lang="ts">
-	import Counter from '$lib/Counter.svelte';
 </script>
-
 <script context="module">
 	export const ssr = false;
 </script>
 
+
 <main>
-	<h1>Welcome to Mixcore</h1>
-
-	<Counter />
+	<h1>Website Builder</h1>
 </main>
-
+		
