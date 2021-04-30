@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.scss';
+  import { Loading } from "carbon-components-svelte";
 	import {
     Header,
 	  HeaderSearch,
@@ -92,7 +93,7 @@
 <script context="module">
 	export const ssr = false;
 </script>
-
+<!-- <Loading /> -->
 <Header 
 	persistentHamburgerMenu={true}
 	company="Mixcore" platformName="CMS" bind:isSideNavOpen>
