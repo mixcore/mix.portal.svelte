@@ -2,7 +2,7 @@
 	import '../app.scss';
 	import {
     Header,
-	HeaderSearch,
+	  HeaderSearch,
     HeaderUtilities,
     HeaderAction,
     HeaderPanelLinks,

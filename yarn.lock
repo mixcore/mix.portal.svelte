@@ -172,10 +172,10 @@
   resolved "https://registry.yarnpkg.com/@sindresorhus/is/-/is-4.0.1.tgz#d26729db850fa327b7cacc5522252194404226f5"
   integrity sha512-Qm9hBEBu18wt1PO2flE7LPb30BHMQt1eQgbV76YntdNk73XZGpn3izvGTYxbGgzXKgbCjiia0uxTd3aTNQrY/g==
 
-"@sveltejs/adapter-node@next":
-  version "1.0.0-next.17"
-  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-node/-/adapter-node-1.0.0-next.17.tgz#42678fec4c497f1e1e818b338fe030b0d0853ad5"
-  integrity sha512-kRGW9S0yf9X5kxFdW2sYF3s/bgME3Xyu/rnFEf121bSv0q7NhWktuuRWH3WbS5wQnFRoN+0s/1PaRK3ErNHsVQ==
+"@sveltejs/adapter-static@next":
+  version "1.0.0-next.7"
+  resolved "https://registry.yarnpkg.com/@sveltejs/adapter-static/-/adapter-static-1.0.0-next.7.tgz#d429858b4578c818ae006976e0a30b00e9d6ec63"
+  integrity sha512-kIghJ2PoAPW6x8r5f+q8JTeB0EmBtl0Jl7wDB2HfsBCcdtNmdRqVgMcpfhSstpz1VGVDOuaU8rGlHL+XBAMMKQ==
 
 "@sveltejs/kit@next":
   version "1.0.0-next.92"
@@ -473,7 +473,7 @@ carbon-components-svelte@^0.31.1:
     carbon-icons-svelte "^10.27.0"
     flatpickr "4.6.9"
 
-carbon-components@^10.33.0:
+carbon-components@10.33.0:
   version "10.33.0"
   resolved "https://registry.yarnpkg.com/carbon-components/-/carbon-components-10.33.0.tgz#c573de233530270d172a2cae0faba5d1530725e5"
   integrity sha512-u9eqP0tZTdyd4RzD5isK1LqTH+Lb+3jUtei7dkKXBK5sm+Xx8yP8l2koOZqzsFzaMGpeZOlO/3ajmDQ+LK6Gbw==
