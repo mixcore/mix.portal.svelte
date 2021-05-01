@@ -1,13 +1,17 @@
 <script lang="ts">
-	let count = 0;
+	import {count, increment, handleClick} from './Counter';
+	import mainCount from './CounterScript.svelte';
+	import mainIncrement from './CounterScript.svelte';
+	
+	// let mainCount = count;
 
-	const increment = (): void => {
-		count += 1;
-	};
+	// const mainIncrement = (): void => {
+	// 	mainCount += 1;
+	// };
 </script>
 
-<button on:click={increment}>
-	Clicks: {count}
+<button on:click={mainIncrement}>
+	Clicks: {mainCount}
 </button>
 
 <style lang="scss">
