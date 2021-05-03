@@ -8,6 +8,4 @@
 	Clicks: {count}
 </button>
 {text}: {count}
-
-<!-- {FW_DISPLAY_SPINNER} -->
 <!-- TEMPLATE --> 
