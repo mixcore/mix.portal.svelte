@@ -1,34 +1,19 @@
 <script lang="ts">
 	import { mainIncrement } from './Counter';
-
-
+	import {FW_DISPLAY_SPINNER} from './mix.lib.ts/src/lib/constants/constants.ts'; // src\lib\mix.lib.ts\src\lib\enums\display-direction.enum.ts
+	// import { post } from 'mix.lib.ts';
 	let counts = 0;
-
+	let text = FW_DISPLAY_SPINNER;
+	// let allPost = post.getAllPost();
 </script>
 
+<style lang="scss">
+	@import "./Counter";
+</style>
+
+<!-- TEMPLATE -->
 <button on:click={() => counts = mainIncrement(counts)}>
 	Clicks: {counts}
 </button>
-
-<style lang="scss">
-	button {
-		font-family: inherit;
-		font-size: inherit;
-		padding: 1em 2em;
-		color: #ff3e00;
-		background-color: rgba(255, 62, 0, 0.1);
-		border-radius: 2em;
-		border: 2px solid rgba(255, 62, 0, 0);
-		outline: none;
-		width: 200px;
-		font-variant-numeric: tabular-nums;
-	}
-
-	button:focus {
-		border: 2px solid #ff3e00;
-	}
-
-	button:active {
-		background-color: rgba(255, 62, 0, 0.2);
-	}
-</style>
+{text}
+<!-- TEMPLATE -->
