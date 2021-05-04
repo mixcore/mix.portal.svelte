@@ -1,1 +1,1 @@
-D:/mixcore/mix.lib.ts
+../../../mix.lib.ts
