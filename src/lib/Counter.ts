@@ -1,6 +1,6 @@
 export let count = 0;
-export let text = "Welcome to Mixcore!";
+export let text = '';
 
-export function mainIncrement (counts) {
-	return counts += 1;
-};
+export function mainIncrement() {
+	return (count += 1);
+}

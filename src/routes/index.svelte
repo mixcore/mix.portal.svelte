@@ -10,11 +10,11 @@
 	<h1>Welcome to Mixcore</h1>
 
 	<Counter />
-	<br/>
-	<Counter count={3} text={"hello 1"} />
-	<br/>
-	<Counter count={6} text={"hello 2"} />
-	<br/>
+
+	<Counter count={3} text={"Hello 1"} />
+
+	<Counter count={6} text={"Hello 2"} />
+
 
 </main>
 

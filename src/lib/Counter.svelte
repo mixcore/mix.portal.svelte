@@ -1,11 +1,14 @@
 <script lang="ts" src="./Counter.ts"></script>
-<style lang="scss">
-	@import "./Counter";
-</style>
 
 <!-- TEMPLATE -->
-<button on:click={() => count = mainIncrement(count)}>
-	Clicks: {count}
-</button>
-{text}: {count}
-<!-- TEMPLATE --> 
+<div class="buttonComp">
+	<button on:click={() => (count = mainIncrement(count))}>
+		Clicks: {count}
+	</button>
+	{text}: {count}
+</div>
+<!-- TEMPLATE -->
+
+<style lang="scss">
+	@import './Counter';
+</style>
