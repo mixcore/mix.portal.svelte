@@ -1,27 +1,39 @@
-import {getDefaultAxiosConfiguration ,MixRestService} from "./mix-lib"
+import { getDefaultAxiosConfiguration, MixRestService } from "./mix-lib";
+import { MixModelType } from './model-type.enums';
 import { onMount } from 'svelte';
+import type { MixPostMvc } from "./mix-post-mvc";
 
 export let count = 0;
 export let text = '';
 
+
 export function mainIncrement() {
 	return (count += 1);
 }
-export class PostService extends MixRestService {
-	// constructor() {
-	//   var conf = getDefaultAxiosConfiguration();
-	//   conf.withCredentials = false;
-	//   conf.baseURL = 'https://localhost:5001/api/v1/rest/en-us';
-	// //   super('post', 'mvc', null, conf);
-	// }
-  }
 
-let photos = [];
+export class PostService extends MixRestService<MixPostMvc> {
+	constructor() {
+		let appUrl = 'https://store.mixcore.org/api/v1/rest/';
+		let viewName = 'mvc';
+		let specificulture = 'en-us';
+		var conf = getDefaultAxiosConfiguration();
+		conf.withCredentials = false;
+		super(appUrl, MixModelType.Post, viewName, specificulture, conf);
+	}
+	public getSingleModel(id: any) {
+		let queries = {
+			kw: 'test'
+		};
+		return super.getSingleModel(id, queries);
+	}
+}
+
+export let response = [];
 
 onMount(async () => {
-	const res = await fetch(`https://jsonplaceholder.typicode.com/photos?_limit=20`);
-	photos = await res.json();
-
-	// MixRestService.
-	// this.srv.get('').then((resp) => console.log(resp));
+	var srv = new PostService();
+	srv.getListModel().then(resp => {
+		response = resp.items;
+		console.log(resp);
+	})
 });

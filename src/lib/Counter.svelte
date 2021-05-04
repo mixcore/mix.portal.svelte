@@ -14,11 +14,8 @@
 
 
 <div class="photos">
-	{#each photos as photo}
-		<figure>
-			<img src={photo.thumbnailUrl} alt={photo.title}>
-			<figcaption>{photo.title}</figcaption>
-		</figure>
+	{#each response as item}
+		<h1>{item.title}</h1>
 	{:else}
 		<!-- this block renders when photos.length === 0 -->
 		<p>loading...</p>
