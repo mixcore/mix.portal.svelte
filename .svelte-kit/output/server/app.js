@@ -3,8 +3,8 @@ import {create_ssr_component, validate_component, missing_component, escape, spr
 import {setContext, afterUpdate, onMount, getContext, createEventDispatcher, onDestroy, tick, beforeUpdate} from "svelte";
 import {expoIn} from "svelte/easing";
 import axios from "axios";
-import {LocalStorage} from "ts-localstorage";
 import Qs from "qs";
+import "crypto-js";
 import {writable, derived} from "svelte/store";
 import "svelte/transition";
 var root_svelte_svelte_type_style_lang = "#svelte-announcer.svelte-1j55zn5{position:absolute;left:0;top:0;clip:rect(0 0 0 0);clip-path:inset(50%);overflow:hidden;white-space:nowrap;width:1px;height:1px}";
@@ -88,9 +88,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-ac8f7628.js",
+      file: "/./_app/start-98d4cb84.js",
       css: ["/./_app/assets/start-a8cd1609.css", "/./_app/assets/vendor-1405fc18.css"],
-      js: ["/./_app/start-ac8f7628.js", "/./_app/chunks/vendor-4168d81c.js"]
+      js: ["/./_app/start-98d4cb84.js", "/./_app/chunks/vendor-3178b6a2.js"]
     },
     fetched: void 0,
     floc: false,
@@ -109,7 +109,7 @@ function init(settings) {
     read: settings.read,
     root: Root,
     router: true,
-    ssr: true,
+    ssr: false,
     target: "#svelte",
     template
   };
@@ -196,7 +196,7 @@ const module_lookup = {
     return index;
   })
 };
-const metadata_lookup = {"src/routes/__layout.svelte": {entry: "/./_app/pages/__layout.svelte-f9ba1d39.js", css: ["/./_app/assets/pages/__layout.svelte-91fdb9a4.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/__layout.svelte-f9ba1d39.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, ".svelte-kit/build/components/error.svelte": {entry: "/./_app/error.svelte-8856637c.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/error.svelte-8856637c.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/index.svelte": {entry: "/./_app/pages/index.svelte-51575779.js", css: ["/./_app/assets/pages/index.svelte-2154f98b.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/index.svelte-51575779.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/website-builder/__layout.svelte": {entry: "/./_app/pages/website-builder/__layout.svelte-070129a0.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/__layout.svelte-070129a0.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/website-builder/index.svelte": {entry: "/./_app/pages/website-builder/index.svelte-dfba916d.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/index.svelte-dfba916d.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/ecommerce/__layout.svelte": {entry: "/./_app/pages/ecommerce/__layout.svelte-9b2da551.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/__layout.svelte-9b2da551.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/ecommerce/index.svelte": {entry: "/./_app/pages/ecommerce/index.svelte-b011c3ae.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/index.svelte-b011c3ae.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/blogs/__layout.svelte": {entry: "/./_app/pages/blogs/__layout.svelte-47d352e2.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/__layout.svelte-47d352e2.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/blogs/index.svelte": {entry: "/./_app/pages/blogs/index.svelte-cc6f832f.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/index.svelte-cc6f832f.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/blogs/posts/__layout.svelte": {entry: "/./_app/pages/blogs/posts/__layout.svelte-d1903205.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/__layout.svelte-d1903205.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}, "src/routes/blogs/posts/index.svelte": {entry: "/./_app/pages/blogs/posts/index.svelte-d1b1cfb9.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/index.svelte-d1b1cfb9.js", "/./_app/chunks/vendor-4168d81c.js"], styles: null}};
+const metadata_lookup = {"src/routes/__layout.svelte": {entry: "/./_app/pages/__layout.svelte-3c8528be.js", css: ["/./_app/assets/pages/__layout.svelte-91fdb9a4.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/__layout.svelte-3c8528be.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, ".svelte-kit/build/components/error.svelte": {entry: "/./_app/error.svelte-f9fde942.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/error.svelte-f9fde942.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/index.svelte": {entry: "/./_app/pages/index.svelte-0230b949.js", css: ["/./_app/assets/pages/index.svelte-2154f98b.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/index.svelte-0230b949.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/website-builder/__layout.svelte": {entry: "/./_app/pages/website-builder/__layout.svelte-b7e88315.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/__layout.svelte-b7e88315.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/website-builder/index.svelte": {entry: "/./_app/pages/website-builder/index.svelte-0f7aede1.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/index.svelte-0f7aede1.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/ecommerce/__layout.svelte": {entry: "/./_app/pages/ecommerce/__layout.svelte-fe921c10.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/__layout.svelte-fe921c10.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/ecommerce/index.svelte": {entry: "/./_app/pages/ecommerce/index.svelte-ea3a560f.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/index.svelte-ea3a560f.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/__layout.svelte": {entry: "/./_app/pages/blogs/__layout.svelte-46ef71fc.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/__layout.svelte-46ef71fc.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/index.svelte": {entry: "/./_app/pages/blogs/index.svelte-b9cd7a92.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/index.svelte-b9cd7a92.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/posts/__layout.svelte": {entry: "/./_app/pages/blogs/posts/__layout.svelte-a9648a08.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/__layout.svelte-a9648a08.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/posts/index.svelte": {entry: "/./_app/pages/blogs/posts/index.svelte-8cfc8bb5.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/index.svelte-8cfc8bb5.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}};
 async function load_component(file) {
   return {
     module: await module_lookup[file](),
@@ -11564,13 +11564,96 @@ var error = /* @__PURE__ */ Object.freeze({
 });
 var DisplayDirection;
 (function(DisplayDirection2) {
-  DisplayDirection2[DisplayDirection2["Asc"] = 0] = "Asc";
-  DisplayDirection2[DisplayDirection2["Desc"] = 1] = "Desc";
+  DisplayDirection2["Asc"] = "Asc";
+  DisplayDirection2["Desc"] = "Desc";
 })(DisplayDirection || (DisplayDirection = {}));
-const AUTHORIZATION = "Authorization";
+var MixModelType$1;
+(function(MixModelType2) {
+  MixModelType2["Page"] = "page";
+  MixModelType2["Post"] = "post";
+  MixModelType2["Module"] = "module";
+  MixModelType2["Database"] = "mix-database";
+  MixModelType2["DatabaseData"] = "mix-database-data";
+})(MixModelType$1 || (MixModelType$1 = {}));
+var MixContentStatus;
+(function(MixContentStatus2) {
+  MixContentStatus2["Deleted"] = "Deleted";
+  MixContentStatus2["Preview"] = "Preview";
+  MixContentStatus2["Published"] = "Published";
+  MixContentStatus2["Draft"] = "Draft";
+  MixContentStatus2["Schedule"] = "Schedule";
+})(MixContentStatus || (MixContentStatus = {}));
+var MixDataType;
+(function(MixDataType2) {
+  MixDataType2["DateTime"] = "DateTime";
+  MixDataType2["Date"] = "Date";
+  MixDataType2["Time"] = "Time";
+  MixDataType2["Duration"] = "Duration";
+  MixDataType2["PhoneNumber"] = "PhoneNumber";
+  MixDataType2["Double"] = "Double";
+  MixDataType2["Text"] = "Text";
+  MixDataType2["Html"] = "Html";
+  MixDataType2["MultilineText"] = "MultilineText";
+  MixDataType2["EmailAddress"] = "EmailAddress";
+  MixDataType2["Password"] = "Password";
+  MixDataType2["Url"] = "Url";
+  MixDataType2["ImageUrl"] = "ImageUrl";
+  MixDataType2["CreditCard"] = "CreditCard";
+  MixDataType2["PostalCode"] = "PostalCode";
+  MixDataType2["Upload"] = "Upload";
+  MixDataType2["Color"] = "Color";
+  MixDataType2["Boolean"] = "Boolean";
+  MixDataType2["Icon"] = "PhoneNumber";
+  MixDataType2["VideoYoutube"] = "VideoYoutube";
+  MixDataType2["TuiEditor"] = "TuiEditor";
+  MixDataType2["Integer"] = "Integer";
+  MixDataType2["Reference"] = "Reference";
+  MixDataType2["QRCode"] = "QRCode";
+})(MixDataType || (MixDataType = {}));
+var MixMenuItemType;
+(function(MixMenuItemType2) {
+  MixMenuItemType2["Page"] = "Page";
+  MixMenuItemType2["Module"] = "Module";
+  MixMenuItemType2["Post"] = "Post";
+  MixMenuItemType2["Database"] = "Database";
+  MixMenuItemType2["Uri"] = "Uri";
+})(MixMenuItemType || (MixMenuItemType = {}));
+var MixModuleType;
+(function(MixModuleType2) {
+  MixModuleType2["Content"] = "Content";
+  MixModuleType2["Data"] = "Data";
+  MixModuleType2["ListPost"] = "ListPost";
+})(MixModuleType || (MixModuleType = {}));
+var MixPageType;
+(function(MixPageType2) {
+  MixPageType2["System"] = "System";
+  MixPageType2["Home"] = "Home";
+  MixPageType2["Article"] = "Article";
+  MixPageType2["ListPost"] = "ListPost";
+})(MixPageType || (MixPageType = {}));
+var MixTemplateFolderType;
+(function(MixTemplateFolderType2) {
+  MixTemplateFolderType2["Layouts"] = "Layouts";
+  MixTemplateFolderType2["Pages"] = "Pages";
+  MixTemplateFolderType2["Modules"] = "Modules";
+  MixTemplateFolderType2["Forms"] = "Forms";
+  MixTemplateFolderType2["Edms"] = "Edms";
+  MixTemplateFolderType2["Posts"] = "Posts";
+  MixTemplateFolderType2["Widgets"] = "Widgets";
+  MixTemplateFolderType2["Masters"] = "Masters";
+})(MixTemplateFolderType || (MixTemplateFolderType = {}));
+class LocalStorageKeys {
+}
+LocalStorageKeys.CONF_GLOBAL_SETTINGS = "Global_Settings";
+LocalStorageKeys.CONF_LOCAL_SETTINGS = "Local_Settings";
+LocalStorageKeys.CONF_TRANSLATOR = "translator";
+LocalStorageKeys.CONF_AUTHORIZATION = "Authorization";
+LocalStorageKeys.CONF_APP_URL = "App_Url";
+LocalStorageKeys.CONF_CURRENT_CULTURE = "Current_Culture";
+LocalStorageKeys.CONF_LAST_SYNC_CONFIGURATION = "Last_Sync_Configuration";
 function getDefaultAxiosConfiguration() {
   return {
-    withCredentials: true,
+    withCredentials: false,
     timeout: 3e4,
     baseURL: "",
     headers: {
@@ -11596,25 +11679,31 @@ class MixAxios {
       if (this.instance.defaults.withCredentials) {
         let token = this.getCredentialToken();
         if (token)
-          config2.headers.common[AUTHORIZATION] = token;
+          config2.headers.common[LocalStorageKeys.CONF_AUTHORIZATION] = token;
       }
       return config2;
     };
     this._handleResponse = ({data: data2}) => data2;
     this._handleError = (error2) => Promise.reject(error2);
     let config = conf || getDefaultAxiosConfiguration();
+    if (!config.baseURL) {
+      if (typeof window !== "undefined") {
+        config.baseURL = localStorage.getItem(LocalStorageKeys.CONF_APP_URL) || window.location.origin;
+      }
+    }
     this.instance = axios.create(config);
     this._initializeResponseInterceptor();
   }
   getCredentialToken() {
-    let token = LocalStorage.getItem(AUTHORIZATION);
-    return token ? `Bearer ${LocalStorage.getItem(AUTHORIZATION)}` : "";
+    let token = localStorage.getItem(LocalStorageKeys.CONF_AUTHORIZATION);
+    return token ? `Bearer ${localStorage.getItem(LocalStorageKeys.CONF_AUTHORIZATION)}` : "";
   }
 }
 class Api extends MixAxios {
   constructor(conf) {
     super(conf);
     this.token = "";
+    this.setAppUrl = this.setAppUrl.bind(this);
     this.getToken = this.getToken.bind(this);
     this.setToken = this.setToken.bind(this);
     this.getUri = this.instance.getUri.bind(this);
@@ -11628,6 +11717,9 @@ class Api extends MixAxios {
     this.patch = this.instance.patch.bind(this);
     this.success = this.success.bind(this);
     this.error = this.error.bind(this);
+  }
+  setAppUrl(appUrl) {
+    this.instance.defaults.baseURL = appUrl;
   }
   getToken() {
     return `Bearer ${this.token}`;
@@ -11669,6 +11761,7 @@ class Api extends MixAxios {
     throw error2;
   }
 }
+const apiService = new Api();
 class MixAuthenticationService extends Api {
   constructor(config) {
     super(config);
@@ -11683,14 +11776,16 @@ class MixRestService extends Api {
   constructor(appUrl, modelName, viewName, specificulture, config) {
     super(config);
     this.instance.defaults.baseURL = appUrl;
-    this.modelUrl = `${modelName}/${viewName}`;
-    if (specificulture) {
-      this.modelUrl = `${specificulture}/${modelName}/${viewName}`;
-    }
+    this.modelName = modelName;
+    this.viewName = viewName;
+    this.specificulture = specificulture;
+  }
+  get modelUrl() {
+    return this.specificulture ? `/rest/${this.specificulture}/${this.modelName}/${this.viewName}` : `/rest/${this.modelName}/${this.viewName}`;
   }
   getSingleModel(id, queries) {
     this.instance.defaults.params = queries;
-    return this.get(`${this.modelUrl}/${id}`);
+    return this.get(`${id}`);
   }
   getDefaultModel(queries) {
     this.instance.defaults.params = queries;
@@ -11723,19 +11818,58 @@ class MixRestService extends Api {
   clearCache(id) {
     return this.get(`${this.modelUrl}/remove-cache/${id}`);
   }
+  setLanguage(specificulture) {
+    this.specificulture = specificulture;
+  }
 }
-var MixModelType;
-(function(MixModelType2) {
-  MixModelType2["Page"] = "page";
-  MixModelType2["Post"] = "post";
-  MixModelType2["Module"] = "module";
-  MixModelType2["Database"] = "mix-database";
-  MixModelType2["DatabaseData"] = "mix-database-data";
-})(MixModelType || (MixModelType = {}));
+class GlobalSetting {
+}
+class MixSettingService {
+  constructor() {
+    this.cachedInMinutes = 20;
+    this.getAllSettings();
+  }
+  getAllSettings(culture) {
+    if (typeof window !== "undefined") {
+      this.localizeSettings = localStorage.getItem(LocalStorageKeys.CONF_LOCAL_SETTINGS);
+      this.globalSettings = JSON.parse(localStorage.getItem(LocalStorageKeys.CONF_GLOBAL_SETTINGS) || "{}");
+      this.translator = localStorage.getItem(LocalStorageKeys.CONF_TRANSLATOR);
+    }
+    if (this.isRenewSettings()) {
+      let url = `/rest/shared${culture ? `/${culture}` : ""}/get-shared-settings`;
+      apiService.get(url).then((response) => {
+        var resp = response;
+        this.globalSettings = resp.globalSettings || new GlobalSetting();
+        this.localizeSettings = resp.localizeSettings;
+        this.translator = resp.translator;
+        if (typeof window !== "undefined") {
+          localStorage.setItem(LocalStorageKeys.CONF_GLOBAL_SETTINGS, JSON.stringify(this.globalSettings));
+          localStorage.setItem(LocalStorageKeys.CONF_LOCAL_SETTINGS, JSON.stringify(this.localizeSettings));
+          localStorage.setItem(LocalStorageKeys.CONF_TRANSLATOR, JSON.stringify(this.translator));
+          localStorage.setItem(LocalStorageKeys.CONF_LAST_SYNC_CONFIGURATION, this.globalSettings.lastUpdateConfiguration.toString() || "");
+        }
+      });
+    }
+  }
+  setAppUrl(appUrl) {
+    apiService.setAppUrl(appUrl);
+  }
+  isRenewSettings() {
+    let now = new Date();
+    let lastSync;
+    if (typeof window !== "undefined") {
+      lastSync = localStorage.getItem(LocalStorageKeys.CONF_LAST_SYNC_CONFIGURATION);
+    }
+    var d = new Date(lastSync || "");
+    d.setMinutes(d.getMinutes() + 20);
+    return !this.localizeSettings || !this.globalSettings || !this.translator || !lastSync || now > d;
+  }
+}
+new MixSettingService();
 var Counter_svelte_svelte_type_style_lang = ".buttonComp.svelte-16cw56t{display:block;margin-bottom:10px}button.svelte-16cw56t{font-family:inherit;font-size:inherit;padding:1em 2em;color:#ff3e00;background-color:rgba(255, 62, 0, 0.1);border-radius:2em;border:2px solid rgba(255, 62, 0, 0);outline:none;width:200px;font-variant-numeric:tabular-nums}button.svelte-16cw56t:focus{border:2px solid #ff3e00}button.svelte-16cw56t:active{background-color:rgba(255, 62, 0, 0.2)}";
 const css = {
   code: ".buttonComp.svelte-16cw56t{display:block;margin-bottom:10px}button.svelte-16cw56t{font-family:inherit;font-size:inherit;padding:1em 2em;color:#ff3e00;background-color:rgba(255, 62, 0, 0.1);border-radius:2em;border:2px solid rgba(255, 62, 0, 0);outline:none;width:200px;font-variant-numeric:tabular-nums}button.svelte-16cw56t:focus{border:2px solid #ff3e00}button.svelte-16cw56t:active{background-color:rgba(255, 62, 0, 0.2)}",
-  map: `{"version":3,"file":"Counter.svelte","sources":["Counter.svelte"],"sourcesContent":["<script lang=\\"ts\\" src=\\"./Counter.ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\n    return new (P || (P = Promise))(function (resolve, reject) {\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\n    });\\n};\\nimport { getDefaultAxiosConfiguration, MixRestService } from \\"./mix-lib\\";\\nimport { MixModelType } from './model-type.enums';\\nimport { onMount } from 'svelte';\\n;\\nexport let count = 0;\\nexport let text = '';\\nexport function mainIncrement() {\\n    return (count += 1);\\n}\\nexport class PostService extends MixRestService {\\n    constructor() {\\n        let appUrl = 'https://store.mixcore.org/api/v1/rest/';\\n        let viewName = 'mvc';\\n        let specificulture = 'en-us';\\n        var conf = getDefaultAxiosConfiguration();\\n        conf.withCredentials = false;\\n        super(appUrl, MixModelType.Post, viewName, specificulture, conf);\\n    }\\n    getSingleModel(id) {\\n        let queries = {\\n            kw: 'test'\\n        };\\n        return super.getSingleModel(id, queries);\\n    }\\n}\\nexport let response = [];\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\n    var srv = new PostService();\\n    srv.getListModel().then(resp => {\\n        response = resp.items;\\n        console.log(resp);\\n    });\\n}));\\n</script>\\n\\n<script context=\\"module\\">\\n\\texport const ssr = false;\\n</script>\\n\\n<!-- TEMPLATE -->\\n<div class=\\"buttonComp\\">\\n\\t<button on:click={() => (count = mainIncrement(count))}>\\n\\t\\tClicks: {count}\\n\\t</button>\\n\\t{text}: {count}\\n</div>\\n\\n\\n<div class=\\"photos\\">\\n\\t{#each response as item}\\n\\t\\t<h1>{item.title}</h1>\\n\\t{:else}\\n\\t\\t<!-- this block renders when photos.length === 0 -->\\n\\t\\t<p>loading...</p>\\n\\t{/each}\\n</div>\\n<!-- TEMPLATE -->\\n\\n<style lang=\\"scss\\">.buttonComp {\\n  display: block;\\n  margin-bottom: 10px;\\n}\\n\\nbutton {\\n  font-family: inherit;\\n  font-size: inherit;\\n  padding: 1em 2em;\\n  color: #ff3e00;\\n  background-color: rgba(255, 62, 0, 0.1);\\n  border-radius: 2em;\\n  border: 2px solid rgba(255, 62, 0, 0);\\n  outline: none;\\n  width: 200px;\\n  font-variant-numeric: tabular-nums;\\n}\\n\\nbutton:focus {\\n  border: 2px solid #ff3e00;\\n}\\n\\nbutton:active {\\n  background-color: rgba(255, 62, 0, 0.2);\\n}</style>"],"names":[],"mappings":"AAmEmB,WAAW,eAAC,CAAC,AAC9B,OAAO,CAAE,KAAK,CACd,aAAa,CAAE,IAAI,AACrB,CAAC,AAED,MAAM,eAAC,CAAC,AACN,WAAW,CAAE,OAAO,CACpB,SAAS,CAAE,OAAO,CAClB,OAAO,CAAE,GAAG,CAAC,GAAG,CAChB,KAAK,CAAE,OAAO,CACd,gBAAgB,CAAE,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,CACvC,aAAa,CAAE,GAAG,CAClB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CACrC,OAAO,CAAE,IAAI,CACb,KAAK,CAAE,KAAK,CACZ,oBAAoB,CAAE,YAAY,AACpC,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACZ,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,AAC3B,CAAC,AAED,qBAAM,OAAO,AAAC,CAAC,AACb,gBAAgB,CAAE,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,AACzC,CAAC"}`
+  map: `{"version":3,"file":"Counter.svelte","sources":["Counter.svelte"],"sourcesContent":["<script lang=\\"ts\\" src=\\"./Counter.ts\\">var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {\\n    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }\\n    return new (P || (P = Promise))(function (resolve, reject) {\\n        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }\\n        function rejected(value) { try { step(generator[\\"throw\\"](value)); } catch (e) { reject(e); } }\\n        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }\\n        step((generator = generator.apply(thisArg, _arguments || [])).next());\\n    });\\n};\\nimport { getDefaultAxiosConfiguration, MixRestService } from \\"./mix-lib\\";\\nimport { onMount } from 'svelte';\\n// import type { MixPostMvc } from \\"./mix-post-mvc\\";\\nexport let count = 0;\\nexport let text = '';\\nexport function mainIncrement() {\\n    return (count += 1);\\n}\\nexport class PostService extends MixRestService {\\n    constructor() {\\n        let appUrl = 'https://store.mixcore.org/api/v1/rest/';\\n        let viewName = 'mvc';\\n        let specificulture = 'en-us';\\n        var conf = getDefaultAxiosConfiguration();\\n        conf.withCredentials = false;\\n        super(appUrl, MixModelType.Post, viewName, specificulture, conf);\\n    }\\n    getSingleModel(id) {\\n        let queries = {\\n            kw: 'test'\\n        };\\n        return super.getSingleModel(id, queries);\\n    }\\n}\\nexport let response = [];\\nonMount(() => __awaiter(void 0, void 0, void 0, function* () {\\n    var srv = new PostService();\\n    srv.getListModel().then(resp => {\\n        response = resp.items;\\n        console.log(resp);\\n    });\\n}));\\n</script>\\n\\n<script context=\\"module\\">\\n\\texport const ssr = false;\\n</script>\\n\\n<!-- TEMPLATE -->\\n<div class=\\"buttonComp\\">\\n\\t<button on:click={() => (count = mainIncrement(count))}>\\n\\t\\tClicks: {count}\\n\\t</button>\\n\\t{text}: {count}\\n</div>\\n\\n\\n<div class=\\"photos\\">\\n\\t{#each response as item}\\n\\t\\t<h1>{item.title}</h1>\\n\\t{:else}\\n\\t\\t<!-- this block renders when photos.length === 0 -->\\n\\t\\t<p>loading...</p>\\n\\t{/each}\\n</div>\\n<!-- TEMPLATE -->\\n\\n<style lang=\\"scss\\">.buttonComp {\\n  display: block;\\n  margin-bottom: 10px;\\n}\\n\\nbutton {\\n  font-family: inherit;\\n  font-size: inherit;\\n  padding: 1em 2em;\\n  color: #ff3e00;\\n  background-color: rgba(255, 62, 0, 0.1);\\n  border-radius: 2em;\\n  border: 2px solid rgba(255, 62, 0, 0);\\n  outline: none;\\n  width: 200px;\\n  font-variant-numeric: tabular-nums;\\n}\\n\\nbutton:focus {\\n  border: 2px solid #ff3e00;\\n}\\n\\nbutton:active {\\n  background-color: rgba(255, 62, 0, 0.2);\\n}</style>"],"names":[],"mappings":"AAkEmB,WAAW,eAAC,CAAC,AAC9B,OAAO,CAAE,KAAK,CACd,aAAa,CAAE,IAAI,AACrB,CAAC,AAED,MAAM,eAAC,CAAC,AACN,WAAW,CAAE,OAAO,CACpB,SAAS,CAAE,OAAO,CAClB,OAAO,CAAE,GAAG,CAAC,GAAG,CAChB,KAAK,CAAE,OAAO,CACd,gBAAgB,CAAE,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,CACvC,aAAa,CAAE,GAAG,CAClB,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CAAC,CACrC,OAAO,CAAE,IAAI,CACb,KAAK,CAAE,KAAK,CACZ,oBAAoB,CAAE,YAAY,AACpC,CAAC,AAED,qBAAM,MAAM,AAAC,CAAC,AACZ,MAAM,CAAE,GAAG,CAAC,KAAK,CAAC,OAAO,AAC3B,CAAC,AAED,qBAAM,OAAO,AAAC,CAAC,AACb,gBAAgB,CAAE,KAAK,GAAG,CAAC,CAAC,EAAE,CAAC,CAAC,CAAC,CAAC,CAAC,GAAG,CAAC,AACzC,CAAC"}`
 };
 const Counter = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   var __awaiter = function(thisArg, _arguments, P, generator) {
