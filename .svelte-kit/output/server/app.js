@@ -88,9 +88,9 @@ function init(settings) {
     amp: false,
     dev: false,
     entry: {
-      file: "/./_app/start-98d4cb84.js",
+      file: "/./_app/start-3e48cff4.js",
       css: ["/./_app/assets/start-a8cd1609.css", "/./_app/assets/vendor-1405fc18.css"],
-      js: ["/./_app/start-98d4cb84.js", "/./_app/chunks/vendor-3178b6a2.js"]
+      js: ["/./_app/start-3e48cff4.js", "/./_app/chunks/vendor-3178b6a2.js"]
     },
     fetched: void 0,
     floc: false,
@@ -143,6 +143,13 @@ const manifest = {
     },
     {
       type: "page",
+      pattern: /^\/security\/?$/,
+      params: empty,
+      a: ["src/routes/__layout.svelte", "src/routes/security/__layout.svelte", "src/routes/security/index.svelte"],
+      b: [".svelte-kit/build/components/error.svelte"]
+    },
+    {
+      type: "page",
       pattern: /^\/blogs\/?$/,
       params: empty,
       a: ["src/routes/__layout.svelte", "src/routes/blogs/__layout.svelte", "src/routes/blogs/index.svelte"],
@@ -163,24 +170,30 @@ const get_hooks = (hooks) => ({
 });
 const module_lookup = {
   "src/routes/__layout.svelte": () => Promise.resolve().then(function() {
-    return __layout$4;
+    return __layout$5;
   }),
   ".svelte-kit/build/components/error.svelte": () => Promise.resolve().then(function() {
     return error;
   }),
   "src/routes/index.svelte": () => Promise.resolve().then(function() {
-    return index$4;
+    return index$5;
   }),
   "src/routes/website-builder/__layout.svelte": () => Promise.resolve().then(function() {
-    return __layout$3;
+    return __layout$4;
   }),
   "src/routes/website-builder/index.svelte": () => Promise.resolve().then(function() {
-    return index$3;
+    return index$4;
   }),
   "src/routes/ecommerce/__layout.svelte": () => Promise.resolve().then(function() {
-    return __layout$2;
+    return __layout$3;
   }),
   "src/routes/ecommerce/index.svelte": () => Promise.resolve().then(function() {
+    return index$3;
+  }),
+  "src/routes/security/__layout.svelte": () => Promise.resolve().then(function() {
+    return __layout$2;
+  }),
+  "src/routes/security/index.svelte": () => Promise.resolve().then(function() {
     return index$2;
   }),
   "src/routes/blogs/__layout.svelte": () => Promise.resolve().then(function() {
@@ -196,7 +209,7 @@ const module_lookup = {
     return index;
   })
 };
-const metadata_lookup = {"src/routes/__layout.svelte": {entry: "/./_app/pages/__layout.svelte-3c8528be.js", css: ["/./_app/assets/pages/__layout.svelte-91fdb9a4.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/__layout.svelte-3c8528be.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, ".svelte-kit/build/components/error.svelte": {entry: "/./_app/error.svelte-f9fde942.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/error.svelte-f9fde942.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/index.svelte": {entry: "/./_app/pages/index.svelte-0230b949.js", css: ["/./_app/assets/pages/index.svelte-2154f98b.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/index.svelte-0230b949.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/website-builder/__layout.svelte": {entry: "/./_app/pages/website-builder/__layout.svelte-b7e88315.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/__layout.svelte-b7e88315.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/website-builder/index.svelte": {entry: "/./_app/pages/website-builder/index.svelte-0f7aede1.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/index.svelte-0f7aede1.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/ecommerce/__layout.svelte": {entry: "/./_app/pages/ecommerce/__layout.svelte-fe921c10.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/__layout.svelte-fe921c10.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/ecommerce/index.svelte": {entry: "/./_app/pages/ecommerce/index.svelte-ea3a560f.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/index.svelte-ea3a560f.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/__layout.svelte": {entry: "/./_app/pages/blogs/__layout.svelte-46ef71fc.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/__layout.svelte-46ef71fc.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/index.svelte": {entry: "/./_app/pages/blogs/index.svelte-b9cd7a92.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/index.svelte-b9cd7a92.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/posts/__layout.svelte": {entry: "/./_app/pages/blogs/posts/__layout.svelte-a9648a08.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/__layout.svelte-a9648a08.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/posts/index.svelte": {entry: "/./_app/pages/blogs/posts/index.svelte-8cfc8bb5.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/index.svelte-8cfc8bb5.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}};
+const metadata_lookup = {"src/routes/__layout.svelte": {entry: "/./_app/pages/__layout.svelte-3c8528be.js", css: ["/./_app/assets/pages/__layout.svelte-91fdb9a4.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/__layout.svelte-3c8528be.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, ".svelte-kit/build/components/error.svelte": {entry: "/./_app/error.svelte-f9fde942.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/error.svelte-f9fde942.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/index.svelte": {entry: "/./_app/pages/index.svelte-0230b949.js", css: ["/./_app/assets/pages/index.svelte-2154f98b.css", "/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/index.svelte-0230b949.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/website-builder/__layout.svelte": {entry: "/./_app/pages/website-builder/__layout.svelte-b7e88315.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/__layout.svelte-b7e88315.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/website-builder/index.svelte": {entry: "/./_app/pages/website-builder/index.svelte-0f7aede1.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/website-builder/index.svelte-0f7aede1.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/ecommerce/__layout.svelte": {entry: "/./_app/pages/ecommerce/__layout.svelte-fe921c10.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/__layout.svelte-fe921c10.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/ecommerce/index.svelte": {entry: "/./_app/pages/ecommerce/index.svelte-ea3a560f.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/ecommerce/index.svelte-ea3a560f.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/security/__layout.svelte": {entry: "/./_app/pages/security/__layout.svelte-1c884862.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/security/__layout.svelte-1c884862.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/security/index.svelte": {entry: "/./_app/pages/security/index.svelte-35ae184f.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/security/index.svelte-35ae184f.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/__layout.svelte": {entry: "/./_app/pages/blogs/__layout.svelte-46ef71fc.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/__layout.svelte-46ef71fc.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/index.svelte": {entry: "/./_app/pages/blogs/index.svelte-b9cd7a92.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/index.svelte-b9cd7a92.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/posts/__layout.svelte": {entry: "/./_app/pages/blogs/posts/__layout.svelte-a9648a08.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/__layout.svelte-a9648a08.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}, "src/routes/blogs/posts/index.svelte": {entry: "/./_app/pages/blogs/posts/index.svelte-8cfc8bb5.js", css: ["/./_app/assets/vendor-1405fc18.css"], js: ["/./_app/pages/blogs/posts/index.svelte-8cfc8bb5.js", "/./_app/chunks/vendor-3178b6a2.js"], styles: null}};
 async function load_component(file) {
   return {
     module: await module_lookup[file](),
@@ -11397,9 +11410,9 @@ create_ssr_component(($$result, $$props, $$bindings, slots) => {
     $$bindings.nested(nested);
   return `<ul${spread([$$restProps], "bx--list--unordered " + (nested ? "bx--list--nested" : ""))}>${slots.default ? slots.default({}) : ``}</ul>`;
 });
-const ssr$5 = false;
+const ssr$6 = false;
 let selected = "0";
-const _layout$4 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+const _layout$5 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let lowerCaseValue;
   let results;
   let isSideNavOpen = false;
@@ -11533,11 +11546,11 @@ ${validate_component(Header, "Header").$$render($$result, {
   } while (!$$settled);
   return $$rendered;
 });
-var __layout$4 = /* @__PURE__ */ Object.freeze({
+var __layout$5 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  default: _layout$4,
-  ssr: ssr$5
+  default: _layout$5,
+  ssr: ssr$6
 });
 function load({error: error2, status}) {
   return {props: {error: error2, status}};
@@ -11946,20 +11959,20 @@ const Counter = create_ssr_component(($$result, $$props, $$bindings, slots) => {
 		<p>loading...</p>`}</div>
 `;
 });
-const ssr$4 = false;
+const ssr$5 = false;
 const Routes = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   return `<main><h1>Welcome to Mixcore</h1>
 
 	${validate_component(Counter, "Counter").$$render($$result, {}, {}, {})}
 </main>`;
 });
-var index$4 = /* @__PURE__ */ Object.freeze({
+var index$5 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   default: Routes,
-  ssr: ssr$4
+  ssr: ssr$5
 });
-const _layout$3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+const _layout$4 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
   let {isSideNavOpen = true} = $$props;
   if ($$props.isSideNavOpen === void 0 && $$bindings.isSideNavOpen && isSideNavOpen !== void 0)
     $$bindings.isSideNavOpen(isSideNavOpen);
@@ -12000,19 +12013,75 @@ const _layout$3 = create_ssr_component(($$result, $$props, $$bindings, slots) =>
   } while (!$$settled);
   return $$rendered;
 });
+var __layout$4 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  default: _layout$4
+});
+const ssr$4 = false;
+const Website_builder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  return `<main><h1>Website Builder</h1></main>`;
+});
+var index$4 = /* @__PURE__ */ Object.freeze({
+  __proto__: null,
+  [Symbol.toStringTag]: "Module",
+  default: Website_builder,
+  ssr: ssr$4
+});
+const _layout$3 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  let {isSideNavOpen = true} = $$props;
+  if ($$props.isSideNavOpen === void 0 && $$bindings.isSideNavOpen && isSideNavOpen !== void 0)
+    $$bindings.isSideNavOpen(isSideNavOpen);
+  let $$settled;
+  let $$rendered;
+  do {
+    $$settled = true;
+    $$rendered = `${validate_component(SideNav, "SideNav").$$render($$result, {isOpen: isSideNavOpen}, {
+      isOpen: ($$value) => {
+        isSideNavOpen = $$value;
+        $$settled = false;
+      }
+    }, {
+      default: () => `${validate_component(SideNavItems, "SideNavItems").$$render($$result, {}, {}, {
+        default: () => `${validate_component(SideNavLink, "SideNavLink").$$render($$result, {
+          href: "/ecommerce/create",
+          text: "Create Product"
+        }, {}, {})}
+		  ${validate_component(SideNavLink, "SideNavLink").$$render($$result, {text: "Link 2"}, {}, {})}
+		  ${validate_component(SideNavLink, "SideNavLink").$$render($$result, {text: "Link 3"}, {}, {})}
+		  ${validate_component(SideNavMenu, "SideNavMenu").$$render($$result, {text: "Menu"}, {}, {
+          default: () => `${validate_component(SideNavMenuItem, "SideNavMenuItem").$$render($$result, {href: "/", text: "Link 1"}, {}, {})}
+			${validate_component(SideNavMenuItem, "SideNavMenuItem").$$render($$result, {href: "/", text: "Link 2"}, {}, {})}
+			${validate_component(SideNavMenuItem, "SideNavMenuItem").$$render($$result, {href: "/", text: "Link 3"}, {}, {})}`
+        })}`
+      })}`
+    })}
+	  
+	  ${validate_component(Content, "Content").$$render($$result, {}, {}, {
+      default: () => `${validate_component(Grid, "Grid").$$render($$result, {}, {}, {
+        default: () => `${validate_component(Row, "Row").$$render($$result, {}, {}, {
+          default: () => `${validate_component(Column, "Column").$$render($$result, {}, {}, {
+            default: () => `${slots.default ? slots.default({}) : ``}`
+          })}`
+        })}`
+      })}`
+    })}`;
+  } while (!$$settled);
+  return $$rendered;
+});
 var __layout$3 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
   default: _layout$3
 });
 const ssr$3 = false;
-const Website_builder = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  return `<main><h1>Website Builder</h1></main>`;
+const Ecommerce = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  return `<main><h1>eCommerce</h1></main>`;
 });
 var index$3 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  default: Website_builder,
+  default: Ecommerce,
   ssr: ssr$3
 });
 const _layout$2 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
@@ -12062,13 +12131,13 @@ var __layout$2 = /* @__PURE__ */ Object.freeze({
   default: _layout$2
 });
 const ssr$2 = false;
-const Ecommerce = create_ssr_component(($$result, $$props, $$bindings, slots) => {
-  return `<main><h1>eCommerce</h1></main>`;
+const Security = create_ssr_component(($$result, $$props, $$bindings, slots) => {
+  return `<main><h1>Auth</h1></main>`;
 });
 var index$2 = /* @__PURE__ */ Object.freeze({
   __proto__: null,
   [Symbol.toStringTag]: "Module",
-  default: Ecommerce,
+  default: Security,
   ssr: ssr$2
 });
 const _layout$1 = create_ssr_component(($$result, $$props, $$bindings, slots) => {
