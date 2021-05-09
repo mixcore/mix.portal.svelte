@@ -1,5 +1,4 @@
-import { DisplayDirection } from '../../enums/display-direction.enum';
-import type { MixContentStatus } from '../../enums/mix-content-status.enum';
+import { DisplayDirection, MixContentStatus } from '../../enums/mix-enums';
 export declare class SearchFilter {
     specificulture?: string;
     fromDate?: Date;

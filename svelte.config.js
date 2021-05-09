@@ -3,7 +3,7 @@ import sveltePreprocess from 'svelte-preprocess';
 //const node = require('@sveltejs/adapter-node');
 // const static = require('@sveltejs/adapter-static');
 import adapter from '@sveltejs/adapter-static';
-// const pkg = require('./package.json');
+// import pkg from'./package.json';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -20,15 +20,17 @@ const config = {
 			assets: 'build',
 			fallback: null
 		}),
+		ssr: false,
 
 		// hydrate the <div id="svelte"> element in src/app.html
 		target: '#svelte',
 
 		// vite: {
 		// 	ssr: {
-		// 		noExternal: Object.keys(pkg.dependencies || pkg.devDependencies || {})
+		// 		noExternal: ({})
 		// 	}
-		// }
+		// },
+		vite: () => ({})
 	}
 };
 

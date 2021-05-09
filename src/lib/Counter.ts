@@ -1,7 +1,7 @@
 import { getDefaultAxiosConfiguration, MixRestService } from "./mix-lib";
-import { MixModelType } from './model-type.enums';
+// import { MixModelType } from './model-type.enums';
 import { onMount } from 'svelte';
-import type { MixPostMvc } from "./mix-post-mvc";
+// import type { MixPostMvc } from "./mix-post-mvc";
 
 export let count = 0;
 export let text = '';

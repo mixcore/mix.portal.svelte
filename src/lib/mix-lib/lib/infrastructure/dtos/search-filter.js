@@ -1,4 +1,4 @@
-import { DisplayDirection } from '../../enums/display-direction.enum';
+import { DisplayDirection } from '../../enums/mix-enums';
 export class SearchFilter {
     constructor() {
         this.pageIndex = 0;
@@ -6,4 +6,4 @@ export class SearchFilter {
         this.direction = DisplayDirection.Asc;
     }
 }
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VhcmNoLWZpbHRlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uL21peC5saWIudHMvc3JjL2xpYi9pbmZyYXN0cnVjdHVyZS9kdG9zL3NlYXJjaC1maWx0ZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLGdCQUFnQixFQUFFLE1BQU0sb0NBQW9DLENBQUM7QUFHdEUsTUFBTSxPQUFPLFlBQVk7SUFBekI7UUFPUyxjQUFTLEdBQVcsQ0FBQyxDQUFDO1FBQ3RCLFNBQUksR0FBWSxDQUFDLENBQUM7UUFHbEIsY0FBUyxHQUFzQixnQkFBZ0IsQ0FBQyxHQUFHLENBQUM7SUFDN0QsQ0FBQztDQUFBIn0=
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2VhcmNoLWZpbHRlci5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uLy4uL21peC5saWIudHMvc3JjL2xpYi9pbmZyYXN0cnVjdHVyZS9kdG9zL3NlYXJjaC1maWx0ZXIudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLGdCQUFnQixFQUFvQixNQUFNLHVCQUF1QixDQUFDO0FBRTNFLE1BQU0sT0FBTyxZQUFZO0lBQXpCO1FBT1MsY0FBUyxHQUFXLENBQUMsQ0FBQztRQUN0QixTQUFJLEdBQVksQ0FBQyxDQUFDO1FBR2xCLGNBQVMsR0FBc0IsZ0JBQWdCLENBQUMsR0FBRyxDQUFDO0lBQzdELENBQUM7Q0FBQSJ9

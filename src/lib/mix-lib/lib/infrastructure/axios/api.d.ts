@@ -13,6 +13,7 @@ export declare class Api extends MixAxios {
      * @param {import("axios").AxiosRequestConfig} conf
      */
     constructor(conf?: AxiosRequestConfig);
+    setAppUrl(appUrl: string): void;
     /**
      * Gets Token.
      *
@@ -164,3 +165,4 @@ export declare class Api extends MixAxios {
      */
     error<T>(error: AxiosError<T>): void;
 }
+export declare const apiService: Api;
