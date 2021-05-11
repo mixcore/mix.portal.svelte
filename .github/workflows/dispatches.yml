@@ -1,0 +1,48 @@
+name: ON Repo Dispatch
+
+on: repository_dispatch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+
+    steps:
+    - uses: actions/checkout@v1
+        
+    - name: Commit to repository
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+      env:
+        GITHUB_TOKEN: ${{ secrets.github_token }}
+        COMMIT_MSG: |
+          [CI/CD] Commit latest code from mix.portal.svelte
+          skip-checks: true
+      run: |
+        
+        # Hard-code user configuration
+        git config --global user.email "i.love.to.smile.around@gmail.com"
+        git config --global user.name "smilefounder"
+        
+        # git clone https://github.com/mixcore/mix.lib.ts.git ${HOME}/work/${GITHUB_REPOSITORY}/
+        git clone https://github.com/mixcore/mix.lib.ts.git ${HOME}/work/mix.lib.ts
+        
+        git checkout main
+        
+        cd ${HOME}/work/mix.lib.ts
+        npm ci
+        npm run build --if-present
+        
+        # cp -a ${HOME}/work/${GITHUB_REPOSITORY}/. ${GITHUB_WORKSPACE}/
+        
+        # Update origin with token
+        git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        git add .
+        
+        # Only commit and push if we have changes
+        git diff --quiet && git diff --staged --quiet || (git commit -m "${COMMIT_MSG}"; git push origin develop)
