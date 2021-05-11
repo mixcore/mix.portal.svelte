@@ -44,6 +44,8 @@ jobs:
         # cp -a ${HOME}/work/${GITHUB_REPOSITORY}/. ${GITHUB_WORKSPACE}/
         cp -a ${HOME}/work/mix.lib.ts/dist/. ${GITHUB_WORKSPACE}/src/lib/
         
+        cd ${GITHUB_WORKSPACE}/
+        
         # Update origin with token
         git remote set-url origin https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
         git add .
