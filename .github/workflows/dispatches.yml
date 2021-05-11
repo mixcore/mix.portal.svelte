@@ -38,7 +38,7 @@ jobs:
         git checkout main
         
         cd ${HOME}/work/mix.lib.ts
-        npm ci
+        npm i
         npm run build --if-present
         
         # cp -a ${HOME}/work/${GITHUB_REPOSITORY}/. ${GITHUB_WORKSPACE}/
