@@ -15,7 +15,7 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v1
         
-    - name: Commit to repository
+    - name: Setup node
       uses: actions/setup-node@v2
       with:
         node-version: ${{ matrix.node-version }}
@@ -24,6 +24,8 @@ jobs:
         COMMIT_MSG: |
           [CI/CD] Commit latest code from mix.portal.svelte
           skip-checks: true
+          
+    - name: Commit to repository
       run: |
         
         # Hard-code user configuration
