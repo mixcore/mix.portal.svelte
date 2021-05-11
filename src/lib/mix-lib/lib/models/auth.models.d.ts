@@ -17,6 +17,6 @@ export declare class Token {
     info: UserInfo | undefined;
 }
 export declare class UserInfo {
-    additionalData: any;
+    additionalData: never | undefined;
     roles: string[] | undefined;
 }

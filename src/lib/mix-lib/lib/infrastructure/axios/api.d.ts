@@ -1,4 +1,4 @@
-import { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
+import { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { MixAxios } from './mix-axios';
 /**
  * @class Api Class is a fancy es6 wrapper class for axios.
@@ -6,7 +6,7 @@ import { MixAxios } from './mix-axios';
  * @param {import("axios").AxiosRequestConfig} config - axios Request Config.
  * @link [AxiosRequestConfig](https://github.com/axios/axios#request-config)
  */
-export declare class Api extends MixAxios {
+export declare class MixApiService extends MixAxios {
     private token;
     /**
      * Creates an instance of api.
@@ -165,4 +165,4 @@ export declare class Api extends MixAxios {
      */
     error<T>(error: AxiosError<T>): void;
 }
-export declare const apiService: Api;
+export declare const apiService: MixApiService;

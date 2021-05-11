@@ -1,3 +1,7 @@
+export declare enum MixViewModelTypes {
+    Portal = "portal",
+    Mvc = "mvc"
+}
 export declare enum DisplayDirection {
     Asc = "Asc",
     Desc = "Desc"

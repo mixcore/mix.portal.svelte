@@ -6,6 +6,6 @@ export declare class GlobalSetting {
 }
 export declare class AllSettingsResponse {
     globalSettings?: GlobalSetting;
-    localizeSettings?: Object;
-    translator?: Object;
+    localizeSettings?: never;
+    translator?: never;
 }

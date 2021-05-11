@@ -2,8 +2,8 @@ import { GlobalSetting } from '../models/setting.models';
 export declare class MixSettingService {
     cachedInMinutes: number;
     globalSettings: GlobalSetting;
-    localizeSettings?: Object;
-    translator?: Object;
+    localizeSettings?: unknown;
+    translator?: unknown;
     /**
      *
      */
