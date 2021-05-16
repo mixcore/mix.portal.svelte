@@ -1,9 +1,13 @@
 <script context="module" lang="ts">
-	export const prerender = true;
+	// export const prerender = true;
 </script>
 
 <script lang="ts">
 	import Counter from '$lib/Counter/index.svelte';
+	import Button from "carbon-components-svelte/src/Button/Button.svelte";
+	// onMount(async () => {
+	// 	await import();
+	// });
 </script>
 
 <svelte:head>
@@ -27,6 +31,8 @@
 	</h2>
 
 	<Counter />
+
+	<Button>Primary button</Button>
 </section>
 
 <style>
