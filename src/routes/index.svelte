@@ -3,13 +3,42 @@
 </script>
 
 <script lang="ts">
-	import type {mixSettingService} from '$lib/mix-lib';
+	import type {mixSettingService, MixPostPortalViewModel} from '$lib/mix-lib';
 	import Counter from '$lib/Counter/index.svelte';
 	
 	import { Button, ButtonSkeleton, ButtonSet } from "carbon-components-svelte/src/Button";	import {
 		TileGroup,
 		RadioTile,
 	} from "carbon-components-svelte";
+
+	
+
+	// export class PostService extends mixSettingService<MixPostPortalViewModel> {
+	// 	constructor() {
+	// 		let appUrl = 'https://store.mixcore.org/api/v1/rest/';
+	// 		let viewName = 'mvc';
+	// 		let specificulture = 'en-us';
+	// 		var conf = getDefaultAxiosConfiguration();
+	// 		conf.withCredentials = false;
+	// 		super(appUrl, MixModelType.Post, viewName, specificulture, conf);
+	// 	}
+	// 	public getSingleModel(id: any) {
+	// 		let queries = {
+	// 			kw: 'test'
+	// 		};
+	// 		return super.getSingleModel(id, queries);
+	// 	}
+	// }
+
+	// export let response = [];
+
+	// onMount(async () => {
+	// 	var srv = new PostService();
+	// 	srv.getListModel().then(resp => {
+	// 		response = resp.items;
+	// 		console.log(resp);
+	// 	})
+	// });
 	
 </script>
 
