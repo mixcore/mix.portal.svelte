@@ -25,6 +25,7 @@ jobs:
         run: |
           npm i
           npm run build
+          rm -d ${GITHUB_WORKSPACE}/docs/
           cp -a ${GITHUB_WORKSPACE}/build/. ${GITHUB_WORKSPACE}/docs/
         env:
           CI: true

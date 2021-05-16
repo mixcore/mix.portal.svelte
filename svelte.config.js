@@ -16,9 +16,9 @@ const config = {
 			assets: 'build',
 			fallback: null
 		}),
-		prerender: {
-			enabled: false
-		},
+		// prerender: {
+		// 	enabled: false
+		// },
 		ssr: false,
 		vite: {
 			optimizeDeps: {
