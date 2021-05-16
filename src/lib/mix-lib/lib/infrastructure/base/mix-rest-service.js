@@ -1,0 +1,55 @@
+import { Api } from '../axios/api';
+export class MixRestRepository {
+    constructor(appUrl, modelName, viewName, specificulture, config) {
+        this.apiService = new Api(config);
+        console.log('apiService', this.apiService.instance);
+        this.apiService.instance.defaults.baseURL = appUrl;
+        this.modelType = modelName;
+        this.viewName = viewName;
+        this.specificulture = specificulture;
+    }
+    get modelUrl() {
+        return this.specificulture
+            ? `/rest/${this.specificulture}/${this.modelType}/${this.viewName}`
+            : `/rest/${this.modelType}/${this.viewName}`;
+    }
+    getSingleModel(id, queries) {
+        this.apiService.instance.defaults.params = queries;
+        return this.apiService.get(`${id}`);
+    }
+    getDefaultModel(queries) {
+        this.apiService.instance.defaults.params = queries;
+        return this.apiService.get(`default`);
+    }
+    getListModel(params) {
+        this.apiService.instance.defaults.params = params;
+        return this.apiService.get(this.modelUrl);
+    }
+    createModel(model) {
+        return this.apiService.post(this.modelUrl, model);
+    }
+    updateModel(id, model) {
+        return this.apiService.put(`${this.modelUrl}${id}`, model);
+    }
+    updateFields(id, fields) {
+        return this.apiService.patch(`${this.modelUrl}/${id}`, fields);
+    }
+    deleteModel(id) {
+        return this.apiService.delete(`${id}`);
+    }
+    duplicateModel(id, queries) {
+        this.apiService.instance.defaults.params = queries;
+        return this.apiService.get(`${this.modelUrl}/duplicate/${id}`);
+    }
+    exportListModel(queries) {
+        this.apiService.instance.defaults.params = queries;
+        return this.apiService.get('${this.modelUrl}/export');
+    }
+    clearCache(id) {
+        return this.apiService.get(`${this.modelUrl}/remove-cache/${id}`);
+    }
+    setLanguage(specificulture) {
+        this.specificulture = specificulture;
+    }
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoibWl4LXJlc3Qtc2VydmljZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL21peC5saWIudHMvc3JjL2xpYi9pbmZyYXN0cnVjdHVyZS9iYXNlL21peC1yZXN0LXNlcnZpY2UudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBSUEsT0FBTyxFQUFFLEdBQUcsRUFBRSxNQUFNLGNBQWMsQ0FBQztBQUNuQyxNQUFNLE9BQU8saUJBQWlCO0lBVTVCLFlBQ0UsTUFBYyxFQUNkLFNBQXVCLEVBQ3ZCLFFBQWdCLEVBQ2hCLGNBQThCLEVBQzlCLE1BQTJCO1FBRTNCLElBQUksQ0FBQyxVQUFVLEdBQUcsSUFBSSxHQUFHLENBQUMsTUFBTSxDQUFDLENBQUM7UUFDbEMsT0FBTyxDQUFDLEdBQUcsQ0FBQyxZQUFZLEVBQUUsSUFBSSxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQUMsQ0FBQztRQUNwRCxJQUFJLENBQUMsVUFBVSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsT0FBTyxHQUFHLE1BQU0sQ0FBQztRQUNuRCxJQUFJLENBQUMsU0FBUyxHQUFHLFNBQVMsQ0FBQztRQUMzQixJQUFJLENBQUMsUUFBUSxHQUFHLFFBQVEsQ0FBQztRQUN6QixJQUFJLENBQUMsY0FBYyxHQUFHLGNBQWMsQ0FBQztJQUN2QyxDQUFDO0lBbkJELElBQVcsUUFBUTtRQUNqQixPQUFPLElBQUksQ0FBQyxjQUFjO1lBQ3hCLENBQUMsQ0FBQyxTQUFTLElBQUksQ0FBQyxjQUFjLElBQUksSUFBSSxDQUFDLFNBQVMsSUFBSSxJQUFJLENBQUMsUUFBUSxFQUFFO1lBQ25FLENBQUMsQ0FBQyxTQUFTLElBQUksQ0FBQyxTQUFTLElBQUksSUFBSSxDQUFDLFFBQVEsRUFBRSxDQUFDO0lBQ2pELENBQUM7SUFpQk0sY0FBYyxDQUFDLEVBQW1CLEVBQUUsT0FBZTtRQUN4RCxJQUFJLENBQUMsVUFBVSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsTUFBTSxHQUFHLE9BQU8sQ0FBQztRQUNuRCxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsR0FBRyxDQUFDLEdBQUcsRUFBRSxFQUFFLENBQUMsQ0FBQztJQUN0QyxDQUFDO0lBRU0sZUFBZSxDQUFDLE9BQWU7UUFDcEMsSUFBSSxDQUFDLFVBQVUsQ0FBQyxRQUFRLENBQUMsUUFBUSxDQUFDLE1BQU0sR0FBRyxPQUFPLENBQUM7UUFDbkQsT0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDLEdBQUcsQ0FBQyxTQUFTLENBQUMsQ0FBQztJQUN4QyxDQUFDO0lBRU0sWUFBWSxDQUFDLE1BQXFCO1FBQ3ZDLElBQUksQ0FBQyxVQUFVLENBQUMsUUFBUSxDQUFDLFFBQVEsQ0FBQyxNQUFNLEdBQUcsTUFBTSxDQUFDO1FBQ2xELE9BQU8sSUFBSSxDQUFDLFVBQVUsQ0FBQyxHQUFHLENBQUMsSUFBSSxDQUFDLFFBQVEsQ0FBQyxDQUFDO0lBQzVDLENBQUM7SUFFTSxXQUFXLENBQUMsS0FBUTtRQUN6QixPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQyxRQUFRLEVBQUUsS0FBSyxDQUFDLENBQUM7SUFDcEQsQ0FBQztJQUVNLFdBQVcsQ0FBQyxFQUFtQixFQUFFLEtBQVE7UUFDOUMsT0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDLEdBQUcsQ0FBQyxHQUFHLElBQUksQ0FBQyxRQUFRLEdBQUcsRUFBRSxFQUFFLEVBQUUsS0FBSyxDQUFDLENBQUM7SUFDN0QsQ0FBQztJQUVNLFlBQVksQ0FBQyxFQUFtQixFQUFFLE1BQWE7UUFDcEQsT0FBTyxJQUFJLENBQUMsVUFBVSxDQUFDLEtBQUssQ0FBQyxHQUFHLElBQUksQ0FBQyxRQUFRLElBQUksRUFBRSxFQUFFLEVBQUUsTUFBTSxDQUFDLENBQUM7SUFDakUsQ0FBQztJQUVNLFdBQVcsQ0FBQyxFQUFtQjtRQUNwQyxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsTUFBTSxDQUFDLEdBQUcsRUFBRSxFQUFFLENBQUMsQ0FBQztJQUN6QyxDQUFDO0lBRU0sY0FBYyxDQUFDLEVBQW1CLEVBQUUsT0FBZTtRQUN4RCxJQUFJLENBQUMsVUFBVSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsTUFBTSxHQUFHLE9BQU8sQ0FBQztRQUNuRCxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsR0FBRyxDQUFDLEdBQUcsSUFBSSxDQUFDLFFBQVEsY0FBYyxFQUFFLEVBQUUsQ0FBQyxDQUFDO0lBQ2pFLENBQUM7SUFFTSxlQUFlLENBQUMsT0FBZTtRQUNwQyxJQUFJLENBQUMsVUFBVSxDQUFDLFFBQVEsQ0FBQyxRQUFRLENBQUMsTUFBTSxHQUFHLE9BQU8sQ0FBQztRQUNuRCxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsR0FBRyxDQUFDLHlCQUF5QixDQUFDLENBQUM7SUFDeEQsQ0FBQztJQUVNLFVBQVUsQ0FBQyxFQUFvQjtRQUNwQyxPQUFPLElBQUksQ0FBQyxVQUFVLENBQUMsR0FBRyxDQUFDLEdBQUcsSUFBSSxDQUFDLFFBQVEsaUJBQWlCLEVBQUUsRUFBRSxDQUFDLENBQUM7SUFDcEUsQ0FBQztJQUVNLFdBQVcsQ0FBQyxjQUFzQjtRQUN2QyxJQUFJLENBQUMsY0FBYyxHQUFHLGNBQWMsQ0FBQztJQUN2QyxDQUFDO0NBQ0YifQ==

@@ -2,6 +2,7 @@
 	import { spring } from 'svelte/motion';
 	import { NumberInput } from "carbon-components-svelte";
 
+	let count_tmp = 0
 	let count = 0;
 
 	const displayed_count = spring();
@@ -38,13 +39,12 @@
 
 
 <NumberInput
-min={4}
-max={20}
-value={count}
-on:click={() => (count += 1)}
-invalidText="Number must be between 4 and 20."
-helperText="Clusters provisioned in your region"
-label="Clusters (4 min, 20 max)"
+	min={4}
+	max={20}
+	bind:value={count}
+	invalidText="Number must be between 4 and 20."
+	helperText="Clusters provisioned in your region"
+	label="Clusters (4 min, 20 max)"
 />
 
 <style>
