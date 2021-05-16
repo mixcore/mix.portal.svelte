@@ -2,13 +2,7 @@
 	// export const prerender = true;
 </script>
 
-<script lang="ts">
-	import Counter from '$lib/Counter/index.svelte';
-	import Button from "carbon-components-svelte/src/Button/Button.svelte";
-	// onMount(async () => {
-	// 	await import();
-	// });
-</script>
+<script lang="ts" src="global.ts"></script>
 
 <svelte:head>
 	<title>Home</title>

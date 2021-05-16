@@ -1,45 +1,95 @@
 <script lang="ts">
-	import Header from '$lib/Header/index.svelte';
+	// import Header from '$lib/Header/index.svelte';
 	import '../app.css';
+	import {
+		Header,
+		HeaderUtilities,
+		HeaderAction,
+		HeaderPanelLinks,
+		HeaderPanelDivider,
+		HeaderPanelLink,
+		SideNav,
+		SideNavItems,
+		SideNavMenu,
+		SideNavMenuItem,
+		SideNavLink,
+		SkipToContent,
+		Content,
+		Grid,
+		Row,
+		Column,
+		TileGroup,
+		RadioTile,
+	} from "carbon-components-svelte";
+		
+	import { expoIn } from "svelte/easing";
+
+	let isSideNavOpen = false;
+	let isOpen = false;
+	let selected = "0";
+	let transitions = {
+		"0": {
+		text: "Default (duration: 200ms)",
+		value: { duration: 200 },
+		},
+		"1": {
+		text: "Custom (duration: 600ms, delay: 50ms, easing: expoIn)",
+		value: { duration: 600, delay: 50, easing: expoIn },
+		},
+		"2": {
+		text: "Disabled",
+		value: false,
+		},
+	};
 </script>
-
-<Header />
-
-<main>
-	<slot />
-</main>
-
-<footer>
-	<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-</footer>
-
-<style>
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 1024px;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
-
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 40px;
-	}
-
-	footer a {
-		font-weight: bold;
-	}
-
-	@media (min-width: 480px) {
-		footer {
-			padding: 40px 0;
-		}
-	}
-</style>
+<Header company="IBM" platformName="Carbon Svelte" bind:isSideNavOpen>
+	<div slot="skip-to-content">
+	  <SkipToContent />
+	</div>
+	<HeaderUtilities>
+	  <HeaderAction bind:isOpen transition={transitions[selected].value}>
+		<HeaderPanelLinks>
+		  <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
+		  <HeaderPanelLink>Switcher item 1</HeaderPanelLink>
+		  <HeaderPanelDivider>Switcher subject 2</HeaderPanelDivider>
+		  <HeaderPanelLink>Switcher item 1</HeaderPanelLink>
+		  <HeaderPanelLink>Switcher item 2</HeaderPanelLink>
+		  <HeaderPanelLink>Switcher item 3</HeaderPanelLink>
+		  <HeaderPanelLink>Switcher item 4</HeaderPanelLink>
+		  <HeaderPanelLink>Switcher item 5</HeaderPanelLink>
+		</HeaderPanelLinks>
+	  </HeaderAction>
+	</HeaderUtilities>
+  </Header>
+  
+  <SideNav bind:isOpen={isSideNavOpen}>
+	<SideNavItems>
+	  <SideNavLink text="Link 1" />
+	  <SideNavLink text="Link 2" />
+	  <SideNavLink text="Link 3" />
+	  <SideNavMenu text="Menu">
+		<SideNavMenuItem href="/" text="Link 1" />
+		<SideNavMenuItem href="/" text="Link 2" />
+		<SideNavMenuItem href="/" text="Link 3" />
+	  </SideNavMenu>
+	</SideNavItems>
+  </SideNav>
+  
+  <Content>
+	<Grid>
+	  <Row>
+		<Column>
+		  <h1>HeaderSwitcher</h1>
+		  <p>
+			Select a transition option below and click on the App Switcher icon in
+			the top right.
+		  </p>
+		  <TileGroup legend="App switcher transitions" bind:selected>
+			{#each Object.keys(transitions) as key}
+			  <RadioTile value={key}>{transitions[key].text}</RadioTile>
+			{/each}
+		  </TileGroup>
+		</Column>
+	  </Row>
+	</Grid>
+  </Content>

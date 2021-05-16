@@ -20,6 +20,13 @@ const config = {
 		  enabled: false
 		},
 		ssr: false,
+		vite:{
+			optimizeDeps: {
+				include: [
+				  'clipboard-copy'
+				]
+			  }
+		}
 	}
 };
 
