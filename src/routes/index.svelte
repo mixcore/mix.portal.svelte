@@ -2,27 +2,27 @@
 	// export const prerender = true;
 </script>
 
-<script lang="ts" src="global.ts"></script>
+<script lang="ts">
+		
+	import Counter from '$lib/Counter/index.svelte';
+	
+	import { Button, ButtonSkeleton, ButtonSet } from "carbon-components-svelte/src/Button";	import {
+		TileGroup,
+		RadioTile,
+	} from "carbon-components-svelte";
+	
+</script>
 
 <svelte:head>
 	<title>Home</title>
 </svelte:head>
 
 <section>
-	<h1>
-		<div class="welcome">
-			<picture>
-				<source srcset="svelte-welcome.webp" type="image/webp" />
-				<img src="svelte-welcome.png" alt="Welcome" />
-			</picture>
-		</div>
-
-		to your new<br />SvelteKit app
-	</h1>
-
-	<h2>
-		try editing <strong>src/routes/index.svelte</strong>
-	</h2>
+	<h1>HeaderSwitcher</h1>
+	<p>
+	  Select a transition option below and click on the App Switcher icon in
+	  the top right.
+	</p>
 
 	<Counter />
 

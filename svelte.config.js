@@ -17,15 +17,13 @@ const config = {
 			fallback: null
 		}),
 		prerender: {
-		  enabled: false
+			enabled: false
 		},
 		ssr: false,
-		vite:{
+		vite: {
 			optimizeDeps: {
-				include: [
-				  'clipboard-copy'
-				]
-			  }
+				include: ['clipboard-copy']
+			}
 		}
 	}
 };

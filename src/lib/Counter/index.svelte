@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { spring } from 'svelte/motion';
+	import { NumberInput } from "carbon-components-svelte";
 
 	let count = 0;
 
@@ -32,7 +33,19 @@
 			<path d="M0,0.5 L1,0.5 M0.5,0 L0.5,1" />
 		</svg>
 	</button>
+
 </div>
+
+
+<NumberInput
+min={4}
+max={20}
+value={count}
+on:click={() => (count += 1)}
+invalidText="Number must be between 4 and 20."
+helperText="Clusters provisioned in your region"
+label="Clusters (4 min, 20 max)"
+/>
 
 <style>
 	.counter {
