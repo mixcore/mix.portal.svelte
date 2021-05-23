@@ -19,15 +19,21 @@
     ToolbarBatchActions,
 	DataTableSkeleton,
 	Pagination,
-	Checkbox 
+	Form,
+    FormGroup,
+    Checkbox,
+    RadioButtonGroup,
+    RadioButton,
+    Select,
+    SelectItem,
   } from "carbon-components-svelte";
+
   import Save16 from "carbon-icons-svelte/lib/Save16";
   import Delete16 from "carbon-icons-svelte/lib/Delete16";
   import Add16 from "carbon-icons-svelte/lib/Add16";
   import Download16 from "carbon-icons-svelte/lib/Download16";
   import SettingsAdjust32 from "carbon-icons-svelte/lib/SettingsAdjust32";
 
-  
   const headers = [
     { key: "name", value: "Name" },
     { key: "port", value: "Port" },
@@ -82,12 +88,48 @@
 			<ToolbarContent>
 			<ToolbarSearch />
 			<ToolbarMenu icon={SettingsAdjust32}>
-				<ToolbarMenuItem primaryFocus><Checkbox labelText="Label text" checked /></ToolbarMenuItem>
-				<ToolbarMenuItem primaryFocus><Checkbox labelText="Label text"  /></ToolbarMenuItem>
-				<ToolbarMenuItem primaryFocus><Checkbox labelText="Label text"  /></ToolbarMenuItem>
-				<ToolbarMenuItem primaryFocus><Checkbox labelText="Label text"  /></ToolbarMenuItem>
-				<ToolbarMenuItem primaryFocus><Checkbox labelText="Label text"  /></ToolbarMenuItem>
-				<ToolbarMenuItem primaryFocus><Checkbox labelText="Label text"  /></ToolbarMenuItem>
+				
+				<Form on:submit>
+					<FormGroup legendText="Checkboxes">
+					<Checkbox id="checkbox-0" labelText="Checkbox Label" checked />
+					<Checkbox id="checkbox-1" labelText="Checkbox Label" />
+					<Checkbox id="checkbox-2" labelText="Checkbox Label" disabled />
+					</FormGroup>
+					<FormGroup legendText="Radio buttons">
+					<RadioButtonGroup name="radio-button-group" selected="default-selected">
+						<RadioButton
+						id="radio-1"
+						value="standard"
+						labelText="Standard Radio Button"
+						/>
+						<RadioButton
+						id="radio-2"
+						value="default-selected"
+						labelText="Default Selected Radio Button"
+						/>
+						<RadioButton
+						id="radio-4"
+						value="disabled"
+						labelText="Disabled Radio Button"
+						disabled
+						/>
+					</RadioButtonGroup>
+					</FormGroup>
+					<FormGroup>
+					<Select id="select-1" labelText="Select menu" value="placeholder-item">
+						<SelectItem
+						disabled
+						hidden
+						value="placeholder-item"
+						text="Choose an option"
+						/>
+						<SelectItem value="option-1" text="Option 1" />
+						<SelectItem value="option-2" text="Option 2" />
+						<SelectItem value="option-3" text="Option 3" />
+					</Select>
+					</FormGroup>
+					<Button type="submit">Submit</Button>
+				</Form>
 			</ToolbarMenu>
 			<ToolbarMenu icon={Download16}>
 				<ToolbarMenuItem primaryFocus>Download to CSV</ToolbarMenuItem>

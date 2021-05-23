@@ -27,7 +27,7 @@ const config = {
 		vite: {
 			// root: "./src",
 			optimizeDeps: {
-				include: ['clipboard-copy']
+				include: ['clipboard-copy', 'bytemd', '@bytemd/plugin-gfm', 'rehype-raw']
 			},
 			resolve: {
 				alias: {
