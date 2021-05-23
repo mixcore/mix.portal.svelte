@@ -1,76 +1,14 @@
 <script context="module" lang="ts">
-	// export const prerender = true;
-	export const ssr = false;
+	export const prerender = true;
+	// export const ssr = false;
 </script>
 
 <script lang="ts">
 	import { onMount } from 'svelte';
-	// import type {
-	// 	mixSettingService
-	// 	} from '$lib/mix.lib.ts';
 		
-	import {
-		LocalStorageKeys,
-		} from '$mixlib/lib/constants/local-storage-keys'; 
-		
-	import {
-		mixSettingService,
-		} from '$mixlib/lib/services/mix-setting-service'; 
-		
-
-		import {
-			PostRepository,
-		} from '$mixlib/lib/repositories/portal/mix-post-repository'; 
-
 	import Counter from '$lib/Counter/index.svelte';
 	
-	import { Button, ButtonSkeleton, ButtonSet } from "carbon-components-svelte/src/Button";	import {
-		TileGroup,
-		RadioTile,
-	} from "carbon-components-svelte";
-
-	let CONF_APP_URL = LocalStorageKeys.CONF_APP_URL;
-	let postrepo = new PostRepository();
-	let res;
-
-
-	// export class PostService extends mixSettingService<MixPostPortalViewModel> {
-	// 	constructor() {
-	// 		let appUrl = 'https://store.mixcore.org/api/v1/rest/';
-	// 		let viewName = 'mvc';
-	// 		let specificulture = 'en-us';
-	// 		var conf = getDefaultAxiosConfiguration();
-	// 		conf.withCredentials = false;
-	// 		super(appUrl, MixModelType.Post, viewName, specificulture, conf);
-	// 	}
-	// 	public getSingleModel(id: any) {
-	// 		let queries = {
-	// 			kw: 'test'
-	// 		};
-	// 		return super.getSingleModel(id, queries);
-	// 	}
-	// }
-
-	// export let response = [];
-
-	function initParams() {
-		console.log('Init Mix Params');
-		localStorage.setItem(
-			LocalStorageKeys.CONF_APP_URL,
-			'https://store.mixcore.org/api/v1'
-		);
-		localStorage.setItem(
-			LocalStorageKeys.CONF_CURRENT_CULTURE, 
-			'en-us'
-		);
-		mixSettingService.getAllSettings('en-us');
-
-  	}
-	
 	onMount(async () => {
-		initParams();
-		
-		postrepo.getListModel().then(resp=> res = resp);
 	});
 
 	
@@ -91,7 +29,6 @@
 
 	<Button>Primary button</Button>
 
-	{JSON.stringify(res)}
 </section>
 
 <style>

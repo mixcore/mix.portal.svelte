@@ -18,11 +18,11 @@ const config = {
 			// default options are shown
 			// pages: 'build',
 			// assets: 'build',
-			// fallback: null
+			fallback: 'index.html'
 		}),
-		prerender: {
-			enabled: false
-		},
+		// prerender: {
+		// 	enabled: false
+		// },
 		ssr: false,
 		vite: {
 			// root: "./src",

@@ -1,0 +1,92 @@
+<script context="module" lang="ts">
+	// export const prerender = true;
+	// export const ssr = false;
+</script>
+
+<script lang="ts">
+	import { onMount } from 'svelte';
+		
+	import {LocalStorageKeys} from '$mixlib/lib/constants/local-storage-keys'; 
+	import { mixSettingService } from '$mixlib/lib/services/mix-setting-service'; 
+	import { PostRepository } from '$mixlib/lib/repositories/portal/mix-post-repository'; 
+
+	import Counter from '$lib/Counter/index.svelte';
+	
+	import { Button, ButtonSkeleton, ButtonSet } from "carbon-components-svelte/src/Button";	import {
+		TileGroup,
+		RadioTile,
+	} from "carbon-components-svelte";
+
+	let CONF_APP_URL = LocalStorageKeys.CONF_APP_URL;
+	let postrepo = new PostRepository();
+	let res;
+
+	function initParams() {
+		console.log('Init Mix Params');
+		localStorage.setItem(
+			LocalStorageKeys.CONF_APP_URL,
+			'https://store.mixcore.org/api/v1'
+		);
+		localStorage.setItem(
+			LocalStorageKeys.CONF_CURRENT_CULTURE, 
+			'en-us'
+		);
+		mixSettingService.getAllSettings('en-us');
+
+  	}
+	
+	onMount(async () => {
+		initParams();
+		
+		postrepo.getListModel().then(resp=> res = resp);
+	});
+
+	
+</script>
+
+<svelte:head>
+	<title>Home</title>
+</svelte:head>
+
+<section>
+	<h1>HeaderSwitcher</h1>
+	<p>
+	  Select a transition option below and click on the App Switcher icon in
+	  the top right.
+	</p>
+
+	<Counter />
+
+	<Button>Primary button</Button>
+
+	{JSON.stringify(res)}
+</section>
+
+<style>
+	section {
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		flex: 1;
+	}
+
+	h1 {
+		width: 100%;
+	}
+
+	.welcome {
+		position: relative;
+		width: 100%;
+		height: 0;
+		padding: 0 0 calc(100% * 495 / 2048) 0;
+	}
+
+	.welcome img {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		display: block;
+	}
+</style>
