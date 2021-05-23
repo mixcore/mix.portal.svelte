@@ -17,13 +17,21 @@
 		mixSettingService,
 		} from '$mixlib/lib/services/mix-setting-service'; 
 		
+
+		import {
+			PostRepository,
+		} from '$mixlib/lib/repositories/portal/mix-post-repository'; 
+
 	import Counter from '$lib/Counter/index.svelte';
 	
 	import { Button, ButtonSkeleton, ButtonSet } from "carbon-components-svelte/src/Button";	import {
 		TileGroup,
 		RadioTile,
 	} from "carbon-components-svelte";
+
 	let CONF_APP_URL = LocalStorageKeys.CONF_APP_URL;
+	let postrepo = new PostRepository();
+	let res;
 
 
 	// export class PostService extends mixSettingService<MixPostPortalViewModel> {
@@ -56,10 +64,13 @@
 			'en-us'
 		);
 		mixSettingService.getAllSettings('en-us');
+
   	}
 	
 	onMount(async () => {
 		initParams();
+		
+		postrepo.getListModel().then(resp=> res = resp);
 	});
 
 	
@@ -79,6 +90,8 @@
 	<Counter />
 
 	<Button>Primary button</Button>
+
+	{JSON.stringify(res)}
 </section>
 
 <style>
