@@ -137,8 +137,7 @@ class Router {
 
 			const url = new URL(href);
 
-			// Don't handle hash changes
-			if (url.pathname === location.pathname && url.search === location.search) return;
+			if (!this.owns(url)) return;
 
 			const noscroll = a.hasAttribute('sveltekit:noscroll');
 			history.pushState({}, '', url.href);
@@ -160,22 +159,26 @@ class Router {
 		history.replaceState(history.state || {}, '', location.href);
 	}
 
+	/** @param {URL} url */
+	owns(url) {
+		return url.origin === location.origin && url.pathname.startsWith(this.base);
+	}
+
 	/**
 	 * @param {URL} url
 	 * @returns {import('./types').NavigationInfo}
 	 */
 	parse(url) {
-		if (url.origin !== location.origin) return null;
-		if (!url.pathname.startsWith(this.base)) return null;
+		if (this.owns(url)) {
+			const path = decodeURIComponent(url.pathname.slice(this.base.length) || '/');
 
-		const path = decodeURIComponent(url.pathname.slice(this.base.length) || '/');
+			const routes = this.routes.filter(([pattern]) => pattern.test(path));
 
-		const routes = this.routes.filter(([pattern]) => pattern.test(path));
+			const query = new URLSearchParams(url.search);
+			const id = `${path}?${query}`;
 
-		const query = new URLSearchParams(url.search);
-		const id = `${path}?${query}`;
-
-		return { id, routes, path, query };
+			return { id, routes, path, query };
+		}
 	}
 
 	/**
@@ -184,14 +187,14 @@ class Router {
 	 * @param {string[]} chain
 	 */
 	async goto(href, { noscroll = false, replaceState = false } = {}, chain) {
-		if (this.enabled) {
-			const url = new URL(href, get_base_uri(document));
+		const url = new URL(href, get_base_uri(document));
 
+		if (this.enabled && this.owns(url)) {
 			history[replaceState ? 'replaceState' : 'pushState']({}, '', href);
 			return this._navigate(url, noscroll ? scroll_state() : null, chain, url.hash);
 		}
 
-		location.href = href;
+		location.href = url.href;
 		return new Promise(() => {
 			/* never resolves */
 		});
@@ -210,7 +213,13 @@ class Router {
 	 * @returns {Promise<import('./types').NavigationResult>}
 	 */
 	async prefetch(url) {
-		return this.renderer.load(this.parse(url));
+		const info = this.parse(url);
+
+		if (!info) {
+			throw new Error('Attempted to prefetch a URL that does not belong to this app');
+		}
+
+		return this.renderer.load(info);
 	}
 
 	/**
@@ -221,6 +230,10 @@ class Router {
 	 */
 	async _navigate(url, scroll, chain, hash) {
 		const info = this.parse(url);
+
+		if (!info) {
+			throw new Error('Attempted to navigate to a URL that does not belong to this app');
+		}
 
 		// remove trailing slashes
 		if (info.path !== '/') {

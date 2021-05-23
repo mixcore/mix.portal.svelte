@@ -1,5 +1,9 @@
 import preprocess from 'svelte-preprocess';
 import adapter from '@sveltejs/adapter-static';
+import { dirname, resolve } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
@@ -21,9 +25,22 @@ const config = {
 		// },
 		ssr: false,
 		vite: {
+			// root: "./src",
 			optimizeDeps: {
 				include: ['clipboard-copy']
-			}
+			},
+			resolve: {
+				alias: {
+					// $components: resolve(__dirname, "./src/components"),
+					// $stores: resolve(__dirname, "./src/stores"),
+					$mixlib: resolve(__dirname, "./src/mix.lib.ts"),
+				},
+			},
+			// esbuild: {
+			// 	include: /\.(tsx?|jsx?)$/,
+			// 	exclude: [],
+			// 	loader: 'tsx'
+			// }
 		}
 	}
 };
