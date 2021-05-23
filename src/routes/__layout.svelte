@@ -27,7 +27,7 @@
 	let isSideNavOpen = false;
 	let isOpen = false;
 </script>
-<Header company="Mixcore" platformName="Portal" bind:isSideNavOpen>
+<Header company="MIXCORE" platformName="Portal" bind:isSideNavOpen>
 	<div slot="skip-to-content">
 	  <SkipToContent />
 	</div>
@@ -49,18 +49,26 @@
   
 <SideNav bind:isOpen={isSideNavOpen}>
 	<SideNavItems>
-	  <SideNavLink text="Link 1" />
-	  <SideNavLink text="Link 2" />
-	  <SideNavLink text="Link 3" />
-	  <SideNavMenu text="Menu">
-		<SideNavMenuItem href="/" text="Link 1" />
-		<SideNavMenuItem href="/" text="Link 2" />
-		<SideNavMenuItem href="/" text="Link 3" />
-	  </SideNavMenu>
-	  <SideNavDivider />
-	  <SideNavLink text="Link 4" />
+		<SideNavLink href="/" text="Dashboard" />
+		<SideNavMenu text="Posts">
+			<SideNavMenuItem href="/" text="Create Post" />
+			<SideNavMenuItem href="/post" text="Post List" />
+			<SideNavMenuItem href="/" text="Draft Posts" />
+		</SideNavMenu>
+		<SideNavMenu text="Pages">
+			<SideNavMenuItem href="/" text="Create Page" />
+			<SideNavMenuItem href="/" text="Page List" />
+			<SideNavMenuItem href="/" text="Draft Pages" />
+		</SideNavMenu>
+		<SideNavMenu text="Modules">
+			<SideNavMenuItem href="/" text="Create Module" />
+			<SideNavMenuItem href="/" text="Module List" />
+			<SideNavMenuItem href="/" text="Draft Modules" />
+		</SideNavMenu>
+		<SideNavDivider />
+		<SideNavLink text="Link 4" />
 	</SideNavItems>
-  </SideNav>
+</SideNav>
   
   <Content>
 	<Grid>

@@ -3,7 +3,8 @@ const c = [
 	() => import("..\\components\\error.svelte"),
 	() => import("..\\..\\..\\src\\routes\\index.svelte"),
 	() => import("..\\..\\..\\src\\routes\\about.svelte"),
-	() => import("..\\..\\..\\src\\routes\\todos\\index.svelte")
+	() => import("..\\..\\..\\src\\routes\\todos\\index.svelte"),
+	() => import("..\\..\\..\\src\\routes\\post\\index.svelte")
 ];
 
 const d = decodeURIComponent;
@@ -22,7 +23,10 @@ export const routes = [
 	[/^\/todos\/?$/, [c[0], c[4]], [c[1]]],
 
 	// src/routes/todos/[uid].json.ts
-	[/^\/todos\/([^/]+?)\.json$/]
+	[/^\/todos\/([^/]+?)\.json$/],
+
+	// src/routes/post/index.svelte
+	[/^\/post\/?$/, [c[0], c[5]], [c[1]]]
 ];
 
 export const fallback = [c[0](), c[1]()];
