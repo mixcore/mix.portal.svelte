@@ -1,0 +1,6 @@
+export class AuditModel {
+    id;
+    lastModified;
+    createdDateTime;
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXVkaXQtbW9kZWwuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9zcmMvbGliL2luZnJhc3RydWN0dXJlL21vZGVscy9hdWRpdC1tb2RlbC50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxNQUFNLE9BQWdCLFVBQVU7SUFDdkIsRUFBRSxDQUFlO0lBQ2pCLFlBQVksQ0FBUTtJQUNwQixlQUFlLENBQVE7Q0FDL0IifQ==

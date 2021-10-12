@@ -1,0 +1,12 @@
+export class GlobalSetting {
+    domain;
+    apiEncryptKey;
+    defaultLanguage;
+    lastUpdateConfiguration;
+}
+export class AllSettingsResponse {
+    globalSettings;
+    localizeSettings;
+    translator;
+}
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoic2V0dGluZy5tb2RlbHMuanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9zcmMvbGliL21vZGVscy9zaGFyZWQvc2V0dGluZy5tb2RlbHMudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsTUFBTSxPQUFPLGFBQWE7SUFDakIsTUFBTSxDQUFVO0lBQ2hCLGFBQWEsQ0FBVTtJQUN2QixlQUFlLENBQVU7SUFDekIsdUJBQXVCLENBQVE7Q0FDdkM7QUFDRCxNQUFNLE9BQU8sbUJBQW1CO0lBQ3ZCLGNBQWMsQ0FBaUI7SUFDL0IsZ0JBQWdCLENBQVM7SUFDekIsVUFBVSxDQUFTO0NBQzNCIn0=
