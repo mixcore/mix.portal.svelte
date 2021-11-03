@@ -7,8 +7,8 @@ export declare enum DisplayDirection {
     Desc = "Desc"
 }
 export declare enum MixModelType {
-    Page = "page",
-    Post = "post",
+    Page = "mix-page-content",
+    Post = "mix-post-content",
     Module = "module",
     Database = "mix-database",
     DatabaseData = "mix-database-data"
