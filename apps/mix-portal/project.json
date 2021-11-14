@@ -1,0 +1,70 @@
+{
+  "root": "apps/mix-portal",
+  "sourceRoot": "apps/mix-portal/src",
+  "projectType": "application",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nxext/svelte:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/mix-portal",
+        "entryFile": "apps/mix-portal/src/main.ts",
+        "tsConfig": "apps/mix-portal/tsconfig.app.json",
+        "svelteConfig": "apps/mix-portal/svelte.config.cjs",
+        "assets": [
+          {
+            "glob": "/*",
+            "input": "apps/mix-portal/public/**",
+            "output": "./"
+          }
+        ]
+      },
+      "configurations": {
+        "production": {
+          "dev": false
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nxext/svelte:build",
+      "options": {
+        "outputPath": "dist/apps/mix-portal",
+        "entryFile": "apps/mix-portal/src/main.ts",
+        "tsConfig": "apps/mix-portal/tsconfig.app.json",
+        "svelteConfig": "apps/mix-portal/svelte.config.cjs",
+        "assets": [
+          {
+            "glob": "/*",
+            "input": "apps/mix-portal/public/**",
+            "output": "./"
+          }
+        ],
+        "watch": true,
+        "serve": true
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/mix-portal/**/*.{ts,svelte,spec.ts}"]
+      }
+    },
+    "check": {
+      "executor": "@nrwl/workspace:run-commands",
+      "options": {
+        "command": "svelte-check",
+        "cwd": "apps/mix-portal"
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/mix-portal"],
+      "options": {
+        "jestConfig": "apps/mix-portal/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  }
+}
