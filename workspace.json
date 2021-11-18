@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "mix-portal": "apps/mix-portal",
-    "mix-site-management": "apps/mix-site-management"
+    "mix-site-management": "apps/mix-site-management",
+    "shared": "libs/shared"
   }
 }

@@ -1,48 +1,22 @@
 {
   "root": "apps/mix-site-management",
-  "sourceRoot": "apps/mix-site-management/src",
   "projectType": "application",
-  "tags": [],
+  "sourceRoot": "apps/mix-site-management/src",
   "targets": {
     "build": {
-      "executor": "@nxext/svelte:build",
-      "outputs": ["{options.outputPath}"],
+      "executor": "@nxext/sveltekit:sveltekit",
       "options": {
-        "outputPath": "dist/apps/mix-site-management",
-        "entryFile": "apps/mix-site-management/src/main.ts",
-        "tsConfig": "apps/mix-site-management/tsconfig.app.json",
-        "svelteConfig": "apps/mix-site-management/svelte.config.cjs",
-        "assets": [
-          {
-            "glob": "/*",
-            "input": "apps/mix-site-management/public/**",
-            "output": "./"
-          }
-        ]
-      },
-      "configurations": {
-        "production": {
-          "dev": false
-        }
+        "command": "build"
       }
     },
     "serve": {
-      "executor": "@nxext/svelte:build",
+      "executor": "@nxext/sveltekit:sveltekit",
       "options": {
-        "outputPath": "dist/apps/mix-site-management",
-        "entryFile": "apps/mix-site-management/src/main.ts",
-        "tsConfig": "apps/mix-site-management/tsconfig.app.json",
-        "svelteConfig": "apps/mix-site-management/svelte.config.cjs",
-        "assets": [
-          {
-            "glob": "/*",
-            "input": "apps/mix-site-management/public/**",
-            "output": "./"
-          }
-        ],
-        "watch": true,
-        "serve": true
+        "command": "dev"
       }
+    },
+    "add": {
+      "executor": "@nxext/sveltekit:add"
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
@@ -52,21 +26,7 @@
           "apps/mix-site-management/**/*.{ts,svelte,spec.ts}"
         ]
       }
-    },
-    "check": {
-      "executor": "@nrwl/workspace:run-commands",
-      "options": {
-        "command": "svelte-check",
-        "cwd": "apps/mix-site-management"
-      }
-    },
-    "test": {
-      "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/apps/mix-site-management"],
-      "options": {
-        "jestConfig": "apps/mix-site-management/jest.config.js",
-        "passWithNoTests": true
-      }
     }
-  }
+  },
+  "tags": []
 }

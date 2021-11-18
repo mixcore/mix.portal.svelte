@@ -13,16 +13,10 @@
     "forceConsistentCasingInFileNames": true
   },
   "files": [],
-  "include": [],
+  "include": ["*.config.js", "*.d.ts", "src/**/*.js", "src/**/*.ts", "src/**/*.svelte"],
   "references": [
     {
       "path": "./tsconfig.app.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
-    },
-    {
-      "path": "./tsconfig.spec.json"
     }
   ]
 }

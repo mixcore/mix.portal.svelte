@@ -1,4 +1,5 @@
 {
+  "extends": "@nrwl/workspace/presets/npm.json",
   "npmScope": "mix.core",
   "affected": {
     "defaultBase": "master"
@@ -6,33 +7,21 @@
   "cli": {
     "defaultCollection": "@nrwl/workspace"
   },
-  "implicitDependencies": {
-    "package.json": {
-      "dependencies": "*",
-      "devDependencies": "*"
-    },
-    ".eslintrc.json": "*"
+  "workspaceLayout": {
+    "appsDir": "apps",
+    "libsDir": "libs"
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "@nrwl/workspace/tasks-runners/default",
       "options": {
         "cacheableOperations": [
           "build",
           "lint",
           "test",
           "e2e"
-        ],
-        "accessToken": "MjA3Y2E2MjktMGYxYy00NDM0LWFkN2QtNDlkOTEyMDMxZjRkfHJlYWQtd3JpdGU="
+        ]
       }
     }
-  },
-  "targetDependencies": {
-    "build": [
-      {
-        "target": "build",
-        "projects": "dependencies"
-      }
-    ]
   }
 }
