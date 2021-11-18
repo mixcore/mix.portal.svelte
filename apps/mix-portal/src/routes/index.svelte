@@ -1,3 +1,7 @@
+<script context="module">
+  export const ssr = false;
+</script>
+
 <script lang="ts">
   import {
     Header,
@@ -7,41 +11,64 @@
     SideNavMenuItem,
     SideNavLink,
     SideNavDivider,
+    SkipToContent
   } from 'carbon-components-svelte';
   import Fade16 from 'carbon-icons-svelte/lib/Fade16';
+  import { MixLogo } from '@mix.core/shared';
 
-  let isSideNavOpen = true;
+  let isSideNavOpen = false;
+
+  let sidebarItems: {label: string, value: string}[] = [
+    {
+      label: 'Dashboard',
+      value: '/dashboard'
+    },
+    {
+      label: 'Navigation',
+      value: '/Navigation'
+    }
+  ]
 </script>
 
-<Header bind:isSideNavOpen>
-  <img
-    class="mix-header-logo"
-    src="/images/mixcore-logo-red-2.svg"
-    alt="mix-logo"
-  />
+<Header  bind:isSideNavOpen>
+  <div slot="skip-to-content">
+    <SkipToContent />
+  </div>
+
+  <MixLogo></MixLogo>
 
   <SideNav bind:isOpen={isSideNavOpen} rail>
     <SideNavItems>
-      <SideNavLink icon={Fade16} text="Link 1" href="/" isSelected />
-      <SideNavLink icon={Fade16} text="Link 2" href="/" />
-      <SideNavLink icon={Fade16} text="Link 3" href="/" />
-      <SideNavMenu icon={Fade16} text="Menu">
-        <SideNavMenuItem href="/" text="Link 1" />
-        <SideNavMenuItem href="/" text="Link 2" />
-        <SideNavMenuItem href="/" text="Link 3" />
-      </SideNavMenu>
-      <SideNavDivider />
-      <SideNavLink icon={Fade16} text="Link 4" href="/" />
+      {#each sidebarItems as item}
+        <SideNavLink icon={Fade16} text={item.label} href={item.value} />
+      {/each}
     </SideNavItems>
   </SideNav>
 </Header>
 
-<h1 style="margin-top: 50px">ABC DEF GHIKLMN</h1>
+<div class="main-workspace">
+  <h1>Main Workspace Work</h1>
+</div>
 
 <style global>
-  @import 'carbon-components-svelte/css/white.css';
+  @import 'carbon-components-svelte/css/all.css';
+
+  body {
+    margin: 0 !important;
+  }
+
+  .bx--header__name {
+    display: none !important;
+  }
 
   .mix-header-logo {
-    width: 145px;
+    margin-left: 15px;
+  }
+
+  .main-workspace {
+    width: calc(100vw - 3rem);
+    height: calc(100vh - 3rem);
+    padding-top: 3rem;
+    padding-left: 4rem;
   }
 </style>
