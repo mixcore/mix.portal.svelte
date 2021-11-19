@@ -29,6 +29,9 @@
     }
   ]
 </script>
+<script context="module">
+	export const ssr = false;
+</script>
 
 <Header  bind:isSideNavOpen>
   <div slot="skip-to-content">
