@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@mix.core/shared": ["libs/shared/src/index.ts"]
+      "@mix.core/shared": ["libs/shared/src/index.ts"],
+      "@mix.core/libs": ["libs/mix.lib.ts/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

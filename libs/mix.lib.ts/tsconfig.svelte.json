@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig",
+  "compilerOptions": {
+    "target": "esnext",
+    "outDir": "../mix.portal.svelte/src/lib/mix-lib",
+    "module": "esnext"
+  },
+  "exclude": [
+    "node_modules/**"
+  ]
+}

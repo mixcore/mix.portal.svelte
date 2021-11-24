@@ -5,5 +5,6 @@
 <style>
     .mix-header-logo {
         width: 145px !important;
+        margin-left: 15px;
     }
 </style>
