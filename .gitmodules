@@ -1,0 +1,3 @@
+[submodule "libs/mix.lib"]
+	path = libs/mix.lib
+	url = git@github.com:mixcore/mix.lib.ts.git
