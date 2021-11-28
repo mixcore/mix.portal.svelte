@@ -8,3 +8,6 @@ export type { IMenuItem } from './models/menu-item.model';
 
 // Store
 export { loadingStore, showLoading, hideLoading } from './stores/loading/loading.store';
+
+// Https 
+export { MixHttps } from './helpers/https.helper';

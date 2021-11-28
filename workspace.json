@@ -3,7 +3,6 @@
   "projects": {
     "mix-portal": "apps/mix-portal",
     "mix-site-management": "apps/mix-site-management",
-    "mix.lib": "libs/mix.lib",
     "shared": "libs/shared"
   }
 }

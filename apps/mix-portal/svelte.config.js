@@ -10,7 +10,7 @@ const config = {
             resolve: {
                 alias: {
                     "@mix.core/shared": path.resolve('../../libs/shared/src'),
-                    "@mix.core/libs": path.resolve('../../libs/mix.lib.ts/src')
+                    "@mix.core/mix.lib": path.resolve('../../libs/mix.lib/src')
                 }
             }
         }
