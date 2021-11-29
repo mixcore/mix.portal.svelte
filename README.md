@@ -1,15 +1,16 @@
 # MixCore Portal
 ## How to setup
-Run `git clone --recursive https://github.com/mixcore/mix.portal.svelte.git` 
+Run following commands to clone the project:
+
+```
+git clone --recursive https://github.com/mixcore/mix.portal.svelte.git
+cd mix.portal.svelte
+yarn
+``` 
 
 OR `git clone --recursive git@github.com:mixcore/mix.portal.svelte.git` for SSH.
 
-If already cloned the repo then run `git submodule update --init --recursive`
-
-## Install dependencies
-Go to folder `cd mix.portal.svelte`
-
-Run `yarn`
+If already cloned the repo then run `git submodule update --init --recursive`.
 
 ## Development server
 Run `nx serve mix-portal` for a Mix Portal dev server.
