@@ -23,3 +23,9 @@ Run `nx g @nxext/svelte:app [application-name]` to generate an application.
 
 ## Generate a library
 Run `nx g @nxext/svelte:lib [lib-name]` to generate a library.
+
+# Activity
+![Alt](https://repobeats.axiom.co/api/embed/b57408f91dfbb158d485702299aea43803613bd5.svg "Repobeats analytics image")
+
+# License
+MIT
