@@ -2,6 +2,7 @@
 export { default as PortalSidebar } from './components/Sidebar.svelte';
 export { default as MixLogo } from './components/MixLogo.svelte';
 export { default as MixSpinner } from './components/MixSpinner.svelte';
+export { default as InitForm } from './components/InitForm.svelte';
 
 // Model
 export type { IMenuItem } from './models/menu-item.model';
@@ -11,3 +12,6 @@ export { loadingStore, showLoading, hideLoading } from './stores/loading/loading
 
 // Https 
 export { MixHttps } from './helpers/https.helper';
+
+// Validation
+export * from './validations';

@@ -11,6 +11,7 @@
     MixLogo,
     MixSpinner,
     loadingStore,
+    InitForm
   } from '@mix.core/shared';
   import Dashboard32 from 'carbon-icons-svelte/lib/Dashboard32';
   import PageNumber32 from 'carbon-icons-svelte/lib/PageNumber32';
@@ -22,6 +23,8 @@
 
   let isSideNavOpen = false;
   let isShowLoading = true;
+  let isPortalReady = false;
+  let isShowInitForm = false;
   let sidebarItems: IMenuItem[] = [
     {
       label: 'Dashboard',
@@ -47,13 +50,19 @@
 
     MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
       if (data === InitStep.Blank) {
-        console.log(123);
-        hideLoading();
+        isShowInitForm = true;
+        isPortalReady = false;
+      } else {
+        isPortalReady = true;
+        isShowInitForm = false;
       }
+
+      hideLoading();
     });
   });
 </script>
 
+{#if isPortalReady}
 <Header bind:isSideNavOpen>
   <div slot="skip-to-content">
     <SkipToContent />
@@ -73,6 +82,11 @@
 <div class="main-workspace">
   <slot />
 </div>
+{/if}
+
+{#if isShowInitForm}
+  <InitForm></InitForm>
+{/if}
 
 {#if isShowLoading}
   <MixSpinner />
@@ -91,6 +105,10 @@
 
   .bx--side-nav__item {
     margin-bottom: 10px;
+  }
+
+  .bx--fieldset  {
+     margin-bottom: 1rem !important;
   }
 
   .main-workspace {
