@@ -9,7 +9,7 @@
 
   onMount(async () => {
     let initSrv = new MixInitService();
-    initSrv.setBaseUrl('https://localhost:5010/api/v2');
+    initSrv.setBaseUrl('https://localhost:5010/api/v2/rest');
 
     MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
       if (data === InitStep.Blank) {
