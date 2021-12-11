@@ -1,6 +1,18 @@
 export interface FormObject {
-    value: Object;
-    
+    [key: string]: FormControl;
 }
 
-export class FormControl {}
+export class FormControl {
+    public value: any;
+    public validations: ValidationFn[]
+
+    constructor(value: any, ...validations: ValidationFn[]) {
+        this.value = value;
+        this.validations = validations;
+    }
+}
+
+export interface ValidationFn {
+    errMessage: string;
+    validate(value: any): boolean;
+}

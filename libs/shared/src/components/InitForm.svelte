@@ -1,15 +1,19 @@
-<script context="module">
-    export const ssr = false;
-</script>
-
 <script lang="ts">
-    import { ProgressIndicator, ProgressStep, Form, FormGroup, TextInput, Select, SelectItem } from "carbon-components-svelte";
+    import type { InitTenantModel } from "@mix.core/mix.lib";
+    import { ProgressIndicator, ProgressStep } from "carbon-components-svelte";
+    import CreateAccountForm from "./CreateAccountForm.svelte";
+    import CreateSiteForm from './CreateSiteForm.svelte';
 
     let currentStep: number = 0;
-    let siteName = null;
+    let initTenantData: InitTenantModel = undefined;
 
     function onStepChange(step: number): void {
         currentStep = step;
+    }
+
+    function onCreateSiteSubmit(event: CustomEvent<InitTenantModel>): void {
+      initTenantData = event.detail;
+      currentStep += 1;
     }
 </script>
 
@@ -23,62 +27,26 @@
                 <ProgressIndicator currentIndex={currentStep}>
                     <ProgressStep
                       current={currentStep === 0}
-                      on:click={() => onStepChange(0)}
                       label={currentStep === 0 ? 'Current Step' : 'Step 1'}
                       description="The progress indicator will listen for clicks on the steps"/>
                     <ProgressStep
                       current={currentStep === 1}
-                      on:click={() => onStepChange(1)}
                       label={currentStep === 1 ? 'Current Step' : 'Step 2'}/>
                     <ProgressStep
                       current={currentStep === 2}
-                      on:click={() => onStepChange(2)}
                       label={currentStep === 2 ? 'Current Step' : 'Step 3'}/>
                 </ProgressIndicator>
               </div>
               
               {#if currentStep === 0}
                 <div class="init-form__form">
-                    <Form>
-                        <FormGroup legendText="Your website title">
-                            <input type="text"
-                              bind:value={siteName}/>
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Select labelText="Choose your langugae">
-                              <SelectItem value="option-1" text="Option 1" />
-                              <SelectItem value="option-2" text="Option 2" />
-                              <SelectItem value="option-3" text="Option 3" />
-                            </Select>
-                        </FormGroup>
-
-                        <FormGroup>
-                            <Select labelText="Choose your server">
-                              <SelectItem value="option-1" text="Option 1" />
-                              <SelectItem value="option-2" text="Option 2" />
-                              <SelectItem value="option-3" text="Option 3" />
-                            </Select>
-                        </FormGroup>
-
-                        <FormGroup legendText="Database Name">
-                            <TextInput></TextInput>
-                        </FormGroup>
-
-                        <FormGroup legendText="Database Username">
-                            <TextInput></TextInput>
-                        </FormGroup>
-
-                        <FormGroup legendText="Database Password">
-                            <TextInput></TextInput>
-                        </FormGroup>
-                    </Form>
+                  <CreateSiteForm on:onCreateSiteSubmit={onCreateSiteSubmit}></CreateSiteForm>
                 </div>
               {/if}
 
               {#if currentStep === 1}
                 <div class="init-form__form">
-                    Form Users Works
+                  <CreateAccountForm></CreateAccountForm>
                 </div>
               {/if}
 

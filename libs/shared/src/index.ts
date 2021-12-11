@@ -6,6 +6,7 @@ export { default as InitForm } from './components/InitForm.svelte';
 
 // Model
 export type { IMenuItem } from './models/menu-item.model';
+export type { ISelectOption } from './models/select-option.model';
 
 // Store
 export { loadingStore, showLoading, hideLoading } from './stores/loading/loading.store';
