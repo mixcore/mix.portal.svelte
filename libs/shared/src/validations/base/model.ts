@@ -13,6 +13,7 @@ export class FormControl {
 }
 
 export interface ValidationFn {
+    errPrefix: string;
     errMessage: string;
     validate(value: any): boolean;
 }
