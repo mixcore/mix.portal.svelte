@@ -1,18 +1,21 @@
 <script lang="ts">
-    import type { InitTenantModel } from "@mix.core/mix.lib";
+    import type { AccountModel, InitTenantModel } from "@mix.core/mix.lib";
     import { ProgressIndicator, ProgressStep } from "carbon-components-svelte";
     import CreateAccountForm from "./CreateAccountForm.svelte";
     import CreateSiteForm from './CreateSiteForm.svelte';
+    import SelectTheme from "./SelectTheme.svelte";
 
     let currentStep: number = 0;
     let initTenantData: InitTenantModel = undefined;
-
-    function onStepChange(step: number): void {
-        currentStep = step;
-    }
+    let initAccountData: AccountModel = undefined;
 
     function onCreateSiteSubmit(event: CustomEvent<InitTenantModel>): void {
       initTenantData = event.detail;
+      currentStep += 1;
+    }
+
+    function onCreateAccountSubmit(event: CustomEvent<AccountModel>): void {
+      initAccountData = event.detail;
       currentStep += 1;
     }
 </script>
@@ -46,13 +49,13 @@
 
               {#if currentStep === 1}
                 <div class="init-form__form">
-                  <CreateAccountForm></CreateAccountForm>
+                  <CreateAccountForm on:onCreateACcountSubmit={onCreateAccountSubmit}></CreateAccountForm>
                 </div>
               {/if}
 
               {#if currentStep === 2}
                 <div class="init-form__form">
-                    Form Theme Works
+                  <SelectTheme></SelectTheme>
                 </div>
               {/if}
             </div>

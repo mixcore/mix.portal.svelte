@@ -3,7 +3,7 @@ import type { Readable, Writable } from "svelte/store";
 import type { FormObject } from "./model";
 
 export class MixForm {
-    public static createForm<T>(input: FormObject, submitCallback?: () => void): FormState<T> {
+    public static createForm<T>(input: FormObject, submitCallback?: (value: T) => void): FormState<T> {
         let initialValue = <T>{};
         Object.keys(input).map(key => {
             initialValue[key] = input[key].value;
@@ -32,7 +32,7 @@ export class MixForm {
             },
             onSubmit: (values) => {
                 if (submitCallback) {
-                    submitCallback();
+                    submitCallback(values);
                 }
             }
         });

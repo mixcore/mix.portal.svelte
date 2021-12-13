@@ -1,16 +1,23 @@
 <script lang="ts">
     import { Button, FormGroup, TextInput } from "carbon-components-svelte";
     import { MixForm } from '@mix.core/shared';
-    import { FormControl, Required } from "../validations";
+    import { Confirmation, Email, FormControl, Required } from "../validations";
+    import { createEventDispatcher } from "svelte";
+    import type { AccountModel } from "@mix.core/mix.lib";
 
-    const { form, errors, state, handleChange, handleSubmit } = MixForm.createForm({
+    const dispatch = createEventDispatcher();
+    const createAccountEvent = 'onCreateACcountSubmit';
+
+    const { form, errors, state, handleChange, handleSubmit } = MixForm.createForm<AccountModel>({
         'userName': new FormControl('', new Required()),
-        'passWord': new FormControl('', new Required())},
-        () => submitForm()
+        'passWord': new FormControl('', new Required()),
+        'confirmPassword': new FormControl('', new Required(), new Confirmation(() => $form['passWord'])),
+        'email': new FormControl('', new Required(), new Email())},
+        (value) => submitForm(value)
     );
 
-    function submitForm(): void {
-        console.log($form);
+    function submitForm(value: AccountModel): void {
+        dispatch(createAccountEvent, value);
     }
 </script>
 
@@ -41,11 +48,33 @@
     </FormGroup>
 
     <FormGroup legendText="Confirm Password">
-        <TextInput type="password"></TextInput>
+            <TextInput
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            on:change={handleChange}
+            on:blur={handleChange}
+            bind:value={$form['confirmPassword']}/>
+        {#if $errors['confirmPassword']['required']}
+            <span style="color: red">{$errors['confirmPassword']['required']}</span>
+        {/if}
+
+        {#if $errors['confirmPassword']['confirm']}
+            <span style="color: red">{$errors['confirmPassword']['confirm']}</span>
+        {/if}
     </FormGroup>
 
     <FormGroup legendText="Your Email Address">
-        <TextInput></TextInput>
+        <TextInput
+            type="text"
+            id="email"
+            name="email"
+            on:change={handleChange}
+            on:blur={handleChange}
+            bind:value={$form['email']}/>
+        {#if $errors['email']['email']}
+            <span style="color: red">{$errors['email']['email']}</span>
+        {/if}
     </FormGroup>
 
     <Button type="submit">Submit Administrator Account</Button>
