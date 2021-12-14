@@ -6,6 +6,8 @@
 
 <style lang="scss">
     .theme-card {
+        background-color: #fff;
+        padding: 15px;
         &__title {
             font-weight: bold;
             font-size: var(--cds-heading-03-font-size);

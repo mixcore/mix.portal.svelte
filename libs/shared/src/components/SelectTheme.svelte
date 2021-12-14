@@ -3,8 +3,20 @@
 </script>
 
 <div class="select-theme">
-    <div>Select a  theme for your website: </div>
+    <div class="select-theme__title">Select a  theme for your website: </div>
 
-    <ThemeCard></ThemeCard>
+    <div class="select-theme__theme-list">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <ThemeCard></ThemeCard>
+            </div>
+        </div>
+    </div>
 </div>
-<style lang="scss"></style>
+<style lang="scss">
+    .select-theme {
+        &__title {
+            margin-bottom: var(--cds-spacing-05);
+        }
+    }
+</style>

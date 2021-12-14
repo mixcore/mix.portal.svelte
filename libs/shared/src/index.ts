@@ -16,3 +16,6 @@ export { MixHttps } from './helpers/https.helper';
 
 // Validation
 export * from './validations';
+
+// Environment
+export { environment } from './environments/environment';

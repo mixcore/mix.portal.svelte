@@ -5,18 +5,22 @@
     import CreateSiteForm from './CreateSiteForm.svelte';
     import SelectTheme from "./SelectTheme.svelte";
 
-    let currentStep: number = 0;
     let initTenantData: InitTenantModel = undefined;
     let initAccountData: AccountModel = undefined;
+    
+    let currentStep: number = 0;
+    let titleLabel: string = 'Create Site Informations';
 
     function onCreateSiteSubmit(event: CustomEvent<InitTenantModel>): void {
       initTenantData = event.detail;
       currentStep += 1;
+      titleLabel = 'Create Admin Account'
     }
 
     function onCreateAccountSubmit(event: CustomEvent<AccountModel>): void {
       initAccountData = event.detail;
       currentStep += 1;
+      titleLabel = 'Choose Theme'
     }
 </script>
 
@@ -24,7 +28,7 @@
     <div class="container">
         <div class="row">
             <div class="init-form__container col-md-5">
-              <h1 class="init-form__label">Setup - Step 1</h1>
+              <h3 class="init-form__label">Setup - {titleLabel}</h3>
         
               <div class="init-form__propress">
                 <ProgressIndicator currentIndex={currentStep}>

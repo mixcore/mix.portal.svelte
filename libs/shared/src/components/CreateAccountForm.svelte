@@ -30,7 +30,7 @@
             on:blur={handleChange}
             bind:value={$form['userName']}/>
         {#if $errors['userName']['required']}
-            <span style="color: red">{$errors['userName']['required']}</span>
+            <span class="form-error">{$errors['userName']['required']}</span>
         {/if}
     </FormGroup>
 
@@ -43,7 +43,7 @@
             on:blur={handleChange}
             bind:value={$form['passWord']}/>
         {#if $errors['passWord']['required']}
-            <span style="color: red">{$errors['passWord']['required']}</span>
+            <span class="form-error">{$errors['passWord']['required']}</span>
         {/if}
     </FormGroup>
 
@@ -56,11 +56,11 @@
             on:blur={handleChange}
             bind:value={$form['confirmPassword']}/>
         {#if $errors['confirmPassword']['required']}
-            <span style="color: red">{$errors['confirmPassword']['required']}</span>
+            <span class="form-error">{$errors['confirmPassword']['required']}</span>
         {/if}
 
         {#if $errors['confirmPassword']['confirm']}
-            <span style="color: red">{$errors['confirmPassword']['confirm']}</span>
+            <span class="form-error">{$errors['confirmPassword']['confirm']}</span>
         {/if}
     </FormGroup>
 
@@ -72,8 +72,12 @@
             on:change={handleChange}
             on:blur={handleChange}
             bind:value={$form['email']}/>
+        {#if $errors['email']['required']}
+            <span class="form-error">{$errors['email']['required']}</span>
+        {/if}
+    
         {#if $errors['email']['email']}
-            <span style="color: red">{$errors['email']['email']}</span>
+            <span class="form-error">{$errors['email']['email']}</span>
         {/if}
     </FormGroup>
 

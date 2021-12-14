@@ -19,7 +19,7 @@
 
   import { onMount } from 'svelte';
   import { InitStep, MixInitService } from '@mix.core/mix.lib';
-  import { MixHttps, hideLoading } from '@mix.core/shared';
+  import { MixHttps, hideLoading, environment } from '@mix.core/shared';
 
   let isSideNavOpen = false;
   let isShowLoading = true;
@@ -45,9 +45,7 @@
 
   loadingStore.subscribe((isShow) => (isShowLoading = isShow));
   onMount(async () => {
-    let initSrv = new MixInitService();
-    initSrv.setBaseUrl('https://localhost:5010/api/v2/rest');
-
+    let initSrv = new MixInitService(environment.baseUrl);
     MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
       if (data === InitStep.Blank) {
         isShowInitForm = true;
@@ -117,4 +115,36 @@
     padding-top: 3.5rem;
     padding-left: 4rem;
   }
+
+  .form-error {
+    display: block;
+    margin-top: 5px;
+    color: var(--cds-support-error);
+    animation: fadeIn 0.3s;
+  }
+
+  @keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-moz-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-webkit-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-o-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+  }
+
+  @-ms-keyframes fadeIn {
+    0% {opacity:0;}
+    100% {opacity:1;}
+}
 </style>

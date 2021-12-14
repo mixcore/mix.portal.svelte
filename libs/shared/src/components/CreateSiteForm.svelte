@@ -79,7 +79,7 @@
       bind:value={$form.siteName}
     />
     {#if $errors.siteName}
-      <span style="color: red">{$errors.siteName}</span>
+      <span class="form-error">{$errors.siteName}</span>
     {/if}
   </FormGroup>
 
@@ -135,7 +135,7 @@
       />
 
       {#if $errors.sqliteDbConnectionString}
-        <span style="color: red">{$errors.sqliteDbConnectionString}</span>
+        <span class="form-error">{$errors.sqliteDbConnectionString}</span>
       {/if}
     </FormGroup>
   {/if}
