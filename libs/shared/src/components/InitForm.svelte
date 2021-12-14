@@ -27,7 +27,7 @@
 <div class="init-form">
     <div class="container">
         <div class="row">
-            <div class="init-form__container col-md-5">
+            <div class="init-form__container {currentStep == 2 ? 'col-12' : 'col-md-5'}">
               <h3 class="init-form__label">Setup - {titleLabel}</h3>
         
               <div class="init-form__propress">
@@ -64,7 +64,7 @@
               {/if}
             </div>
         
-            <div class="init-form__img col-md-7">
+            <div class="init-form__img">
               <img src="/images/carbon-img-concept.svg" alt="concept">
             </div>
           </div>
@@ -90,12 +90,17 @@
     }
 
     &__img {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        right: 0;
+        z-index: -1;
+
         display: flex;
-        align-items: center;
-        justify-content: center;
+        justify-content: flex-end;
 
         > img {
-            width: 80%;
+            width: 50%;
             height: auto;
             object-fit: contain;
         }
