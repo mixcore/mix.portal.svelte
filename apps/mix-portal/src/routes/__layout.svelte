@@ -1,65 +1,66 @@
 <script lang="ts">
-  import {
-    Header,
-    SideNav,
-    SideNavItems,
-    SideNavLink,
-    SkipToContent,
-  } from 'carbon-components-svelte';
-  import {
-    IMenuItem,
-    MixLogo,
-    MixSpinner,
-    loadingStore,
-    InitForm
-  } from '@mix.core/shared';
-  import Dashboard32 from 'carbon-icons-svelte/lib/Dashboard32';
-  import PageNumber32 from 'carbon-icons-svelte/lib/PageNumber32';
-  import Book32 from 'carbon-icons-svelte/lib/Book32';
+  // import {
+  //   Header,
+  //   SideNav,
+  //   SideNavItems,
+  //   SideNavLink,
+  //   SkipToContent,
+  // } from 'carbon-components-svelte';
+  // import {
+  //   IMenuItem,
+  //   MixLogo,
+  //   MixSpinner,
+  //   loadingStore,
+  //   InitForm
+  // } from '@mix.core/shared';
+  // import Dashboard32 from 'carbon-icons-svelte/lib/Dashboard32';
+  // import PageNumber32 from 'carbon-icons-svelte/lib/PageNumber32';
+  // import Book32 from 'carbon-icons-svelte/lib/Book32';
 
-  import { onMount } from 'svelte';
-  import { InitStep, MixInitService } from '@mix.core/mix.lib';
-  import { MixHttps, hideLoading, environment } from '@mix.core/shared';
+  // import { onMount } from 'svelte';
+  // import { InitStep, MixInitService } from '@mix.core/mix.lib';
+  // import { MixHttps, hideLoading, environment } from '@mix.core/shared';
 
-  let isSideNavOpen = false;
-  let isShowLoading = true;
-  let isPortalReady = false;
-  let isShowInitForm = false;
-  let sidebarItems: IMenuItem[] = [
-    {
-      label: 'Dashboard',
-      value: '/dashboard',
-      icon: Dashboard32,
-    },
-    {
-      label: 'Pages',
-      value: '/navigations',
-      icon: PageNumber32,
-    },
-    {
-      label: 'Posts',
-      value: '/posts',
-      icon: Book32,
-    },
-  ];
+  // let isSideNavOpen = false;
+  // let isShowLoading = true;
+  // let isPortalReady = false;
+  // let isShowInitForm = false;
+  // let sidebarItems: IMenuItem[] = [
+  //   {
+  //     label: 'Dashboard',
+  //     value: '/dashboard',
+  //     icon: Dashboard32,
+  //   },
+  //   {
+  //     label: 'Pages',
+  //     value: '/navigations',
+  //     icon: PageNumber32,
+  //   },
+  //   {
+  //     label: 'Posts',
+  //     value: '/posts',
+  //     icon: Book32,
+  //   },
+  // ];
 
-  loadingStore.subscribe((isShow) => (isShowLoading = isShow));
-  onMount(async () => {
-    let initSrv = new MixInitService(environment.baseUrl);
-    MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
-      if (data === InitStep.Blank) {
-        isShowInitForm = true;
-        isPortalReady = false;
-      } else {
-        isPortalReady = true;
-        isShowInitForm = false;
-      }
+  // loadingStore.subscribe((isShow) => (isShowLoading = isShow));
+  // onMount(async () => {
+  //   let initSrv = new MixInitService(environment.baseUrl);
+  //   MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
+  //     if (data === InitStep.Blank) {
+  //       isShowInitForm = true;
+  //       isPortalReady = false;
+  //     } else {
+  //       isPortalReady = true;
+  //       isShowInitForm = false;
+  //     }
 
-      hideLoading();
-    });
-  });
+  //     hideLoading();
+  //   });
+  // });
 </script>
-
+<slot />
+<!-- 
 {#if isPortalReady}
 <Header bind:isSideNavOpen>
   <div slot="skip-to-content">
@@ -147,4 +148,4 @@
     0% {opacity:0;}
     100% {opacity:1;}
 }
-</style>
+</style> -->
