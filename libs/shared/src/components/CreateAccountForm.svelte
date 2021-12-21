@@ -4,6 +4,7 @@
     import { Confirmation, Email, FormControl, Required } from "../validations";
     import { createEventDispatcher } from "svelte";
     import type { AccountModel } from "@mix.core/mix.lib";
+    import ArrowRight16 from "carbon-icons-svelte/lib/ArrowRight16";
 
     const dispatch = createEventDispatcher();
     const createAccountEvent = 'onCreateACcountSubmit';
@@ -81,7 +82,9 @@
         {/if}
     </FormGroup>
 
-    <Button type="submit">Submit Administrator Account</Button>
+    <Button class="full-width"
+            type="submit"
+            icon={ArrowRight16}> Continue </Button>
 </form>
 
 <style lang="scss"></style>

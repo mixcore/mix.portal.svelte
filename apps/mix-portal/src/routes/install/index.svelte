@@ -1,20 +1,15 @@
-<script context="module">
-  export const ssr = false;
-</script>
-
 <script lang="ts">
-  import { onMount } from 'svelte';
-  import { InitStep, MixInitService } from '@mix.core/mix.lib';
-  import { MixHttps, hideLoading } from '@mix.core/shared';
+import { goto } from '$app/navigation';
 
-  onMount(async () => {
-    let initSrv = new MixInitService();
-    initSrv.setBaseUrl('https://localhost:5010/api/v2/rest');
+  import type { ThemeModel } from '@mix.core/mix.lib';
+  import { InitForm } from '@mix.core/shared';
 
-    MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
-      if (data === InitStep.Blank) {
-        hideLoading();
-      }
-    });
-  });
+  function createTenant(event: CustomEvent<ThemeModel>): void {
+    goto('/account/sign-in');
+  }
 </script>
+
+<InitForm on:onSubmitInitTenantEvt={createTenant} />
+
+<style>
+</style>

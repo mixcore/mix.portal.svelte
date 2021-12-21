@@ -18,6 +18,7 @@
   import { environment } from '../environments/environment';
   import type { ISelectOption } from '../models/select-option.model';
   import { createEventDispatcher } from 'svelte';
+  import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
 
   const dispatch = createEventDispatcher();
   const createSiteSubmitEvent = 'onCreateSiteSubmit';
@@ -140,7 +141,9 @@
     </FormGroup>
   {/if}
 
-  <Button type="submit">Submit Site Information</Button>
+  <Button class="full-width"
+          type="submit"
+          icon={ArrowRight16}> Continue </Button>
 </form>
 
 <style lang="scss"></style>

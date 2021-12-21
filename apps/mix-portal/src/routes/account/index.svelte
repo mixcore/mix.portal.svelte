@@ -1,7 +1,4 @@
 <script lang="ts">
 </script>
 
-<slot />
-
-<style>
-</style>
+<style></style>

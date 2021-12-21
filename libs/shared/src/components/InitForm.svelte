@@ -1,9 +1,13 @@
 <script lang="ts">
-    import type { AccountModel, InitTenantModel } from "@mix.core/mix.lib";
+    import type { AccountModel, InitTenantModel, ThemeModel } from "@mix.core/mix.lib";
     import { ProgressIndicator, ProgressStep } from "carbon-components-svelte";
+    import { createEventDispatcher } from "svelte";
     import CreateAccountForm from "./CreateAccountForm.svelte";
     import CreateSiteForm from './CreateSiteForm.svelte';
     import SelectTheme from "./SelectTheme.svelte";
+
+    const dispath = createEventDispatcher();
+    const onSubmitInitTenantEvt: string = 'onSubmitInitTenantEvt';
 
     let initTenantData: InitTenantModel = undefined;
     let initAccountData: AccountModel = undefined;
@@ -21,6 +25,10 @@
       initAccountData = event.detail;
       currentStep += 1;
       titleLabel = 'Choose Theme'
+    }
+
+    function onThemeSubmit(event: CustomEvent<ThemeModel>): void {
+      dispath(onSubmitInitTenantEvt, event.detail);
     }
 </script>
 
@@ -59,13 +67,17 @@
 
               {#if currentStep === 2}
                 <div class="init-form__form">
-                  <SelectTheme></SelectTheme>
+                  <SelectTheme on:onThemeSubmit={onThemeSubmit}></SelectTheme>
                 </div>
               {/if}
             </div>
         
             <div class="init-form__img">
-              <img src="/images/carbon-img-concept.svg" alt="concept">
+              {#if currentStep === 2}
+                <img src="/images/mix-concept-blank.svg" alt="concept">
+              {:else}
+                <img src="/images/mix-concept.svg" alt="concept">
+              {/if}
             </div>
           </div>
     </div>
@@ -76,6 +88,7 @@
     position: fixed;
     width: 100vw;
     height: 100vh;
+    overflow: auto;
 
     &__container {
         padding-top: 30px;

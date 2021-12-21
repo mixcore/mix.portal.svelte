@@ -3,19 +3,4 @@
 </script>
 
 <script lang="ts">
-  // import { onMount } from 'svelte';
-  // import { InitStep, MixInitService } from '@mix.core/mix.lib';
-  // import { MixHttps, hideLoading } from '@mix.core/shared';
-
-  // onMount(async () => {
-  //   let initSrv = new MixInitService();
-  //   initSrv.setBaseUrl('https://localhost:5010/api/v2/rest');
-
-  //   MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
-  //     if (data === InitStep.Blank) {
-  //       hideLoading();
-  //     }
-  //   });
-  // });
 </script>
-<a href="/install">Install Mixcore CMS</a>

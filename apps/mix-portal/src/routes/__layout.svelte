@@ -1,91 +1,37 @@
 <script lang="ts">
-  // import {
-  //   Header,
-  //   SideNav,
-  //   SideNavItems,
-  //   SideNavLink,
-  //   SkipToContent,
-  // } from 'carbon-components-svelte';
-  // import {
-  //   IMenuItem,
-  //   MixLogo,
-  //   MixSpinner,
-  //   loadingStore,
-  //   InitForm
-  // } from '@mix.core/shared';
-  // import Dashboard32 from 'carbon-icons-svelte/lib/Dashboard32';
-  // import PageNumber32 from 'carbon-icons-svelte/lib/PageNumber32';
-  // import Book32 from 'carbon-icons-svelte/lib/Book32';
+  import { InitStep, MixInitService } from '@mix.core/mix.lib';
+  import {
+    environment,
+    hideLoading,
+    loadingStore,
+    MixHttps,
+    MixSpinner,
+  } from '@mix.core/shared';
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
 
-  // import { onMount } from 'svelte';
-  // import { InitStep, MixInitService } from '@mix.core/mix.lib';
-  // import { MixHttps, hideLoading, environment } from '@mix.core/shared';
+  let isShowLoading: boolean = true;
+  let initSrv = new MixInitService(environment.baseUrl);
+  loadingStore.subscribe((isShow) => (isShowLoading = isShow));
 
-  // let isSideNavOpen = false;
-  // let isShowLoading = true;
-  // let isPortalReady = false;
-  // let isShowInitForm = false;
-  // let sidebarItems: IMenuItem[] = [
-  //   {
-  //     label: 'Dashboard',
-  //     value: '/dashboard',
-  //     icon: Dashboard32,
-  //   },
-  //   {
-  //     label: 'Pages',
-  //     value: '/navigations',
-  //     icon: PageNumber32,
-  //   },
-  //   {
-  //     label: 'Posts',
-  //     value: '/posts',
-  //     icon: Book32,
-  //   },
-  // ];
-
-  // loadingStore.subscribe((isShow) => (isShowLoading = isShow));
-  // onMount(async () => {
-  //   let initSrv = new MixInitService(environment.baseUrl);
-  //   MixHttps.get<InitStep>(initSrv.getInitStatusApi).then((data) => {
-  //     if (data === InitStep.Blank) {
-  //       isShowInitForm = true;
-  //       isPortalReady = false;
-  //     } else {
-  //       isPortalReady = true;
-  //       isShowInitForm = false;
-  //     }
-
-  //     hideLoading();
-  //   });
-  // });
+  onMount(async () => {
+    MixHttps.get<InitStep>(initSrv.getInitStatusApi)
+      .then((data) => {
+        switch (data) {
+          case InitStep.Blank:
+            goto('/install');
+            break;
+          default:
+            goto('/portal');
+            break;
+        }
+      })
+      .catch(() => goto('/error'))
+      .finally(() => hideLoading());
+  });
 </script>
+
 <slot />
-<!-- 
-{#if isPortalReady}
-<Header bind:isSideNavOpen>
-  <div slot="skip-to-content">
-    <SkipToContent />
-  </div>
-
-  <MixLogo />
-
-  <SideNav bind:isOpen={isSideNavOpen} rail>
-    <SideNavItems>
-      {#each sidebarItems as item}
-        <SideNavLink icon={item.icon} text={item.label} href={item.value} />
-      {/each}
-    </SideNavItems>
-  </SideNav>
-</Header>
-
-<div class="main-workspace">
-  <slot />
-</div>
-{/if}
-
-{#if isShowInitForm}
-  <InitForm></InitForm>
-{/if}
 
 {#if isShowLoading}
   <MixSpinner />
@@ -106,8 +52,12 @@
     margin-bottom: 10px;
   }
 
-  .bx--fieldset  {
-     margin-bottom: 1rem !important;
+  .bx--fieldset {
+    margin-bottom: 1rem !important;
+  }
+
+  .bx--btn {
+    border-radius: 8px;
   }
 
   .main-workspace {
@@ -124,28 +74,53 @@
     animation: fadeIn 0.3s;
   }
 
+  .full-width {
+    width: 100% !important;
+    max-width: unset !important;
+  }
+
   @keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   @-moz-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   @-webkit-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   @-o-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 
   @-ms-keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
-}
-</style> -->
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+</style>

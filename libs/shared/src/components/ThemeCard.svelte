@@ -3,6 +3,11 @@
     import { Button } from "carbon-components-svelte";
     import { createEventDispatcher } from "svelte";
 
+    // Icon import
+    import Add16 from "carbon-icons-svelte/lib/Add16";
+    import Checkmark16 from "carbon-icons-svelte/lib/Checkmark16";
+
+    // Component props
     export let theme: ThemeModel = undefined;
     export let selected: boolean = false;
 
@@ -17,9 +22,14 @@
 <div class="theme-card">
     <div class="theme-card__title"> { theme.title } </div>
     <div class="theme-card__description"> { theme.description } </div>
-    <div class="theme-card__thumbnail"> { theme.thumbnailImg } </div>
+    <div class="theme-card__thumbnail"> 
+        <img src="{theme.thumbnailImg}" alt="theme-thumbnail">
+    </div>
 
-    <Button> Select </Button>
+    <Button kind="tertiary"
+            disabled={selected}
+            icon={ selected ? Checkmark16 : Add16}
+            on:click={selectTheme}> Select </Button>
 </div>
 
 <style lang="scss">
@@ -39,8 +49,13 @@
             margin-bottom: var(--cds-spacing-05);
         }
 
-        &__thumnail {
+        &__thumbnail {
             margin-bottom: var(--cds-spacing-05);
+
+            > img {
+                width: 100%;
+                max-height: 350px;
+            }
         }
     }
 </style>
