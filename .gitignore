@@ -38,4 +38,8 @@ testem.log
 .DS_Store
 Thumbs.db
 
-/apps/mix-portal/node_modules/.vite
+/apps/mix-portal/node_modules
+/apps/mix-portal/.svelte-kit
+
+/apps/mix-site-management/node_modules
+/apps/mix-site-management/.svelte-kit
