@@ -1,83 +1,119 @@
 <script lang="ts">
-    import { goto } from "$app/navigation";
-    import { Divider, Email, FormControl, MixForm, Required } from "@mix.core/shared";
-    import { Button, Checkbox, FormGroup, TextInput } from "carbon-components-svelte";
-    import ArrowRight16 from "carbon-icons-svelte/lib/ArrowRight16";
-
-    const { form, errors, state, handleChange, handleSubmit } = MixForm.createForm({
-        'passWord': new FormControl('', new Required()),
-        'email': new FormControl('', new Required(), new Email())},
-        (value) => submitForm(value)
+  import { onMount } from 'svelte';
+  import { goto } from '$app/navigation';
+  import {
+    environment,
+    Divider,
+    FormControl,
+    MixForm,
+    Required,
+    MixHttps,
+  } from '@mix.core/shared';
+  import { CryptoService, MixSharedService } from '@mix.core/mix.lib';
+  import {
+    Button,
+    Checkbox,
+    FormGroup,
+    TextInput,
+  } from 'carbon-components-svelte';
+  import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
+  let sharedSrv = new MixSharedService(environment.baseUrl);
+  var key;
+  onMount(async () => {
+    MixHttps.get<any>(sharedSrv.getGlobalSettings).then((data) => {
+      key = data.apiEncryptKey;
+    });
+  });
+  const { form, errors, state, handleChange, handleSubmit } =
+    MixForm.createForm(
+      {
+        password: new FormControl('', new Required()),
+        username: new FormControl('', new Required()),
+      },
+      (value) => submitForm(value)
     );
 
-    function submitForm(value): void {
-        console.log(value['email'] , value['passWord']);
-        goto('/cms/dashboard');
-    }
+  function submitForm(value): void {
+    console.log(value['username'], value['password']);
+    let loginData = {
+      username: value['username'],
+      password: value['password'],
+      rememberMe: true,
+    };
+    let text = JSON.stringify(loginData);
+
+    var cryptoSrv = new CryptoService();
+    let encrypted = cryptoSrv.encryptAES(text, key);
+    MixHttps.post<any>(sharedSrv.signIn, {
+      message: encrypted,
+    });
+    goto('/cms/dashboard');
+  }
 </script>
 
-<form on:submit="{handleSubmit}"
-      class="form-sign-in w-100">
+<form on:submit={handleSubmit} class="form-sign-in w-100">
+  <h3 class="form-sign-in__title">Log-in</h3>
 
-    <h3 class="form-sign-in__title">Log-in</h3>
+  <span class="form-sign-in__description"
+    >Don't have an account yet? <a href="/sign-up">Create an account now</a
+    ></span
+  >
 
-    <span class="form-sign-in__description">Don't have an account yet? <a href="/sign-up">Create an account now</a></span>
+  <Divider />
 
-    <Divider></Divider>
+  <FormGroup legendText="Username">
+    <TextInput
+      id="username"
+      name="username"
+      on:change={handleChange}
+      on:blur={handleChange}
+      bind:value={$form['username']}
+    />
+    {#if $errors['username']['required']}
+      <span class="form-error">{$errors['username']['required']}</span>
+    {/if}
 
-    <FormGroup legendText="Email">
-        <TextInput
-            id="email"
-            name="email"
-            on:change={handleChange}
-            on:blur={handleChange}
-            bind:value={$form['email']}/>
-        {#if $errors['email']['required']}
-            <span class="form-error">{$errors['email']['required']}</span>
-        {/if}
+    {#if $errors['username']['username']}
+      <span class="form-error">{$errors['username']['username']}</span>
+    {/if}
+  </FormGroup>
 
-        {#if $errors['email']['email']}
-            <span class="form-error">{$errors['email']['email']}</span>
-        {/if}
-    </FormGroup>
+  <FormGroup legendText="Password">
+    <TextInput
+      type="password"
+      id="password"
+      name="password"
+      on:change={handleChange}
+      on:blur={handleChange}
+      bind:value={$form['password']}
+    />
+    {#if $errors['password']['required']}
+      <span class="form-error">{$errors['password']['required']}</span>
+    {/if}
+  </FormGroup>
 
-    <FormGroup legendText="Password">
-        <TextInput
-            type="password"
-            id="passWord"
-            name="passWord"
-            on:change={handleChange}
-            on:blur={handleChange}
-            bind:value={$form['passWord']}/>
-        {#if $errors['passWord']['required']}
-            <span class="form-error">{$errors['passWord']['required']}</span>
-        {/if}
-    </FormGroup>
-    
-    <FormGroup>
-        <div class="d-flex justify-content-between align-items-center">
-            <Checkbox labelText="Remember Me" />
+  <FormGroup>
+    <div class="d-flex justify-content-between align-items-center">
+      <Checkbox labelText="Remember Me" />
 
-            <a href="/forgot-password"> Forgot password ? </a>
-        </div>
-    </FormGroup>
+      <a href="/forgot-password"> Forgot password ? </a>
+    </div>
+  </FormGroup>
 
-    <Button class="full-width"
-            type="submit"
-            icon={ArrowRight16}> Continue </Button>
+  <Button class="full-width" type="submit" icon={ArrowRight16}>Continue</Button>
 
-    <Divider></Divider>
+  <Divider />
 </form>
 
 <style lang="scss">
-    .form-sign-in {
-        &__title {
-            margin-bottom: var(--cds-spacing-03);
-        }
-
-        &__description {
-            display: block;
-            margin-bottom: var(--cds-spacing-07);
-        }
+  .form-sign-in {
+    &__title {
+      margin-bottom: var(--cds-spacing-03);
     }
+
+    &__description {
+      display: block;
+      margin-bottom: var(--cds-spacing-07);
+    }
+  }
 </style>
