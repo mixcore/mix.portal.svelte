@@ -22,7 +22,7 @@
             goto('/install');
             break;
           default:
-            goto('/portal');
+            goto('/cms');
             break;
         }
       })
