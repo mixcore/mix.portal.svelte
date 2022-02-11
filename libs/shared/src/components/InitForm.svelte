@@ -11,6 +11,7 @@
 
     let initTenantData: InitTenantModel = undefined;
     let initAccountData: AccountModel = undefined;
+    let initThemeData: ThemeModel = undefined;
     
     let currentStep: number = 0;
     let titleLabel: string = 'Create Site Informations';
@@ -28,7 +29,13 @@
     }
 
     function onThemeSubmit(event: CustomEvent<ThemeModel>): void {
-      dispath(onSubmitInitTenantEvt, event.detail);
+      initThemeData = event.detail;
+      
+      dispath(onSubmitInitTenantEvt, {
+        tenantData: initTenantData,
+        accountData: initAccountData,
+        themeData: initThemeData
+      });
     }
 </script>
 

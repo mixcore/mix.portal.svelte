@@ -1,6 +1,5 @@
 <script lang="ts">
   import { onMount } from 'svelte';
-  import { goto } from '$app/navigation';
   import {
     environment,
     Divider,
@@ -17,6 +16,7 @@
     TextInput,
   } from 'carbon-components-svelte';
   import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
+  
   let sharedSrv = new MixSharedService(environment.baseUrl);
   var key;
   onMount(async () => {
@@ -24,6 +24,7 @@
       key = data.apiEncryptKey;
     });
   });
+
   const { form, errors, state, handleChange, handleSubmit } =
     MixForm.createForm(
       {
@@ -34,7 +35,6 @@
     );
 
   function submitForm(value): void {
-    console.log(value['username'], value['password']);
     let loginData = {
       username: value['username'],
       password: value['password'],
@@ -44,10 +44,9 @@
 
     var cryptoSrv = new CryptoService();
     let encrypted = cryptoSrv.encryptAES(text, key);
-    MixHttps.post<any>(sharedSrv.signIn, {
+    MixHttps.post<any>(sharedSrv.signInEndpoint, {
       message: encrypted,
     });
-    goto('/cms/dashboard');
   }
 </script>
 
