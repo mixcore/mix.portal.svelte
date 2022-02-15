@@ -7,6 +7,8 @@
     MixForm,
     Required,
     MixHttps,
+showLoading,
+hideLoading,
   } from '@mix.core/shared';
   import { CryptoService, MixSharedService } from '@mix.core/mix.lib';
   import {
@@ -16,23 +18,13 @@
     TextInput,
   } from 'carbon-components-svelte';
   import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
-  
-  let sharedSrv = new MixSharedService(environment.baseUrl);
-  var key;
-  onMount(async () => {
-    MixHttps.get<any>(sharedSrv.getGlobalSettings).then((data) => {
-      key = data.apiEncryptKey;
-    });
-  });
 
   const { form, errors, state, handleChange, handleSubmit } =
-    MixForm.createForm(
-      {
+    MixForm.createForm({
         password: new FormControl('', new Required()),
-        username: new FormControl('', new Required()),
-      },
+        username: new FormControl('', new Required())},
       (value) => submitForm(value)
-    );
+  );
 
   function submitForm(value): void {
     let loginData = {
@@ -40,13 +32,20 @@
       password: value['password'],
       rememberMe: true,
     };
-    let text = JSON.stringify(loginData);
 
-    var cryptoSrv = new CryptoService();
-    let encrypted = cryptoSrv.encryptAES(text, key);
-    MixHttps.post<any>(sharedSrv.signInEndpoint, {
-      message: encrypted,
-    });
+    let sharedSrv = new MixSharedService(environment.baseUrl);
+    let cryptoSrv = new CryptoService();
+
+    Promise.resolve()
+           .then(() => showLoading())
+           .then(() =>  MixHttps.get<string>(sharedSrv.getGlobalSettings))
+           .then((key) => {
+              let encrypted = cryptoSrv.encryptAES(JSON.stringify(loginData), key);
+              return MixHttps.post<any>(sharedSrv.signInEndpoint, { message: encrypted,})})
+           .then((res) => {
+              console.log(res);
+           })
+           .finally(() => hideLoading())
   }
 </script>
 

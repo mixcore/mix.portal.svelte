@@ -25,11 +25,8 @@ import { goto } from '$app/navigation';
     Promise.resolve()
            .then(() => showLoading())
            .then(() => MixHttps.post(initSrv.initFullTenantEndpoint, initFullTenantData))
-           .then(() => {
-              console.log('successfull init mix tenant');
-              goto('/account/sign-in')
-           })
-           .catch(err => {console.error(err)})
+           .then(() => goto('/account/sign-in'))
+           .catch((err) => {console.error(err)})
            .finally(() => hideLoading())
   }
 </script>

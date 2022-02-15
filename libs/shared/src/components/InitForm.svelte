@@ -79,7 +79,7 @@
               {/if}
             </div>
         
-            <div class="init-form__img">
+            <div class="init-form__img {currentStep == 2 ? '--low-contrast' : 'col-md-6'}">
               {#if currentStep === 2}
                 <img src="/images/mix-concept-blank.svg" alt="concept">
               {:else}
@@ -110,18 +110,18 @@
     }
 
     &__img {
-        position: absolute;
-        width: 100%;
-        top: 0;
-        right: 0;
         z-index: -1;
-
         display: flex;
-        justify-content: flex-end;
+        justify-content: center;
+
+        &.--low-contrast {
+          position: absolute;
+          opacity: 0.3;
+        }
 
         > img {
-            width: 50%;
-            height: auto;
+            width: 80%;
+            height: 100%;
             object-fit: contain;
         }
     }

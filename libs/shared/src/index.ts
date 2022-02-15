@@ -12,6 +12,7 @@ export type { ISelectOption } from './models/select-option.model';
 
 // Store
 export { loadingStore, showLoading, hideLoading } from './stores/loading/loading.store';
+export { toastStore, showGlobalToastNotification, removeNotification } from './stores/toast/toast.store';
 
 // Https 
 export { MixHttps } from './helpers/https.helper';

@@ -19,6 +19,7 @@
   import type { ISelectOption } from '../models/select-option.model';
   import { createEventDispatcher } from 'svelte';
   import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
+  import { showGlobalToastNotification } from '../stores/toast/toast.store';
 
   const dispatch = createEventDispatcher();
   const createSiteSubmitEvent = 'onCreateSiteSubmit';
@@ -49,6 +50,7 @@
       return errs;
     },
     onSubmit: (values) => {
+      showGlobalToastNotification({title: 'Successfully', subTitle: 'Complete create site information', kind: 'success'})
       dispatch(createSiteSubmitEvent, <InitTenantModel>{
         siteName: values.siteName,
         sqliteDbConnectionString: values.sqliteDbConnectionString,

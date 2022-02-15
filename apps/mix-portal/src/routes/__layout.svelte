@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { fade, fly } from 'svelte/transition';
+  import { flip } from 'svelte/animate'
   import { InitStep, MixInitService } from '@mix.core/mix.lib';
   import {
     environment,
@@ -6,13 +8,19 @@
     loadingStore,
     MixHttps,
     MixSpinner,
+    toastStore,
+    removeNotification
   } from '@mix.core/shared';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
+  import { ToastNotification } from "carbon-components-svelte";
+  import type { IToastOption } from 'libs/shared/src/stores/toast/toast.store';
 
   let isShowLoading: boolean = true;
+  let toasts: IToastOption[] = [];
   let initSrv = new MixInitService(environment.baseUrl);
   loadingStore.subscribe((isShow) => (isShowLoading = isShow));
+  toastStore.subscribe((t) => toasts = t)
 
   onMount(async () => {
     MixHttps.get<InitStep>(initSrv.getInitStatusApi)
@@ -37,11 +45,33 @@
   <MixSpinner />
 {/if}
 
+<div class="mix-toast-container">
+  {#each toasts as toast}
+    <div in:fly>
+        <ToastNotification lowContrast
+                           title="{toast.title}" 
+                           subtitle="{toast.subTitle}"
+                           kind="{toast.kind}"
+                           timeout="{toast.timeOut}"
+                           caption={new Date().toLocaleString()}
+                           on:close={() => removeNotification(toast.id)} />
+    </div>
+  {/each}
+</div>
+
+
 <style global>
   @import 'carbon-components-svelte/css/all.css';
 
   body {
     margin: 0 !important;
+  }
+
+  .mix-toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
   }
 
   .bx--header__name {

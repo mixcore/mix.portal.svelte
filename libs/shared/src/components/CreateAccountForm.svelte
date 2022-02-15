@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Button, FormGroup, TextInput } from "carbon-components-svelte";
-    import { MixForm } from '@mix.core/shared';
-    import { Confirmation, Email, FormControl, Required } from "../validations";
+    import { showGlobalToastNotification } from '../stores/toast/toast.store';
+    import { Confirmation, Email, FormControl, MixForm, Required } from "../validations";
     import { createEventDispatcher } from "svelte";
     import type { AccountModel } from "@mix.core/mix.lib";
     import ArrowRight16 from "carbon-icons-svelte/lib/ArrowRight16";
@@ -18,6 +18,7 @@
     );
 
     function submitForm(value: AccountModel): void {
+        showGlobalToastNotification({title: 'Successfully', subTitle: 'Complete create account information', kind: 'success'})
         dispatch(createAccountEvent, value);
     }
 </script>
