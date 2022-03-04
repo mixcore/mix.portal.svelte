@@ -77,7 +77,7 @@ hideLoading,
       <span class="form-error">{$errors['username']['username']}</span>
     {/if}
   </FormGroup>
-
+  
   <FormGroup legendText="Password">
     <TextInput
       type="password"
