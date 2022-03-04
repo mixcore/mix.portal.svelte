@@ -23,7 +23,7 @@
   toastStore.subscribe((t) => toasts = t)
 
   onMount(async () => {
-    MixHttps.get<InitStep>(initSrv.getInitStatusApi)
+    MixHttps.get<InitStep>(initSrv.getInitStatusEndpoint)
       .then((data) => {
         switch (data) {
           case InitStep.Blank:
