@@ -28,9 +28,11 @@ hideLoading,
 
   function submitForm(value): void {
     let loginData = {
-      username: value['username'],
-      password: value['password'],
-      rememberMe: true,
+      UserName: value['username'],
+      Password: value['password'],
+      RememberMe: true,
+      Email: '',
+      ReturnUrl: ''
     };
 
     let sharedSrv = new MixSharedService(environment.baseUrl);
@@ -41,7 +43,7 @@ hideLoading,
            .then(() =>  MixHttps.get<string>(sharedSrv.getGlobalSettings))
            .then((key) => {
               let encrypted = cryptoSrv.encryptAES(JSON.stringify(loginData), key['apiEncryptKey']);
-              return MixHttps.post<any>(sharedSrv.signInEndpoint, { message: encrypted,})})
+              return MixHttps.post<string>(sharedSrv.signInEndpoint, { message: encrypted,})})
            .then((res) => {
               console.log(res);
            })
