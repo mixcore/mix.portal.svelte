@@ -40,7 +40,7 @@ hideLoading,
            .then(() => showLoading())
            .then(() =>  MixHttps.get<string>(sharedSrv.getGlobalSettings))
            .then((key) => {
-              let encrypted = cryptoSrv.encryptAES(JSON.stringify(loginData), key);
+              let encrypted = cryptoSrv.encryptAES(JSON.stringify(loginData), key['apiEncryptKey']);
               return MixHttps.post<any>(sharedSrv.signInEndpoint, { message: encrypted,})})
            .then((res) => {
               console.log(res);
