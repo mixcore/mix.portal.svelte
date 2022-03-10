@@ -1,15 +1,14 @@
 <script lang="ts">
-  import { fade, fly } from 'svelte/transition';
-  import { flip } from 'svelte/animate'
+  import { fly } from 'svelte/transition';
   import { InitStep, MixInitService } from '@mix.core/mix.lib';
   import {
     environment,
     hideLoading,
     loadingStore,
-    MixHttps,
     MixSpinner,
     toastStore,
-    removeNotification
+    removeNotification,
+    MixApi
   } from '@mix.core/shared';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
@@ -23,7 +22,7 @@
   toastStore.subscribe((t) => toasts = t)
 
   onMount(async () => {
-    MixHttps.get<InitStep>(initSrv.getInitStatusEndpoint)
+    MixApi.get<InitStep>(initSrv.getInitStatusEndpoint, true)
       .then((data) => {
         switch (data) {
           case InitStep.Blank:

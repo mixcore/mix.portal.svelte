@@ -8,7 +8,6 @@
     Button,
   } from 'carbon-components-svelte';
   import { createForm } from 'svelte-forms-lib';
-  import { MixHttps } from '@mix.core/shared';
   import {
     MixSharedService,
     Culture,
@@ -20,6 +19,7 @@
   import { createEventDispatcher } from 'svelte';
   import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
   import { showGlobalToastNotification } from '../stores/toast/toast.store';
+  import { MixApi } from '../helpers/https.helper';
 
   const dispatch = createEventDispatcher();
   const createSiteSubmitEvent = 'onCreateSiteSubmit';
@@ -63,7 +63,7 @@
   });
 
   const sharedService = new MixSharedService(environment.baseUrl);
-  MixHttps.get(sharedService.getCulturesApi).then(
+  MixApi.get(sharedService.getCulturesApi).then(
     (resp) => {
       (availableCutures = resp['items']),
         ($form.culture = availableCutures[0].specificulture);

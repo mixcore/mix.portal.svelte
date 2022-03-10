@@ -15,10 +15,14 @@ export { loadingStore, showLoading, hideLoading } from './stores/loading/loading
 export { toastStore, showGlobalToastNotification, removeNotification } from './stores/toast/toast.store';
 
 // Https 
-export { MixHttps } from './helpers/https.helper';
+export { MixHttps, MixApi } from './helpers/https.helper';
+export type { IAuthorizationData } from './helpers/https.helper';
 
 // Validation
 export * from './validations';
 
 // Environment
 export { environment } from './environments/environment';
+
+// Service
+export { authService } from './services/auth.service';

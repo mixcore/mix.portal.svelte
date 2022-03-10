@@ -1,16 +1,16 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import {
     environment,
     Divider,
     FormControl,
     MixForm,
     Required,
-    MixHttps,
-showLoading,
-hideLoading,
+    showLoading,
+    hideLoading,
+    MixApi,
+    authService,
   } from '@mix.core/shared';
-  import { CryptoService, MixSharedService } from '@mix.core/mix.lib';
+  import { MixSharedService } from '@mix.core/mix.lib';
   import {
     Button,
     Checkbox,
@@ -27,6 +27,7 @@ hideLoading,
   );
 
   function submitForm(value): void {
+    let sharedSrv = new MixSharedService(environment.baseUrl);
     let loginData = {
       UserName: value['username'],
       Password: value['password'],
@@ -35,18 +36,13 @@ hideLoading,
       ReturnUrl: ''
     };
 
-    let sharedSrv = new MixSharedService(environment.baseUrl);
-    let cryptoSrv = new CryptoService();
-
     Promise.resolve()
            .then(() => showLoading())
-           .then(() =>  MixHttps.get<string>(sharedSrv.getGlobalSettings))
-           .then((key) => {
-              let encrypted = cryptoSrv.encryptAES(JSON.stringify(loginData), key['apiEncryptKey']);
-              return MixHttps.post<string>(sharedSrv.signInEndpoint, { message: encrypted,})})
-           .then((res) => {
-              console.log(res);
-           })
+           .then(() =>  MixApi.get<string>(sharedSrv.getGlobalSettings))
+           .then((key) => authService.login(loginData, key))
+           .then((res) => MixApi.updateHeaderAuthData(res))
+           .then(() => authService.getUserConfigSetting())
+           .then((res) => {console.log(res.globalSettings)})
            .finally(() => hideLoading())
   }
 </script>
@@ -55,9 +51,8 @@ hideLoading,
   <h3 class="form-sign-in__title">Log-in</h3>
 
   <span class="form-sign-in__description"
-    >Don't have an account yet? <a href="/sign-up">Create an account now</a
-    ></span
-  >
+    >Don't have an account yet? <a href="/sign-up">Create an account now</a>
+  </span>
 
   <Divider />
 
@@ -85,8 +80,7 @@ hideLoading,
       name="password"
       on:change={handleChange}
       on:blur={handleChange}
-      bind:value={$form['password']}
-    />
+      bind:value={$form['password']}/>
     {#if $errors['password']['required']}
       <span class="form-error">{$errors['password']['required']}</span>
     {/if}

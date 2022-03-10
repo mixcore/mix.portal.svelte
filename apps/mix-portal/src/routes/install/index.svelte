@@ -7,7 +7,7 @@ import { goto } from '$app/navigation';
     MixInitService,
     ThemeModel,
   } from '@mix.core/mix.lib';
-  import { environment, InitForm, MixHttps, showLoading, hideLoading } from '@mix.core/shared';
+  import { environment, InitForm, showLoading, hideLoading, MixApi } from '@mix.core/shared';
 
   function createTenant(
     event: CustomEvent<{
@@ -24,7 +24,7 @@ import { goto } from '$app/navigation';
 
     Promise.resolve()
            .then(() => showLoading())
-           .then(() => MixHttps.post(initSrv.initFullTenantEndpoint, initFullTenantData))
+           .then(() => MixApi.post(initSrv.initFullTenantEndpoint, initFullTenantData))
            .then(() => goto('/account/sign-in'))
            .catch((err) => {console.error(err)})
            .finally(() => hideLoading())
