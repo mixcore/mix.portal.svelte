@@ -37,11 +37,11 @@ export class MixHttps {
 
   public processHeader(skipAuthorize: boolean): HeadersInit {
     let header = { "Content-Type": "application/json" }
-    if (!skipAuthorize) {
+    if (skipAuthorize === false) {
       let authData = this.getAuthData();
-      header['Authorization'] = `Bearer ${authData.access_token}`
+      header['Authorization'] = `Bearer ${authData.accessToken}`
     }
-    
+
     return header;
   }
 

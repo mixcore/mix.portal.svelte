@@ -85,15 +85,16 @@
     margin-bottom: 1rem !important;
   }
 
-  .bx--btn {
-    border-radius: 8px;
-  }
-
   .main-workspace {
     width: calc(100vw - 3rem);
     height: calc(100vh - 3rem);
     padding-top: 3.5rem;
     padding-left: 4rem;
+  }
+
+  .workspace-header {
+    margin-top: 1rem;
+    margin-bottom: 2rem;
   }
 
   .form-error {

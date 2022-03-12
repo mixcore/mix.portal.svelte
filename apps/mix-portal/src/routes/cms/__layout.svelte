@@ -21,6 +21,8 @@
   import PageNumber32 from 'carbon-icons-svelte/lib/PageNumber32';
   import Book32 from 'carbon-icons-svelte/lib/Book32';
   import UserAvatarFilledAlt20 from "carbon-icons-svelte/lib/UserAvatarFilledAlt20";
+  import ModelBuilder20 from "carbon-icons-svelte/lib/ModelBuilder20";
+  
   import { goto } from '$app/navigation';
 
   let isOpenLogoutConfirmModal = false;
@@ -29,18 +31,23 @@
   let sidebarItems: IMenuItem[] = [
     {
       label: 'Dashboard',
-      value: '/dashboard',
+      value: '/cms',
       icon: Dashboard32,
     },
     {
-      label: 'Pages',
-      value: '/navigations',
+      label: 'Posts',
+      value: '/cms/posts',
       icon: PageNumber32,
     },
     {
-      label: 'Posts',
-      value: '/posts',
+      label: 'Pages',
+      value: '/cms/pages',
       icon: Book32,
+    },
+    {
+      label: 'Modules',
+      value: '/cms/modules',
+      icon: ModelBuilder20,
     },
   ];
 

@@ -24,8 +24,8 @@
 
   const { form, errors, state, handleChange, handleSubmit } =
     MixForm.createForm({
-        password: new FormControl('', new Required()),
-        username: new FormControl('', new Required())},
+      password: new FormControl('', new Required()),
+      username: new FormControl('', new Required())},
       (value) => submitForm(value)
   );
 
