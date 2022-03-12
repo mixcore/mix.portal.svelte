@@ -18,7 +18,9 @@
     TextInput,
   } from 'carbon-components-svelte';
   import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
-import { goto } from '$app/navigation';
+  import { goto } from '$app/navigation';
+
+  let showLoginError = false;
 
   const { form, errors, state, handleChange, handleSubmit } =
     MixForm.createForm({
@@ -28,6 +30,7 @@ import { goto } from '$app/navigation';
   );
 
   function submitForm(value): void {
+    showLoginError = false;
     let sharedSrv = new MixSharedService(environment.baseUrl);
     let loginData = {
       UserName: value['username'],
@@ -44,6 +47,7 @@ import { goto } from '$app/navigation';
            .then((res) => authService.updateHeaderAuthData(res))
            .then(() => authService.initUserConfigSetting())
            .then(() =>  goto('/cms'))
+           .catch(() => { showLoginError = true })
            .finally(() => hideLoading())
   }
 </script>
@@ -55,6 +59,12 @@ import { goto } from '$app/navigation';
     >Don't have an account yet? <a href="/sign-up">Create an account now</a>
   </span>
 
+  {#if showLoginError}
+    <span class="form-sign-in__error">
+      Something wrong with your Username or Password, please try again !
+    </span>
+  {/if}
+  
   <Divider />
 
   <FormGroup legendText="Username">
@@ -109,6 +119,11 @@ import { goto } from '$app/navigation';
     &__description {
       display: block;
       margin-bottom: var(--cds-spacing-07);
+    }
+
+    &__error {
+      color: red;
+      margin: 10px 0px 10px 0px;
     }
   }
 </style>
