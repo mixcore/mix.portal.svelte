@@ -22,7 +22,8 @@
   import Book32 from 'carbon-icons-svelte/lib/Book32';
   import UserAvatarFilledAlt20 from "carbon-icons-svelte/lib/UserAvatarFilledAlt20";
   import ModelBuilder20 from "carbon-icons-svelte/lib/ModelBuilder20";
-  
+  import NetworkEnterprise20 from "carbon-icons-svelte/lib/NetworkEnterprise20";
+
   import { goto } from '$app/navigation';
 
   let isOpenLogoutConfirmModal = false;
@@ -48,6 +49,11 @@
       label: 'Modules',
       value: '/cms/modules',
       icon: ModelBuilder20,
+    },
+    {
+      label: 'News',
+      value: '/cms/news',
+      icon: NetworkEnterprise20,
     },
   ];
 
