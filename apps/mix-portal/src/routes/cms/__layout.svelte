@@ -1,19 +1,30 @@
 <script lang="ts">
   import {
     Header,
+    HeaderAction,
+    HeaderPanelDivider,
+    HeaderPanelLink,
+    HeaderPanelLinks,
+    HeaderUtilities,
+    Modal,
     SideNav,
     SideNavItems,
     SideNavLink,
     SkipToContent,
   } from 'carbon-components-svelte';
   import {
+    authService,
     IMenuItem,
     MixLogo
   } from '@mix.core/shared';
   import Dashboard32 from 'carbon-icons-svelte/lib/Dashboard32';
   import PageNumber32 from 'carbon-icons-svelte/lib/PageNumber32';
   import Book32 from 'carbon-icons-svelte/lib/Book32';
+  import UserAvatarFilledAlt20 from "carbon-icons-svelte/lib/UserAvatarFilledAlt20";
+  import { goto } from '$app/navigation';
 
+  let isOpenLogoutConfirmModal = false;
+  let isOpenUser = false;
   let isSideNavOpen = false;
   let sidebarItems: IMenuItem[] = [
     {
@@ -32,6 +43,17 @@
       icon: Book32,
     },
   ];
+
+  function logOut(): void {
+    authService.logout().then(() => {
+      isOpenLogoutConfirmModal = false;
+      goto('account/sign-in');
+    });
+  }
+
+  function openLogoutConfirmModal(): void {
+    isOpenLogoutConfirmModal = true;
+  }
 </script>
 
 <Header bind:isSideNavOpen>
@@ -40,6 +62,21 @@
   </div>
 
   <MixLogo />
+
+  <HeaderUtilities>
+    <HeaderAction
+      bind:isOpen={isOpenUser}
+      icon={UserAvatarFilledAlt20}
+      closeIcon={UserAvatarFilledAlt20}>
+      <HeaderPanelLinks>
+        <HeaderPanelLink>Account</HeaderPanelLink>
+        <HeaderPanelLink>Language</HeaderPanelLink>
+        <HeaderPanelDivider></HeaderPanelDivider>
+        <HeaderPanelLink>Change Password</HeaderPanelLink>
+        <HeaderPanelLink on:click={openLogoutConfirmModal}>Logout</HeaderPanelLink>
+      </HeaderPanelLinks>
+    </HeaderAction>
+  </HeaderUtilities>
 
   <SideNav bind:isOpen={isSideNavOpen} rail>
     <SideNavItems>
@@ -53,6 +90,19 @@
 <div class="main-workspace">
   <slot />
 </div>
+
+<Modal
+  size="sm"
+  open={isOpenLogoutConfirmModal}
+  modalHeading="Confirmation"
+  primaryButtonText="Confirm"
+  secondaryButtonText="Cancel"
+  on:click:button--primary={logOut}
+  on:open
+  on:close
+  on:submit>
+  <p>Do you want to log out ?</p>
+</Modal>
 
 <style lang="scss">
   .main-workspace {

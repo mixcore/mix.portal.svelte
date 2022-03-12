@@ -18,6 +18,7 @@
     TextInput,
   } from 'carbon-components-svelte';
   import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
+import { goto } from '$app/navigation';
 
   const { form, errors, state, handleChange, handleSubmit } =
     MixForm.createForm({
@@ -40,9 +41,9 @@
            .then(() => showLoading())
            .then(() =>  MixApi.get<string>(sharedSrv.getGlobalSettings))
            .then((key) => authService.login(loginData, key))
-           .then((res) => MixApi.updateHeaderAuthData(res))
-           .then(() => authService.getUserConfigSetting())
-           .then((res) => {console.log(res.globalSettings)})
+           .then((res) => authService.updateHeaderAuthData(res))
+           .then(() => authService.initUserConfigSetting())
+           .then(() =>  goto('/cms'))
            .finally(() => hideLoading())
   }
 </script>

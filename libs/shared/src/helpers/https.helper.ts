@@ -24,10 +24,6 @@ export class MixHttps {
       .then((data) => Promise.resolve<T>(data));
   }
 
-  public updateHeaderAuthData(encryptData: IAuthorizationData): void {
-    localStorage.setItem('authorizationData', JSON.stringify(encryptData))
-  }
-
   public getAuthData(): any {
     let encryptedAuthData = JSON.parse(localStorage.getItem("authorizationData")) as IAuthorizationData;
     let cryptoService = new CryptoService();
