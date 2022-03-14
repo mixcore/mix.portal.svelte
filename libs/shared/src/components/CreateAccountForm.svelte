@@ -4,7 +4,7 @@
     import { Confirmation, Email, FormControl, MixForm, Required } from "../validations";
     import { createEventDispatcher } from "svelte";
     import type { AccountModel } from "@mix.core/mix.lib";
-    import ArrowRight16 from "carbon-icons-svelte/lib/ArrowRight16";
+    import { ArrowRight16 } from "carbon-icons-svelte";
 
     const dispatch = createEventDispatcher();
     const createAccountEvent = 'onCreateACcountSubmit';

@@ -1,7 +1,3 @@
-<script context="module">
-    export const ssr = false;
-</script>
-
 <script lang="ts">
     import Application from "carbon-pictograms-svelte/lib/Application.svelte";
     import RedHatApplications from "carbon-pictograms-svelte/lib/RedHatApplications.svelte";
@@ -132,7 +128,11 @@
     .dashboard-item {
         height: 100%;
         background-color: var(--cds-ui-01, #f4f4f4);
-        padding: var(--cds-spacing-07   );
+        padding: var(--cds-spacing-07);
+
+        &:hover {
+            box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+        }
 
         &__title {
             margin-bottom: var(--cds-spacing-04);

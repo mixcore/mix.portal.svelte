@@ -1,3 +1,13 @@
+<script context="module">
+  export function load({ status }) {
+    return {
+      props: {
+        title: `${status}: ''`
+      }
+    };
+  } 
+</script>
+
 <script lang="ts">
   import {
     environment,
@@ -17,7 +27,7 @@
     FormGroup,
     TextInput,
   } from 'carbon-components-svelte';
-  import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
+  import { ArrowRight16 } from 'carbon-icons-svelte';
   import { goto } from '$app/navigation';
 
   let showLoginError = false;

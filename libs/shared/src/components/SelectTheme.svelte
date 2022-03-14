@@ -2,7 +2,7 @@
   import type { ThemeModel } from '@mix.core/mix.lib';
   import { Button } from 'carbon-components-svelte';
   import ThemeCard from './ThemeCard.svelte';
-  import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
+  import { ArrowRight16 } from 'carbon-icons-svelte';
   import { createEventDispatcher } from 'svelte';
 
   const dispatch = createEventDispatcher();

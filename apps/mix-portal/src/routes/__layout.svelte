@@ -1,3 +1,14 @@
+<script context="module">
+    /** @type {import('@sveltejs/kit').ErrorLoad} */
+    export function load({ error, status }) {
+      return {
+        props: {
+          title: `${status}: ''`
+        }
+      };
+    } 
+</script>
+
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import { InitStep, MixInitService } from '@mix.core/mix.lib';
@@ -62,6 +73,13 @@
 <style global>
   @import 'carbon-components-svelte/css/all.css';
 
+  :root {
+    --cds-interactive-01: #f06;
+    --cds-interactive-03: #f06;
+    --cds-interactive-04: #f06;
+    --cds-ui-01: #fffcf0;
+  }
+
   body {
     margin: 0 !important;
   }
@@ -107,6 +125,12 @@
   .full-width {
     width: 100% !important;
     max-width: unset !important;
+  }
+
+  .mix-widget {
+    background-color: var(--cds-ui-01);
+    padding: 10px 20px;
+    border-radius: 5px;
   }
 
   @keyframes fadeIn {

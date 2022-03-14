@@ -17,7 +17,7 @@
   import { environment } from '../environments/environment';
   import type { ISelectOption } from '../models/select-option.model';
   import { createEventDispatcher } from 'svelte';
-  import ArrowRight16 from 'carbon-icons-svelte/lib/ArrowRight16';
+  import { ArrowRight16 } from 'carbon-icons-svelte';
   import { showGlobalToastNotification } from '../stores/toast/toast.store';
   import { MixApi } from '../helpers/https.helper';
 

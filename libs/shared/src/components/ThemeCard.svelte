@@ -2,10 +2,8 @@
     import type { ThemeModel } from "@mix.core/mix.lib";
     import { Button } from "carbon-components-svelte";
     import { createEventDispatcher } from "svelte";
-
-    // Icon import
-    import Add16 from "carbon-icons-svelte/lib/Add16";
-    import Checkmark16 from "carbon-icons-svelte/lib/Checkmark16";
+    import { Add16 } from "carbon-icons-svelte";
+    import { Checkmark16 } from "carbon-icons-svelte";
 
     // Component props
     export let theme: ThemeModel = undefined;

@@ -35,7 +35,7 @@
     "carbon-components-svelte": "0.49.0",
     "carbon-icons-svelte": "10.38.0",
     "carbon-pictograms-svelte": "12.0.0",
-    "carbon-preprocess-svelte": "0.6.0",
+    "carbon-preprocess-svelte": "^0.6.0",
     "cypress": "^8.3.0",
     "eslint": "7.32.0",
     "eslint-config-prettier": "8.1.0",

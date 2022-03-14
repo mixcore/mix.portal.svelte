@@ -17,12 +17,12 @@
     IMenuItem,
     MixLogo
   } from '@mix.core/shared';
-  import Dashboard32 from 'carbon-icons-svelte/lib/Dashboard32';
-  import PageNumber32 from 'carbon-icons-svelte/lib/PageNumber32';
-  import Book32 from 'carbon-icons-svelte/lib/Book32';
-  import UserAvatarFilledAlt20 from "carbon-icons-svelte/lib/UserAvatarFilledAlt20";
-  import ModelBuilder20 from "carbon-icons-svelte/lib/ModelBuilder20";
-  import NetworkEnterprise20 from "carbon-icons-svelte/lib/NetworkEnterprise20";
+  import { Dashboard32 } from 'carbon-icons-svelte';
+  import { PageNumber32 } from 'carbon-icons-svelte';
+  import { Book32 } from 'carbon-icons-svelte';
+  import { UserAvatarFilledAlt20 } from "carbon-icons-svelte";
+  import { ModelBuilder20 } from "carbon-icons-svelte";
+  import { NetworkEnterprise20 } from "carbon-icons-svelte";
 
   import { goto } from '$app/navigation';
 
@@ -60,7 +60,7 @@
   function logOut(): void {
     authService.logout().then(() => {
       isOpenLogoutConfirmModal = false;
-      goto('account/sign-in');
+      goto('/account/sign-in');
     });
   }
 

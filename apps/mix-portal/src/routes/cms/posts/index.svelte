@@ -1,4 +1,6 @@
 <script lang="ts">
+import { goto } from "$app/navigation";
+
     import {
         DataTable,
         Toolbar,
@@ -6,6 +8,10 @@
         ToolbarSearch,
         Button,
     } from "carbon-components-svelte";
+
+    function createNewPost(): void {
+        goto('posts/create');
+    }
 </script>
 
 <div class="posts">
@@ -76,7 +82,7 @@
                         <Toolbar>
                             <ToolbarContent>
                                 <ToolbarSearch />
-                                <Button>Create New Post</Button>
+                                <Button on:click={createNewPost}>Create New Post</Button>
                             </ToolbarContent>
                         </Toolbar>
                 </DataTable>

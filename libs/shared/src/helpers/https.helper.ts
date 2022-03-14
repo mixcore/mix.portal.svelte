@@ -46,10 +46,13 @@ export class MixHttps {
   }
 
   private interceptor(res: Response): Promise<any> {
-    if (res.ok) {
+    if (res.status === 401) {
+      window.location.href = "/account/sign-in";
+      throw new Error(res.statusText);
+    } else if (res.ok) {
       return res.status === 204 ? Promise.resolve(res.ok) : res.json();
     } else {
-      throw new Error(res.statusText)
+      throw new Error(res.statusText);
     }
   }
 }
