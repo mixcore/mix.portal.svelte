@@ -1,14 +1,3 @@
-<script context="module">
-    /** @type {import('@sveltejs/kit').ErrorLoad} */
-    export function load({ error, status }) {
-      return {
-        props: {
-          title: `${status}: ''`
-        }
-      };
-    } 
-</script>
-
 <script lang="ts">
   import { fly } from 'svelte/transition';
   import { InitStep, MixInitService } from '@mix.core/mix.lib';
@@ -19,7 +8,8 @@
     MixSpinner,
     toastStore,
     removeNotification,
-    MixApi
+    MixApi,
+    showLoading
   } from '@mix.core/shared';
   import { onMount } from 'svelte';
   import { goto } from '$app/navigation';
@@ -29,20 +19,15 @@
   let isShowLoading: boolean = true;
   let toasts: IToastOption[] = [];
   let initSrv = new MixInitService(environment.baseUrl);
+
   loadingStore.subscribe((isShow) => (isShowLoading = isShow));
   toastStore.subscribe((t) => toasts = t)
 
   onMount(async () => {
+    showLoading();
     MixApi.get<InitStep>(initSrv.getInitStatusEndpoint, true)
       .then((data) => {
-        switch (data) {
-          case InitStep.Blank:
-            goto('/install');
-            break;
-          default:
-            goto('/cms');
-            break;
-        }
+        if (data === InitStep.Blank) goto('/install');
       })
       .catch(() => goto('/error'))
       .finally(() => hideLoading());
@@ -101,6 +86,10 @@
 
   .bx--fieldset {
     margin-bottom: 1rem !important;
+  }
+
+  .bx--tooltip--a11y {
+    border-bottom: none !important;
   }
 
   .main-workspace {

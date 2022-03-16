@@ -7,6 +7,10 @@ const config = {
     preprocess: [preprocess(), optimizeImports()],
     kit: {
         vite: {
+            endpointExtensions: ['.js', '.ts'],
+            files: {
+                hooks: 'src/hook.js',
+            },
             resolve: {
                 alias: {
                     "@mix.core/shared": path.resolve('../../libs/shared/src'),

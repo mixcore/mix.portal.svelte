@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
 
 //
-export const loadingStore = writable(true);
+export const loadingStore = writable(false);
 
 //
 export function showLoading() {
