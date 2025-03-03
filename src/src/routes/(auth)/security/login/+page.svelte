@@ -172,7 +172,7 @@
         
         {#if canLogin}
           <Button 
-            on:click={handleLogin} 
+            onclick={() => handleLogin()}
             disabled={!loginData.username || !loginData.password}
             class="px-5"
           >
@@ -185,11 +185,11 @@
         {/if}
         
         <div class="flex space-x-2">
-          <Button variant="link" on:click={() => goToSiteUrl('/')}>
+          <Button variant="link" onclick={() => goToSiteUrl('/')}>
             Homepage
           </Button>
           <span>|</span>
-          <Button variant="link" on:click={() => goToSiteUrl('/security/register')}>
+          <Button variant="link" onclick={() => goToSiteUrl('/security/register')}>
             Register
           </Button>
         </div>
