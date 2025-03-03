@@ -141,7 +141,7 @@
     
     <CardFooter class="flex-col items-center space-y-4">
       <Button 
-        on:click={handleRegister} 
+        onclick={handleRegister} 
         type="submit" 
         class="px-5"
       >
@@ -153,11 +153,11 @@
       {/if}
       
       <div class="flex space-x-2">
-        <Button variant="link" on:click={() => goToSiteUrl('/')}>
+        <Button variant="link" onclick={() => goToSiteUrl('/')}>
           Back to Home page
         </Button>
         <span>|</span>
-        <Button variant="link" on:click={() => goToSiteUrl('/security/login?ReturnUrl=%2Fportal')}>
+        <Button variant="link" onclick={() => goToSiteUrl('/security/login?ReturnUrl=%2Fportal')}>
           Login
         </Button>
       </div>
