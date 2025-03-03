@@ -1,0 +1,38 @@
+{
+	"$schema": "https://inlang.com/schema/project-settings",
+	"modules": [
+		"https://cdn.jsdelivr.net/npm/@inlang/message-lint-rule-empty-pattern@1/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/message-lint-rule-identical-pattern@1/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/message-lint-rule-missing-translation@1/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/message-lint-rule-without-source@1/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/message-lint-rule-valid-js-identifier@1/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/plugin-message-format@2/dist/index.js",
+		"https://cdn.jsdelivr.net/npm/@inlang/plugin-m-function-matcher@0/dist/index.js"
+	],
+	"plugin.inlang.messageFormat": {
+		"pathPattern": "./messages/{languageTag}.json"
+	},
+	"sourceLanguageTag": "en-us",
+	"languageTags": [
+		"en-us",
+		"zh-cn",
+		"es-es",
+		"hi-in",
+		"fr-fr",
+		"ar-sa",
+		"bn-bd",
+		"ru-ru",
+		"pt-br",
+		"id-id",
+		"de-de",
+		"ja-jp",
+		"tr-tr",
+		"ko-kr",
+		"it-it",
+		"pl-pl",
+		"nl-nl",
+		"vi-vn",
+		"th-th",
+		"fa-ir"
+	]
+}
