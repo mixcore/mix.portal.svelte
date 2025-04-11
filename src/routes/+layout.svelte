@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { page } from '$app/stores';
 	import { initializeThemeVariables } from '$lib/utils';
 	
 	// Layouts & Providers
@@ -17,25 +18,30 @@
 	let condensedLayout = false;
 	let hideHeader = false;
 	
+	// Check if current route is an auth route
+	$: isAuthRoute = $page.url.pathname.startsWith('/auth');
+	
 	// Initialize the theme based on user preference
 	onMount(() => {
-		initializeTheme();
-		initializeThemeVariables();
-		
-		// Restore layout preferences if any
-		if (browser) {
-			try {
-				const savedCondensed = localStorage.getItem('mixcore_condensed_layout');
-				if (savedCondensed) {
-					condensedLayout = savedCondensed === 'true';
+		if (!isAuthRoute) {
+			initializeTheme();
+			initializeThemeVariables();
+			
+			// Restore layout preferences if any
+			if (browser) {
+				try {
+					const savedCondensed = localStorage.getItem('mixcore_condensed_layout');
+					if (savedCondensed) {
+						condensedLayout = savedCondensed === 'true';
+					}
+					
+					const savedHideHeader = localStorage.getItem('mixcore_hide_header');
+					if (savedHideHeader) {
+						hideHeader = savedHideHeader === 'true';
+					}
+				} catch (e) {
+					console.warn('Failed to restore layout preferences:', e);
 				}
-				
-				const savedHideHeader = localStorage.getItem('mixcore_hide_header');
-				if (savedHideHeader) {
-					hideHeader = savedHideHeader === 'true';
-				}
-			} catch (e) {
-				console.warn('Failed to restore layout preferences:', e);
 			}
 		}
 	});
@@ -80,29 +86,35 @@
 	}
 </script>
 
-<NavigationContextProvider 
-	initialContext="cms" 
-	let:activeContext 
-	let:navigationItems
-	let:isContextChanging
->
-	<ShellLayout
-		isDarkMode={$isDarkMode}
-		isMobileMenuOpen={$isMobileMenuOpen}
-		activeContext={activeContext}
-		appContexts={appContexts}
-		activeNavItems={navigationItems}
-		condensed={condensedLayout}
-		hideHeader={hideHeader}
-		toggleTheme={toggleTheme}
-		toggleMobileMenu={toggleMobileMenu}
-		setContext={setContext}
-		on:overlayClick={handleOverlayClick}
-		on:ready={handleShellReady}
+{#if isAuthRoute}
+	<!-- Auth routes use their own layout defined in /auth/+layout.svelte -->
+	<slot />
+{:else}
+	<!-- Dashboard and other routes use the shell layout -->
+	<NavigationContextProvider 
+		initialContext="cms" 
+		let:activeContext 
+		let:navigationItems
+		let:isContextChanging
 	>
-		<slot />
-	</ShellLayout>
-</NavigationContextProvider>
+		<ShellLayout
+			isDarkMode={$isDarkMode}
+			isMobileMenuOpen={$isMobileMenuOpen}
+			activeContext={activeContext}
+			appContexts={appContexts}
+			activeNavItems={navigationItems}
+			condensed={condensedLayout}
+			hideHeader={hideHeader}
+			toggleTheme={toggleTheme}
+			toggleMobileMenu={toggleMobileMenu}
+			setContext={setContext}
+			on:overlayClick={handleOverlayClick}
+			on:ready={handleShellReady}
+		>
+			<slot />
+		</ShellLayout>
+	</NavigationContextProvider>
+{/if}
 
 <style>
 	:global(html) {
