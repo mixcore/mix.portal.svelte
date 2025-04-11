@@ -1,0 +1,166 @@
+{
+  "schemas": [
+    {
+      "name": "mixdb_tables",
+      "displayName": "Database Tables",
+      "description": "Stores the database tables created in MixDB",
+      "fields": [
+        {
+          "name": "id",
+          "displayName": "ID",
+          "type": "string",
+          "isPrimary": true,
+          "isRequired": true
+        },
+        {
+          "name": "name",
+          "displayName": "Table Name",
+          "type": "string",
+          "isRequired": true,
+          "isSearchable": true
+        },
+        {
+          "name": "displayName",
+          "displayName": "Display Name",
+          "type": "string",
+          "isRequired": true
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "type": "string"
+        },
+        {
+          "name": "createdDate",
+          "displayName": "Created Date",
+          "type": "datetime",
+          "isRequired": true,
+          "defaultValue": "now()"
+        },
+        {
+          "name": "createdBy",
+          "displayName": "Created By",
+          "type": "string",
+          "isRequired": true
+        },
+        {
+          "name": "modifiedDate",
+          "displayName": "Modified Date",
+          "type": "datetime"
+        },
+        {
+          "name": "modifiedBy",
+          "displayName": "Modified By",
+          "type": "string"
+        },
+        {
+          "name": "isSystem",
+          "displayName": "Is System Table",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_table_name",
+          "fields": ["name"],
+          "isUnique": true
+        }
+      ]
+    },
+    {
+      "name": "mixdb_fields",
+      "displayName": "Table Fields",
+      "description": "Stores the fields for each database table",
+      "fields": [
+        {
+          "name": "id",
+          "displayName": "ID",
+          "type": "string",
+          "isPrimary": true,
+          "isRequired": true
+        },
+        {
+          "name": "tableId",
+          "displayName": "Table ID",
+          "type": "string",
+          "isRequired": true,
+          "isReference": true,
+          "referenceSchema": "mixdb_tables",
+          "referenceField": "id"
+        },
+        {
+          "name": "name",
+          "displayName": "Field Name",
+          "type": "string",
+          "isRequired": true,
+          "isSearchable": true
+        },
+        {
+          "name": "displayName",
+          "displayName": "Display Name",
+          "type": "string",
+          "isRequired": true
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "type": "string"
+        },
+        {
+          "name": "type",
+          "displayName": "Data Type",
+          "type": "string",
+          "isRequired": true,
+          "allowedValues": [
+            "string",
+            "number",
+            "boolean",
+            "datetime",
+            "reference",
+            "json",
+            "text",
+            "image",
+            "file"
+          ]
+        },
+        {
+          "name": "isRequired",
+          "displayName": "Is Required",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "isPrimary",
+          "displayName": "Is Primary Key",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "isSearchable",
+          "displayName": "Is Searchable",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "defaultValue",
+          "displayName": "Default Value",
+          "type": "string"
+        },
+        {
+          "name": "sortOrder",
+          "displayName": "Sort Order",
+          "type": "number",
+          "defaultValue": 0
+        }
+      ],
+      "indexes": [
+        {
+          "name": "idx_field_table",
+          "fields": ["tableId", "name"],
+          "isUnique": true
+        }
+      ]
+    }
+  ]
+} 

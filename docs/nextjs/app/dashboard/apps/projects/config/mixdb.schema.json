@@ -1,0 +1,375 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mixcore Projects App Schema",
+  "description": "Database schema definitions for Mixcore Projects App",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "string",
+          "const": "projects"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "displayName": {
+          "type": "string",
+          "const": "Projects Management"
+        },
+        "description": {
+          "type": "string",
+          "const": "Microsoft Project-like project management application"
+        },
+        "category": {
+          "type": "string",
+          "const": "productivity"
+        },
+        "icon": {
+          "type": "string",
+          "const": "space_dashboard"
+        },
+        "requiredPermissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["projects.view", "projects.create", "projects.edit", "projects.delete", "tasks.view", "tasks.create", "tasks.edit", "tasks.delete"]
+          }
+        }
+      },
+      "required": ["appId", "version", "displayName", "category", "icon"]
+    },
+    "collections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "displayName": { "type": "string" },
+          "fields": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": { "type": "string" },
+                "displayName": { "type": "string" },
+                "dataType": { "type": "string" },
+                "isRequired": { "type": "boolean" },
+                "isIndex": { "type": "boolean" },
+                "isUnique": { "type": "boolean" },
+                "defaultValue": { "type": ["string", "number", "boolean", "null"] },
+                "description": { "type": "string" },
+                "options": { "type": "object" }
+              },
+              "required": ["name", "displayName", "dataType"]
+            }
+          }
+        },
+        "required": ["name", "displayName", "fields"]
+      }
+    }
+  },
+  "required": ["metadata", "collections"],
+  "collections": [
+    {
+      "name": "projects",
+      "displayName": "Projects",
+      "description": "Project records",
+      "fields": [
+        {
+          "name": "id",
+          "displayName": "ID",
+          "dataType": "string",
+          "isRequired": true,
+          "isIndex": true,
+          "isUnique": true,
+          "description": "Unique identifier for the project"
+        },
+        {
+          "name": "name",
+          "displayName": "Name",
+          "dataType": "string",
+          "isRequired": true,
+          "description": "Project name"
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "dataType": "text",
+          "isRequired": false,
+          "description": "Project description"
+        },
+        {
+          "name": "startDate",
+          "displayName": "Start Date",
+          "dataType": "date",
+          "isRequired": true,
+          "description": "Project start date"
+        },
+        {
+          "name": "dueDate",
+          "displayName": "Due Date",
+          "dataType": "date",
+          "isRequired": true,
+          "description": "Project due date"
+        },
+        {
+          "name": "progress",
+          "displayName": "Progress",
+          "dataType": "number",
+          "isRequired": true,
+          "defaultValue": 0,
+          "description": "Project completion percentage"
+        },
+        {
+          "name": "status",
+          "displayName": "Status",
+          "dataType": "string",
+          "isRequired": true,
+          "defaultValue": "Not Started",
+          "options": {
+            "enum": ["Not Started", "On Track", "At Risk", "Delayed", "Completed"]
+          },
+          "description": "Current project status"
+        },
+        {
+          "name": "members",
+          "displayName": "Team Members",
+          "dataType": "array",
+          "items": {
+            "dataType": "string"
+          },
+          "description": "List of team member IDs assigned to the project"
+        },
+        {
+          "name": "createdBy",
+          "displayName": "Created By",
+          "dataType": "string",
+          "isRequired": true,
+          "description": "User ID of project creator"
+        },
+        {
+          "name": "createdDate",
+          "displayName": "Created Date",
+          "dataType": "datetime",
+          "isRequired": true,
+          "description": "Date and time when the project was created"
+        },
+        {
+          "name": "modifiedBy",
+          "displayName": "Modified By",
+          "dataType": "string",
+          "description": "User ID of last modifier"
+        },
+        {
+          "name": "modifiedDate",
+          "displayName": "Modified Date",
+          "dataType": "datetime",
+          "description": "Date and time when the project was last modified"
+        }
+      ]
+    },
+    {
+      "name": "tasks",
+      "displayName": "Tasks",
+      "description": "Project tasks",
+      "fields": [
+        {
+          "name": "id",
+          "displayName": "ID",
+          "dataType": "string",
+          "isRequired": true,
+          "isIndex": true,
+          "isUnique": true,
+          "description": "Unique identifier for the task"
+        },
+        {
+          "name": "projectId",
+          "displayName": "Project ID",
+          "dataType": "string",
+          "isRequired": true,
+          "isIndex": true,
+          "description": "ID of the project this task belongs to"
+        },
+        {
+          "name": "title",
+          "displayName": "Title",
+          "dataType": "string",
+          "isRequired": true,
+          "description": "Task title"
+        },
+        {
+          "name": "description",
+          "displayName": "Description",
+          "dataType": "text",
+          "description": "Task description"
+        },
+        {
+          "name": "status",
+          "displayName": "Status",
+          "dataType": "string",
+          "isRequired": true,
+          "defaultValue": "Not Started",
+          "options": {
+            "enum": ["notStarted", "inProgress", "completed"]
+          },
+          "description": "Current task status"
+        },
+        {
+          "name": "priority",
+          "displayName": "Priority",
+          "dataType": "string",
+          "isRequired": true,
+          "defaultValue": "medium",
+          "options": {
+            "enum": ["low", "medium", "high"]
+          },
+          "description": "Task priority level"
+        },
+        {
+          "name": "dueDate",
+          "displayName": "Due Date",
+          "dataType": "date",
+          "isRequired": true,
+          "description": "Task due date"
+        },
+        {
+          "name": "startDate",
+          "displayName": "Start Date",
+          "dataType": "date",
+          "isRequired": true,
+          "description": "Task start date"
+        },
+        {
+          "name": "endDate",
+          "displayName": "End Date",
+          "dataType": "date",
+          "description": "Task end date"
+        },
+        {
+          "name": "assignee",
+          "displayName": "Assignee",
+          "dataType": "string",
+          "description": "User ID of task assignee"
+        },
+        {
+          "name": "progress",
+          "displayName": "Progress",
+          "dataType": "number",
+          "isRequired": true,
+          "defaultValue": 0,
+          "description": "Task completion percentage"
+        },
+        {
+          "name": "dependencies",
+          "displayName": "Dependencies",
+          "dataType": "array",
+          "items": {
+            "dataType": "string"
+          },
+          "description": "IDs of tasks that this task depends on"
+        },
+        {
+          "name": "isMilestone",
+          "displayName": "Is Milestone",
+          "dataType": "boolean",
+          "defaultValue": false,
+          "description": "Whether this task is a milestone"
+        },
+        {
+          "name": "isCritical",
+          "displayName": "Is Critical",
+          "dataType": "boolean",
+          "defaultValue": false,
+          "description": "Whether this task is on the critical path"
+        },
+        {
+          "name": "createdBy",
+          "displayName": "Created By",
+          "dataType": "string",
+          "isRequired": true,
+          "description": "User ID of task creator"
+        },
+        {
+          "name": "createdDate",
+          "displayName": "Created Date",
+          "dataType": "datetime",
+          "isRequired": true,
+          "description": "Date and time when the task was created"
+        },
+        {
+          "name": "modifiedBy",
+          "displayName": "Modified By",
+          "dataType": "string",
+          "description": "User ID of last modifier"
+        },
+        {
+          "name": "modifiedDate",
+          "displayName": "Modified Date",
+          "dataType": "datetime",
+          "description": "Date and time when the task was last modified"
+        }
+      ]
+    },
+    {
+      "name": "team_members",
+      "displayName": "Team Members",
+      "description": "Project team members",
+      "fields": [
+        {
+          "name": "id",
+          "displayName": "ID",
+          "dataType": "string",
+          "isRequired": true,
+          "isIndex": true,
+          "isUnique": true,
+          "description": "Unique identifier for the team member"
+        },
+        {
+          "name": "userId",
+          "displayName": "User ID",
+          "dataType": "string",
+          "isRequired": true,
+          "isIndex": true,
+          "description": "ID of the user"
+        },
+        {
+          "name": "projectIds",
+          "displayName": "Project IDs",
+          "dataType": "array",
+          "items": {
+            "dataType": "string"
+          },
+          "description": "IDs of projects the member is assigned to"
+        },
+        {
+          "name": "role",
+          "displayName": "Role",
+          "dataType": "string",
+          "isRequired": true,
+          "defaultValue": "Member",
+          "options": {
+            "enum": ["Owner", "Manager", "Member", "Observer"]
+          },
+          "description": "Team member's role in the project"
+        },
+        {
+          "name": "joinDate",
+          "displayName": "Join Date",
+          "dataType": "date",
+          "isRequired": true,
+          "description": "Date when the member joined the project"
+        },
+        {
+          "name": "availability",
+          "displayName": "Availability",
+          "dataType": "number",
+          "defaultValue": 100,
+          "description": "Member's availability percentage for the project"
+        }
+      ]
+    }
+  ]
+} 

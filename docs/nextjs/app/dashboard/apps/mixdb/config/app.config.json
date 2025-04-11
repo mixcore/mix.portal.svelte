@@ -1,0 +1,73 @@
+{
+  "appId": "mixdb",
+  "version": "1.0.0",
+  "displayName": "MixDB",
+  "description": "Database management system for Mixcore",
+  "category": "database",
+  "icon": "database",
+  "author": {
+    "name": "Mixcore Team",
+    "email": "info@mixcore.org",
+    "url": "https://mixcore.org"
+  },
+  "license": "MIT",
+  "entryPoint": "index.tsx",
+  "init": {
+    "initOnInstall": true,
+    "schemaFile": "./mixdb.schema.json",
+    "demoDataFile": "./demo-data.json",
+    "createDefaultPermissions": true
+  },
+  "mainStyles": "app-globals.css",
+  "navigation": {
+    "position": "main",
+    "priority": 3,
+    "menuItem": {
+      "title": "MixDB",
+      "icon": "database",
+      "url": "/dashboard/apps/mixdb",
+      "badge": null,
+      "contextId": "mixdb"
+    }
+  },
+  "permissions": [
+    {
+      "name": "mixdb.view",
+      "displayName": "View MixDB",
+      "description": "Allow user to view MixDB management dashboard"
+    },
+    {
+      "name": "mixdb.manage",
+      "displayName": "Manage MixDB",
+      "description": "Allow user to manage database schemas and data"
+    },
+    {
+      "name": "mixdb.export",
+      "displayName": "Export MixDB Data",
+      "description": "Allow user to export data from MixDB"
+    },
+    {
+      "name": "mixdb.import",
+      "displayName": "Import MixDB Data",
+      "description": "Allow user to import data into MixDB"
+    }
+  ],
+  "settings": {
+    "maxRowsPerQuery": 1000,
+    "enableQueryCache": true,
+    "defaultPageSize": 50
+  },
+  "integrations": {
+    "cms": {
+      "enabled": true,
+      "createContentTypes": true
+    },
+    "mixdb": {
+      "enabled": true
+    },
+    "authentication": {
+      "enabled": true,
+      "requiredRoles": ["Administrator", "Database Manager"]
+    }
+  }
+} 

@@ -1,0 +1,540 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mixcore Blogs Schema",
+  "description": "Database schema definitions for Mixcore Blogs Mini App",
+  "type": "object",
+  "properties": {
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "appId": {
+          "type": "string",
+          "const": "blogs"
+        },
+        "version": {
+          "type": "string",
+          "const": "1.0.0"
+        },
+        "displayName": {
+          "type": "string",
+          "const": "Blogs"
+        },
+        "description": {
+          "type": "string",
+          "const": "A modern blogging platform similar to Ghost, powered by Mixcore CMS API"
+        },
+        "category": {
+          "type": "string",
+          "const": "content"
+        },
+        "icon": {
+          "type": "string",
+          "const": "post"
+        },
+        "requiredPermissions": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["blogs.view", "blogs.create", "blogs.edit", "blogs.delete", "blogs.publish", "blogs.admin"]
+          }
+        }
+      },
+      "required": ["appId", "version", "displayName", "category", "icon"]
+    },
+    "collections": {
+      "type": "object",
+      "properties": {
+        "blogPosts": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "const": "blogPosts"
+            },
+            "displayName": {
+              "type": "string",
+              "const": "Blog Posts"
+            },
+            "description": {
+              "type": "string",
+              "const": "Blog posts collection for the Blogs mini-app"
+            },
+            "icon": {
+              "type": "string",
+              "const": "post"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "dataType": {
+                    "type": "string",
+                    "enum": ["string", "number", "boolean", "datetime", "object", "array", "reference"]
+                  },
+                  "isRequired": {
+                    "type": "boolean"
+                  },
+                  "defaultValue": {},
+                  "referenceCollection": {
+                    "type": "string"
+                  },
+                  "options": {
+                    "type": "object"
+                  },
+                  "isSystem": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["name", "displayName", "dataType"]
+              }
+            }
+          },
+          "required": ["name", "displayName", "fields"]
+        },
+        "blogCategories": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "const": "blogCategories"
+            },
+            "displayName": {
+              "type": "string",
+              "const": "Categories"
+            },
+            "description": {
+              "type": "string",
+              "const": "Categories for blog posts"
+            },
+            "icon": {
+              "type": "string",
+              "const": "folder"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "dataType": {
+                    "type": "string",
+                    "enum": ["string", "number", "boolean", "datetime", "object", "array", "reference"]
+                  },
+                  "isRequired": {
+                    "type": "boolean"
+                  },
+                  "defaultValue": {},
+                  "options": {
+                    "type": "object"
+                  },
+                  "isSystem": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["name", "displayName", "dataType"]
+              }
+            }
+          },
+          "required": ["name", "displayName", "fields"]
+        },
+        "blogTags": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "const": "blogTags"
+            },
+            "displayName": {
+              "type": "string",
+              "const": "Tags"
+            },
+            "description": {
+              "type": "string",
+              "const": "Tags for blog posts"
+            },
+            "icon": {
+              "type": "string",
+              "const": "tag"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "dataType": {
+                    "type": "string",
+                    "enum": ["string", "number", "boolean", "datetime", "object", "array", "reference"]
+                  },
+                  "isRequired": {
+                    "type": "boolean"
+                  },
+                  "defaultValue": {},
+                  "options": {
+                    "type": "object"
+                  },
+                  "isSystem": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["name", "displayName", "dataType"]
+              }
+            }
+          },
+          "required": ["name", "displayName", "fields"]
+        },
+        "blogAuthors": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "const": "blogAuthors"
+            },
+            "displayName": {
+              "type": "string",
+              "const": "Authors"
+            },
+            "description": {
+              "type": "string",
+              "const": "Authors of blog posts"
+            },
+            "icon": {
+              "type": "string",
+              "const": "user"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "displayName": {
+                    "type": "string"
+                  },
+                  "dataType": {
+                    "type": "string",
+                    "enum": ["string", "number", "boolean", "datetime", "object", "array", "reference"]
+                  },
+                  "isRequired": {
+                    "type": "boolean"
+                  },
+                  "defaultValue": {},
+                  "options": {
+                    "type": "object"
+                  },
+                  "isSystem": {
+                    "type": "boolean"
+                  }
+                },
+                "required": ["name", "displayName", "dataType"]
+              }
+            }
+          },
+          "required": ["name", "displayName", "fields"]
+        }
+      }
+    },
+    "collectionsData": {
+      "type": "object",
+      "properties": {
+        "blogPosts": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Title",
+                "isRequired": true
+              },
+              "slug": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Slug",
+                "isRequired": true
+              },
+              "status": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Status",
+                "isRequired": true,
+                "options": {
+                  "enum": ["draft", "published", "scheduled", "archived"]
+                },
+                "defaultValue": "draft"
+              },
+              "content": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Content",
+                "isRequired": true
+              },
+              "excerpt": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Excerpt",
+                "isRequired": false
+              },
+              "featuredImage": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Featured Image",
+                "isRequired": false
+              },
+              "authorId": {
+                "type": "string",
+                "dataType": "reference",
+                "displayName": "Author",
+                "isRequired": true,
+                "referenceCollection": "blogAuthors"
+              },
+              "categoryIds": {
+                "type": "array",
+                "dataType": "array",
+                "displayName": "Categories",
+                "isRequired": false,
+                "items": {
+                  "dataType": "reference",
+                  "referenceCollection": "blogCategories"
+                }
+              },
+              "tagIds": {
+                "type": "array",
+                "dataType": "array",
+                "displayName": "Tags",
+                "isRequired": false,
+                "items": {
+                  "dataType": "reference",
+                  "referenceCollection": "blogTags"
+                }
+              },
+              "isFeatured": {
+                "type": "boolean",
+                "dataType": "boolean",
+                "displayName": "Featured",
+                "isRequired": false,
+                "defaultValue": false
+              },
+              "publishedDate": {
+                "type": "string",
+                "dataType": "datetime",
+                "displayName": "Published Date",
+                "isRequired": false
+              },
+              "scheduledDate": {
+                "type": "string",
+                "dataType": "datetime",
+                "displayName": "Scheduled Date",
+                "isRequired": false
+              },
+              "readTime": {
+                "type": "number",
+                "dataType": "number",
+                "displayName": "Read Time (minutes)",
+                "isRequired": false
+              },
+              "metaTitle": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Meta Title",
+                "isRequired": false
+              },
+              "metaDescription": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Meta Description",
+                "isRequired": false
+              },
+              "canonicalUrl": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Canonical URL",
+                "isRequired": false
+              },
+              "ogImage": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "OG Image",
+                "isRequired": false
+              },
+              "twitterImage": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Twitter Image",
+                "isRequired": false
+              }
+            },
+            "required": ["title", "slug", "status", "content", "authorId"]
+          }
+        },
+        "blogCategories": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Name",
+                "isRequired": true
+              },
+              "slug": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Slug",
+                "isRequired": true
+              },
+              "description": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Description",
+                "isRequired": false
+              },
+              "featuredImage": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Featured Image",
+                "isRequired": false
+              },
+              "color": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Color",
+                "isRequired": false
+              },
+              "parentId": {
+                "type": "string",
+                "dataType": "reference",
+                "displayName": "Parent Category",
+                "isRequired": false,
+                "referenceCollection": "blogCategories"
+              }
+            },
+            "required": ["name", "slug"]
+          }
+        },
+        "blogTags": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Name",
+                "isRequired": true
+              },
+              "slug": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Slug",
+                "isRequired": true
+              },
+              "description": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Description",
+                "isRequired": false
+              },
+              "color": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Color",
+                "isRequired": false
+              }
+            },
+            "required": ["name", "slug"]
+          }
+        },
+        "blogAuthors": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Name",
+                "isRequired": true
+              },
+              "email": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Email",
+                "isRequired": true
+              },
+              "bio": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Bio",
+                "isRequired": false
+              },
+              "avatar": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Avatar",
+                "isRequired": false
+              },
+              "website": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Website",
+                "isRequired": false
+              },
+              "twitter": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Twitter",
+                "isRequired": false
+              },
+              "facebook": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Facebook",
+                "isRequired": false
+              },
+              "linkedin": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "LinkedIn",
+                "isRequired": false
+              },
+              "role": {
+                "type": "string",
+                "dataType": "string",
+                "displayName": "Role",
+                "isRequired": false,
+                "options": {
+                  "enum": ["Administrator", "Editor", "Author", "Contributor"]
+                },
+                "defaultValue": "Author"
+              }
+            },
+            "required": ["name", "email"]
+          }
+        }
+      }
+    }
+  },
+  "required": ["metadata", "collections", "collectionsData"]
+} 

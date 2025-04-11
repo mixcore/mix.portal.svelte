@@ -1,0 +1,140 @@
+{
+  "appId": "projects",
+  "version": "1.0.0",
+  "displayName": "Projects Management",
+  "description": "Microsoft Project-like project management application for Mixcore CMS",
+  "category": "productivity",
+  "icon": "space_dashboard",
+  "author": {
+    "name": "Mixcore Team",
+    "email": "support@mixcore.org",
+    "url": "https://mixcore.org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mixcore/mix.portal.react"
+  },
+  "entryPoint": "index.tsx",
+  "init": {
+    "initOnInstall": true,
+    "schemaFile": "./mixdb.schema.json",
+    "demoDataFile": "./demo-data.json",
+    "createDefaultPermissions": true
+  },
+  "mainStyles": "app-globals.css",
+  "navigation": {
+    "position": "main",
+    "priority": 5,
+    "menuItem": {
+      "title": "Projects",
+      "icon": "space_dashboard",
+      "url": "/dashboard/apps/projects",
+      "badge": null,
+      "contextId": "projects"
+    }
+  },
+  "permissions": [
+    {
+      "name": "projects.view",
+      "displayName": "View Projects",
+      "description": "Can view project listings and details"
+    },
+    {
+      "name": "projects.create",
+      "displayName": "Create Projects",
+      "description": "Can create new projects"
+    },
+    {
+      "name": "projects.edit",
+      "displayName": "Edit Projects",
+      "description": "Can edit existing projects"
+    },
+    {
+      "name": "projects.delete",
+      "displayName": "Delete Projects",
+      "description": "Can delete projects"
+    },
+    {
+      "name": "tasks.view",
+      "displayName": "View Tasks",
+      "description": "Can view task listings and details"
+    },
+    {
+      "name": "tasks.create",
+      "displayName": "Create Tasks",
+      "description": "Can create new tasks"
+    },
+    {
+      "name": "tasks.edit",
+      "displayName": "Edit Tasks",
+      "description": "Can edit existing tasks"
+    },
+    {
+      "name": "tasks.delete",
+      "displayName": "Delete Tasks",
+      "description": "Can delete tasks"
+    }
+  ],
+  "settings": {
+    "ganttDefaultView": "Day",
+    "enableFullScreenByDefault": false,
+    "enableNotifications": true,
+    "showCompletedTasks": true,
+    "defaultSortField": "dueDate",
+    "defaultSortDirection": "asc",
+    "enableComments": true,
+    "enableAttachments": true,
+    "enableTimeTracking": true,
+    "calendarFirstDayOfWeek": 0
+  },
+  "integrations": {
+    "cms": {
+      "enabled": true,
+      "createContentTypes": true
+    },
+    "mixdb": {
+      "enabled": true
+    },
+    "authentication": {
+      "enabled": true,
+      "requiredRoles": ["Administrator", "Editor", "Member"]
+    },
+    "notifications": {
+      "enabled": true,
+      "supportedChannels": ["inApp", "email"]
+    }
+  },
+  "ui": {
+    "theme": {
+      "useSystemTheme": true,
+      "colors": {
+        "primary": "blue",
+        "secondary": "gray",
+        "accent": "purple",
+        "danger": "red",
+        "success": "green",
+        "warning": "amber"
+      }
+    },
+    "layout": {
+      "fluid": true,
+      "container": "max-w-7xl",
+      "padding": "p-4 md:p-6"
+    },
+    "animations": {
+      "enabled": true,
+      "transition": "ease-in-out"
+    }
+  },
+  "storage": {
+    "local": {
+      "enabled": true,
+      "prefix": "mixcore_projects_"
+    },
+    "persistent": {
+      "enabled": true,
+      "schema": "./mixdb.schema.json"
+    }
+  }
+} 

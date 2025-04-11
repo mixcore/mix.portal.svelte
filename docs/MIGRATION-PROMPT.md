@@ -466,6 +466,192 @@ The `app.config.json` should follow this structure:
 </PageLayout>
 ```
 
+## UI Component Standardization
+
+To ensure a consistent user experience across the application, we use two different UI component libraries depending on the context:
+
+1. **Admin UI**: Uses shadcn UI components for the main admin interface
+2. **Mini-Apps**: Use DaisyUI components for mini-applications 
+
+This separation helps distinguish the core admin functionality from modular mini-apps while maintaining a cohesive design language throughout the application.
+
+### Admin UI Components (shadcn)
+
+For the main admin interface, all components should use the shadcn UI library. This includes:
+
+- Dashboard layouts and navigation
+- Settings and configuration screens
+- User management interfaces
+- System-level administration tools
+
+### Key shadcn Implementation Requirements
+
+1. **Use shadcn Components**: For all admin UI, leverage the shadcn component library.
+   - Buttons, inputs, selects, and dialogs should use shadcn implementations
+   - Admin toolbars and control panels should be built from shadcn primitives
+   
+2. **Dark Mode Support**: All components must support both light and dark themes.
+   - Use shadcn theme tokens instead of hardcoded colors
+   - Test all components in both light and dark mode
+   
+3. **Responsive Design**: Components should adapt gracefully to different screen sizes.
+   - Mobile-first approach
+   - Use fluid layouts and responsive spacing
+   
+4. **Accessibility**: Ensure all UI components meet accessibility standards.
+   - Proper keyboard navigation
+   - Screen reader compatibility
+   - Sufficient color contrast
+
+### Mini-App Components (DaisyUI)
+
+For mini-apps and embedded applications, all components should use the DaisyUI component library. This includes:
+
+- Mini-app specific interfaces
+- Embedded tools and utilities
+- Content management interfaces
+- Extension functionality
+
+### Key DaisyUI Implementation Requirements
+
+1. **Use DaisyUI Components**: For mini-apps, leverage the DaisyUI components for all common UI needs.
+   - Buttons, inputs, selects, and dialogs should use DaisyUI implementations
+   - Toolbars and control panels should be built from DaisyUI primitives
+   
+2. **Dark Mode Support**: All components must support both light and dark themes.
+   - Use theme tokens instead of hardcoded colors
+   - Test all components in both light and dark mode
+   
+3. **Responsive Design**: Components should adapt gracefully to different screen sizes.
+   - Mobile-first approach
+   - Use fluid layouts and responsive spacing
+   
+4. **Accessibility**: Ensure all UI components meet accessibility standards.
+   - Proper keyboard navigation
+   - Screen reader compatibility
+   - Sufficient color contrast
+
+### Example: DaisyUI Toolbar Implementation
+
+When implementing toolbars in mini-apps, such as those in the Gantt chart component:
+
+```svelte
+<!-- ❌ Avoid custom implementations -->
+<div class="toolbar">
+  <button class="custom-button">
+    <span class="icon">+</span>
+    Add
+  </button>
+</div>
+
+<!-- ✅ Use DaisyUI components -->
+<div class="flex items-center gap-2">
+  <button class="btn btn-outline btn-sm">
+    <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
+      <path d="M12 4v16m-8-8h16" />
+    </svg>
+    Add
+  </button>
+  <div class="divider divider-horizontal"></div>
+  <div class="btn-group btn-group-horizontal">
+    <button class="btn btn-sm">Day</button>
+    <button class="btn btn-sm btn-active">Week</button>
+    <button class="btn btn-sm">Month</button>
+  </div>
+</div>
+```
+
+### Example: shadcn Admin UI Implementation
+
+When implementing admin interfaces:
+
+```svelte
+<!-- ❌ Avoid using DaisyUI in admin interfaces -->
+<div class="flex items-center gap-2">
+  <button class="btn btn-outline btn-sm">Add</button>
+</div>
+
+<!-- ✅ Use shadcn components -->
+<div class="flex items-center gap-2">
+  <Button variant="outline" size="sm">
+    <PlusIcon className="w-4 h-4 mr-1" />
+    Add
+  </Button>
+  <Separator orientation="vertical" className="h-6" />
+  <ToggleGroup type="single" defaultValue="week">
+    <ToggleGroupItem value="day">Day</ToggleGroupItem>
+    <ToggleGroupItem value="week">Week</ToggleGroupItem>
+    <ToggleGroupItem value="month">Month</ToggleGroupItem>
+  </ToggleGroup>
+</div>
+```
+
+By following these standards, we ensure that all parts of the application maintain their distinct identity while providing a consistent experience, which improves user experience and makes maintenance easier.
+
+## NextJS Layout and Style Reference
+
+To assist with the migration process, we've included a comprehensive NextJS implementation in `docs/nextjs/` that can serve as a reference for layout structure, styling patterns, and component organization.
+
+### Key NextJS Layout Files
+
+1. **Root Layouts**:
+   - `app/layout.tsx` - Server component root layout with theme configuration
+   - `app/layout-client.tsx` - Client component root layout with client-side theme handling
+
+2. **Dashboard Layout**:
+   - `app/dashboard/layout.tsx` - Main dashboard layout with sidebar, header, and content area
+   - `components/layout/dashboard-layout.tsx` - Reusable dashboard component with stats cards and content sections
+
+3. **Layout Components**:
+   ```
+   components/layout/
+   ├── app-sidebar.tsx         # Main navigation sidebar
+   ├── header.tsx              # Application header with context selector
+   ├── layout-container.tsx    # Content container with consistent padding
+   ├── shell-layout.tsx        # High-level application shell
+   ├── enhanced-shell.tsx      # Enhanced shell with additional features
+   ├── page-container.tsx      # Container for standard pages
+   └── ...                     # Other layout components
+   ```
+
+### Styling System
+
+The NextJS implementation includes a robust styling system that can be adapted for Svelte:
+
+1. **Theme Variables**:
+   - `app/globals.css` - Core CSS variables and Tailwind configuration
+   - `app/theme.css` - Theme-specific styles and color schemes
+
+2. **Multiple Themes**:
+   - Default, blue, green, amber, and monochrome themes
+   - Light and dark mode variants for each theme
+   - Scaling support for different device sizes
+
+3. **CSS Architecture**:
+   - CSS variables for consistent theming
+   - Tailwind CSS for utility classes
+   - Component-specific styles where needed
+
+### When Implementing Layouts
+
+When migrating layouts from AngularJS to Svelte, consider referencing the NextJS implementation for:
+
+1. **Layout Structure**: 
+   - How the app shell, sidebar, and content areas are organized
+   - Responsive layout patterns for different screen sizes
+
+2. **Theming Strategy**:
+   - CSS variable structure for consistent theming
+   - Dark/light mode implementation
+   - Color scheme variations
+
+3. **Component Patterns**:
+   - Header implementation with context selector and user menu
+   - Sidebar navigation with collapsible sections
+   - Content layout patterns for different page types
+
+By referencing these NextJS implementations, you can ensure consistency in your Svelte components while adhering to modern web standards and best practices.
+
 ## Additional Resources
 
 For more information, please refer to:
@@ -473,6 +659,7 @@ For more information, please refer to:
 - [SvelteKit Documentation](https://kit.svelte.dev/docs)
 - [Svelte Documentation](https://svelte.dev/docs)
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [shadcn UI Documentation](https://ui.shadcn.com/)
 - [DaisyUI Documentation](https://daisyui.com/docs)
 - [Zod Documentation](https://zod.dev/)
 

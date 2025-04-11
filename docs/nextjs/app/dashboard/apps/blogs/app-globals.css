@@ -1,0 +1,239 @@
+/* Mini App Template Global Styles */
+
+/* Hide scrollbar but allow scrolling */
+.no-scrollbar {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
+}
+
+/* App-specific styles */
+.mini-app-active {
+  overflow: hidden;
+}
+
+/* Mini app shell styles */
+.mini-app-app-shell {
+  position: relative;
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+/* Fluid content container */
+.mini-app-app-shell.fluid {
+  height: 100%;
+  overflow: hidden;
+}
+
+/* App header styling */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: hsl(var(--background));
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+/* App sidebar styling */
+.app-sidebar {
+  background-color: hsl(var(--background));
+  border-right: 1px solid hsl(var(--border));
+}
+
+/* Ensure consistent borders between sections */
+.section-divider {
+  border-bottom: 1px solid hsl(var(--border));
+}
+
+.content-section {
+  border-top: 1px solid hsl(var(--border));
+}
+
+/* Responsive container for app content */
+.app-container {
+  width: 100%;
+  height: 100vh;
+  margin: 0 auto;
+}
+
+/* Card styling */
+.app-card {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out;
+}
+
+.app-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Status indicators */
+.status-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-right: 6px;
+}
+
+.status-indicator.draft {
+  background-color: hsl(var(--muted));
+}
+
+.status-indicator.published {
+  background-color: hsl(var(--success));
+}
+
+.status-indicator.archived {
+  background-color: hsl(var(--warning));
+}
+
+/* Toast notifications */
+.app-toast {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 16px;
+  background-color: var(--primary);
+  color: var(--primary-foreground);
+  border-radius: 4px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.app-toast.hidden {
+  transform: translateY(20px);
+  opacity: 0;
+}
+
+/* Loading overlay */
+.app-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: hsl(var(--background)/80%);
+  backdrop-filter: blur(2px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+}
+
+.app-loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid hsl(var(--border));
+  border-radius: 50%;
+  border-top-color: hsl(var(--primary));
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive grid layout */
+.app-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .app-grid {
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .app-grid {
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    gap: 2rem;
+  }
+}
+
+/* Print styles */
+@media print {
+  .app-header,
+  .app-sidebar,
+  .app-toolbar,
+  .app-tabs {
+    display: none !important;
+  }
+  
+  .app-main {
+    overflow: visible !important;
+    height: auto !important;
+    padding: 0 !important;
+  }
+  
+  .app-content {
+    display: block !important;
+  }
+  
+  body {
+    background-color: white !important;
+  }
+  
+  * {
+    box-shadow: none !important;
+    text-shadow: none !important;
+  }
+}
+
+/* Dark mode adjustments */
+.dark .app-card {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.dark .app-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.dark .app-loading-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Tooltip styling */
+.app-tooltip {
+  position: absolute;
+  padding: 6px 10px;
+  background-color: var(--popover);
+  color: var(--popover-foreground);
+  border-radius: 4px;
+  font-size: 0.75rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 50;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+/* Animation for fade-in elements */
+.fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

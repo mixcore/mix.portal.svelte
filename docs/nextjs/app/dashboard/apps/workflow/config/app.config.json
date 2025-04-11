@@ -1,0 +1,91 @@
+{
+  "appId": "workflow",
+  "version": "1.0.0",
+  "displayName": "Workflow Automation",
+  "description": "Visual workflow automation builder for Mixcore",
+  "category": "productivity",
+  "icon": "flow_chart",
+  "author": {
+    "name": "Mixcore Team",
+    "email": "info@mixcore.org",
+    "url": "https://mixcore.org"
+  },
+  "license": "MIT",
+  "entryPoint": "index.tsx",
+  "init": {
+    "initOnInstall": true,
+    "schemaFile": "./mixdb.schema.json",
+    "demoDataFile": "./demo-data.json",
+    "createDefaultPermissions": true
+  },
+  "mainStyles": "app-globals.css",
+  "navigation": {
+    "position": "main",
+    "priority": 5,
+    "menuItem": {
+      "title": "Workflow",
+      "icon": "flow_chart",
+      "url": "/dashboard/apps/workflow",
+      "badge": null,
+      "contextId": "workflow"
+    }
+  },
+  "permissions": [
+    {
+      "name": "workflow.view",
+      "displayName": "View Workflows",
+      "description": "View workflows in the Workflow Automation app"
+    },
+    {
+      "name": "workflow.create",
+      "displayName": "Create Workflows",
+      "description": "Create new workflows"
+    },
+    {
+      "name": "workflow.edit",
+      "displayName": "Edit Workflows",
+      "description": "Edit existing workflows"
+    },
+    {
+      "name": "workflow.delete",
+      "displayName": "Delete Workflows",
+      "description": "Delete workflows"
+    },
+    {
+      "name": "workflow.execute",
+      "displayName": "Execute Workflows",
+      "description": "Manually execute workflows"
+    }
+  ],
+  "settings": {
+    "executionLimit": {
+      "type": "number",
+      "default": 100,
+      "description": "Maximum number of steps a workflow can execute"
+    },
+    "loopLimit": {
+      "type": "number",
+      "default": 10,
+      "description": "Maximum iterations for loops in workflows"
+    },
+    "logLevel": {
+      "type": "select",
+      "options": ["debug", "info", "warn", "error"],
+      "default": "info",
+      "description": "Log level for workflow execution"
+    }
+  },
+  "integrations": {
+    "cms": {
+      "enabled": true,
+      "createContentTypes": true
+    },
+    "mixdb": {
+      "enabled": true
+    },
+    "authentication": {
+      "enabled": true,
+      "requiredRoles": ["Administrator", "Editor"]
+    }
+  }
+} 

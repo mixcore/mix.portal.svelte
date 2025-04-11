@@ -1,0 +1,261 @@
+{
+  "workflowTemplates": [
+    {
+      "name": "Content Publishing Workflow",
+      "description": "Automated workflow for content review and publishing",
+      "category": "Content Management",
+      "featured": true,
+      "thumbnail": "/assets/workflow-templates/content-publishing.png",
+      "nodes": [
+        {
+          "id": "node-1",
+          "type": "trigger.schedule",
+          "position": { "x": 100, "y": 100 },
+          "data": {
+            "schedule": "0 9 * * *",
+            "name": "Daily Check"
+          }
+        },
+        {
+          "id": "node-2",
+          "type": "database.query",
+          "position": { "x": 400, "y": 100 },
+          "data": {
+            "collection": "posts",
+            "query": {
+              "status": "draft",
+              "scheduledPublish": { "$lte": "now" }
+            }
+          }
+        },
+        {
+          "id": "node-3",
+          "type": "logic.foreach",
+          "position": { "x": 700, "y": 100 },
+          "data": {}
+        },
+        {
+          "id": "node-4",
+          "type": "database.update",
+          "position": { "x": 1000, "y": 100 },
+          "data": {
+            "collection": "posts",
+            "update": {
+              "status": "published",
+              "publishedAt": "now"
+            }
+          }
+        },
+        {
+          "id": "node-5",
+          "type": "notification.send",
+          "position": { "x": 1300, "y": 100 },
+          "data": {
+            "channel": "system",
+            "template": "content-published"
+          }
+        }
+      ],
+      "edges": [
+        { "id": "edge-1-2", "source": "node-1", "target": "node-2" },
+        { "id": "edge-2-3", "source": "node-2", "target": "node-3" },
+        { "id": "edge-3-4", "source": "node-3", "target": "node-4" },
+        { "id": "edge-4-5", "source": "node-4", "target": "node-5" }
+      ]
+    },
+    {
+      "name": "Form Submission Processing",
+      "description": "Process form submissions with data validation and notification",
+      "category": "Forms",
+      "featured": true,
+      "thumbnail": "/assets/workflow-templates/form-processing.png",
+      "nodes": [
+        {
+          "id": "node-1",
+          "type": "trigger.form",
+          "position": { "x": 100, "y": 100 },
+          "data": {
+            "formId": "contact-form"
+          }
+        },
+        {
+          "id": "node-2",
+          "type": "transform.validate",
+          "position": { "x": 400, "y": 100 },
+          "data": {
+            "schema": {
+              "email": "email",
+              "name": "string",
+              "message": "string"
+            }
+          }
+        },
+        {
+          "id": "node-3",
+          "type": "database.insert",
+          "position": { "x": 700, "y": 100 },
+          "data": {
+            "collection": "form_submissions"
+          }
+        },
+        {
+          "id": "node-4",
+          "type": "email.send",
+          "position": { "x": 1000, "y": 100 },
+          "data": {
+            "to": "{{form.email}}",
+            "subject": "Thank you for your submission",
+            "template": "form-confirmation"
+          }
+        }
+      ],
+      "edges": [
+        { "id": "edge-1-2", "source": "node-1", "target": "node-2" },
+        { "id": "edge-2-3", "source": "node-2", "target": "node-3" },
+        { "id": "edge-3-4", "source": "node-3", "target": "node-4" }
+      ]
+    },
+    {
+      "name": "Data Synchronization",
+      "description": "Sync data between Mixcore and an external API",
+      "category": "Integration",
+      "featured": false,
+      "thumbnail": "/assets/workflow-templates/data-sync.png",
+      "nodes": [
+        {
+          "id": "node-1",
+          "type": "trigger.schedule",
+          "position": { "x": 100, "y": 100 },
+          "data": {
+            "schedule": "0 */2 * * *",
+            "name": "Every 2 hours"
+          }
+        },
+        {
+          "id": "node-2",
+          "type": "http.request",
+          "position": { "x": 400, "y": 100 },
+          "data": {
+            "url": "https://api.example.com/data",
+            "method": "GET",
+            "headers": {
+              "Authorization": "Bearer {{env.API_KEY}}"
+            }
+          }
+        },
+        {
+          "id": "node-3",
+          "type": "transform.map",
+          "position": { "x": 700, "y": 100 },
+          "data": {
+            "mapping": {
+              "id": "{{item.id}}",
+              "title": "{{item.name}}",
+              "content": "{{item.description}}",
+              "status": "{{item.active ? 'active' : 'inactive'}}"
+            }
+          }
+        },
+        {
+          "id": "node-4",
+          "type": "database.upsert",
+          "position": { "x": 1000, "y": 100 },
+          "data": {
+            "collection": "synced_items",
+            "key": "id"
+          }
+        }
+      ],
+      "edges": [
+        { "id": "edge-1-2", "source": "node-1", "target": "node-2" },
+        { "id": "edge-2-3", "source": "node-2", "target": "node-3" },
+        { "id": "edge-3-4", "source": "node-3", "target": "node-4" }
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "name": "Weekly Report Generator",
+      "description": "Generate and email weekly activity reports",
+      "active": true,
+      "schedule": {
+        "enabled": true,
+        "cron": "0 9 * * MON"
+      },
+      "nodes": [
+        {
+          "id": "node-1",
+          "type": "trigger.schedule",
+          "position": { "x": 100, "y": 100 },
+          "data": {
+            "schedule": "0 9 * * MON",
+            "name": "Monday Morning"
+          }
+        },
+        {
+          "id": "node-2",
+          "type": "database.query",
+          "position": { "x": 400, "y": 100 },
+          "data": {
+            "collection": "page_views",
+            "query": {
+              "timestamp": {
+                "$gte": "{{now - 7d}}",
+                "$lte": "{{now}}"
+              }
+            },
+            "groupBy": {
+              "_id": "$pageId",
+              "count": { "$sum": 1 }
+            },
+            "sort": { "count": -1 }
+          }
+        },
+        {
+          "id": "node-3",
+          "type": "transform.aggregate",
+          "position": { "x": 700, "y": 100 },
+          "data": {
+            "operations": [
+              { "type": "sum", "field": "count", "as": "totalViews" },
+              { "type": "average", "field": "count", "as": "avgViews" },
+              { "type": "max", "field": "count", "as": "maxViews" }
+            ]
+          }
+        },
+        {
+          "id": "node-4",
+          "type": "transform.template",
+          "position": { "x": 1000, "y": 100 },
+          "data": {
+            "template": "weekly-report",
+            "variables": {
+              "startDate": "{{now - 7d | date('YYYY-MM-DD')}}",
+              "endDate": "{{now | date('YYYY-MM-DD')}}",
+              "totalViews": "{{totalViews}}",
+              "avgViews": "{{avgViews}}",
+              "maxViews": "{{maxViews}}",
+              "topPages": "{{result}}"
+            }
+          }
+        },
+        {
+          "id": "node-5",
+          "type": "email.send",
+          "position": { "x": 1300, "y": 100 },
+          "data": {
+            "to": ["admin@example.com", "reports@example.com"],
+            "subject": "Weekly Activity Report: {{startDate}} to {{endDate}}",
+            "body": "{{renderResult}}"
+          }
+        }
+      ],
+      "edges": [
+        { "id": "edge-1-2", "source": "node-1", "target": "node-2" },
+        { "id": "edge-2-3", "source": "node-2", "target": "node-3" },
+        { "id": "edge-3-4", "source": "node-3", "target": "node-4" },
+        { "id": "edge-4-5", "source": "node-4", "target": "node-5" }
+      ]
+    }
+  ]
+} 

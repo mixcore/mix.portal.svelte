@@ -1,0 +1,157 @@
+/* Projects mini-app specific styles */
+
+/* Layout and container */
+.projects-app-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.projects-app-header {
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.projects-app-content {
+  flex: 1;
+}
+
+/* Container mode overrides */
+main[data-app-view="projects-app"] {
+  height: 100vh !important;
+  overflow: hidden !important;
+}
+
+.projects-app-active .dashboard-content {
+  height: 100% !important;
+  padding: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Gantt chart specific styles */
+.gantt-view-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.task-bar {
+  transition: all 0.2s ease-in-out;
+}
+
+.task-bar:hover {
+  opacity: 1;
+  z-index: 10;
+  filter: brightness(1.1);
+}
+
+/* Board view specific styles */
+.board-column {
+  height: fit-content;
+  max-height: calc(100vh - 172px - 120px);
+}
+
+/* Responsive adjustments */
+@media (max-height: 800px) {
+  .projects-app-header .ribbon-content {
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+  
+  .projects-app-content {
+    height: calc(100vh - 150px) !important;
+  }
+  
+  .ribbon-tabs button {
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+  }
+
+  .board-column {
+    max-height: calc(100vh - 150px - 120px);
+  }
+}
+
+/* Printing styles for reports */
+@media print {
+  .projects-app-header,
+  .gantt-toolbar,
+  .board-column > div:first-child {
+    display: none;
+  }
+  
+  .projects-app-content,
+  .gantt-view,
+  .task-rows {
+    height: auto !important;
+    overflow: visible !important;
+  }
+  
+  .projects-app-shell {
+    height: auto;
+  }
+}
+
+/* Theme-specific adjustments */
+.dark .projects-app-header {
+  background-color: hsl(var(--card));
+  border-color: hsl(var(--border));
+}
+
+.dark .ribbon-content {
+  background-color: hsl(var(--secondary));
+}
+
+.dark .gantt-toolbar {
+  background-color: hsl(var(--secondary));
+}
+
+.dark .task-name-column,
+.dark .timeline-header .bg-gray-50 {
+  background-color: hsl(var(--secondary));
+  color: hsl(var(--secondary-foreground));
+}
+
+.dark .date-header.bg-gray-100 {
+  background-color: hsl(var(--muted));
+}
+
+/* Animation effects */
+@keyframes taskAppear {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.task-row {
+  animation: taskAppear 0.3s ease-out;
+}
+
+/* Utility classes */
+.projects-app .truncate-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Project list specific styles */
+.project-list-container .table-header-cell {
+  transition: background-color 0.15s ease;
+}
+
+.project-list-container .sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: white;
+}
+
+.dark .project-list-container .sticky-header {
+  background-color: hsl(var(--card));
+} 

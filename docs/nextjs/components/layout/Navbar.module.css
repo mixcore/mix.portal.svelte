@@ -1,0 +1,14 @@
+.navbar {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.brand {
+    font-weight: 700;
+    color: white !important;
+}
+
+.brand:hover {
+    color: rgba(255, 255, 255, 0.9) !important;
+}

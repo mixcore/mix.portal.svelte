@@ -1,0 +1,186 @@
+{
+  "appId": "blogs",
+  "version": "1.0.0",
+  "displayName": "Blogs",
+  "description": "A modern blogging platform similar to Ghost, powered by Mixcore CMS API",
+  "category": "content",
+  "icon": "post",
+  "author": {
+    "name": "Mixcore Team",
+    "email": "support@mixcore.org",
+    "url": "https://mixcore.org"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mixcore/mix.portal.react"
+  },
+  "entryPoint": "index.tsx",
+  "init": {
+    "initOnInstall": true,
+    "schemaFile": "./mixdb.schema.json",
+    "demoDataFile": "./demo-data.json",
+    "createDefaultPermissions": true
+  },
+  "mainStyles": "app-globals.css",
+  "navigation": {
+    "position": "main",
+    "priority": 5,
+    "menuItem": {
+      "title": "Blogs",
+      "icon": "post",
+      "url": "/dashboard/apps/blogs",
+      "badge": null,
+      "contextId": "blogs"
+    }
+  },
+  "permissions": [
+    {
+      "name": "blogs.view",
+      "displayName": "View Blogs",
+      "description": "Can view blogs"
+    },
+    {
+      "name": "blogs.create",
+      "displayName": "Create Blog Posts",
+      "description": "Can create new blog posts"
+    },
+    {
+      "name": "blogs.edit",
+      "displayName": "Edit Blog Posts",
+      "description": "Can edit blog posts"
+    },
+    {
+      "name": "blogs.delete",
+      "displayName": "Delete Blog Posts",
+      "description": "Can delete blog posts"
+    },
+    {
+      "name": "blogs.publish",
+      "displayName": "Publish Blog Posts",
+      "description": "Can publish and unpublish blog posts"
+    },
+    {
+      "name": "blogs.admin",
+      "displayName": "Administer Blogs",
+      "description": "Can administer blogs configuration"
+    }
+  ],
+  "settings": {
+    "enableFullScreenByDefault": false,
+    "enableNotifications": true,
+    "showDetailPanel": true,
+    "defaultSortField": "createdDateTime",
+    "defaultSortDirection": "desc",
+    "enableComments": true,
+    "enableAttachments": true,
+    "enableSharing": true,
+    "enableScheduledPublishing": true,
+    "enableDrafts": true,
+    "enableFeaturedPosts": true,
+    "enableCategories": true,
+    "enableTags": true,
+    "enableAuthors": true,
+    "enableSEO": true,
+    "enableAnalytics": true,
+    "enableEmailSubscription": true
+  },
+  "integrations": {
+    "cms": {
+      "enabled": true,
+      "createContentTypes": true
+    },
+    "mixdb": {
+      "enabled": true
+    },
+    "authentication": {
+      "enabled": true,
+      "requiredRoles": ["Administrator", "Editor", "Author", "Member"]
+    },
+    "notifications": {
+      "enabled": true,
+      "supportedChannels": ["inApp", "email"]
+    },
+    "search": {
+      "enabled": true,
+      "indexContent": true
+    }
+  },
+  "ui": {
+    "theme": {
+      "useSystemTheme": true,
+      "colors": {
+        "primary": "blue",
+        "secondary": "gray",
+        "accent": "purple",
+        "danger": "red",
+        "success": "green",
+        "warning": "amber"
+      }
+    },
+    "layout": {
+      "fluid": true,
+      "container": "max-w-7xl",
+      "padding": "p-4 md:p-6"
+    },
+    "animations": {
+      "enabled": true,
+      "transition": "ease-in-out"
+    }
+  },
+  "storage": {
+    "local": {
+      "enabled": true,
+      "prefix": "mixcore_blogs_"
+    },
+    "persistent": {
+      "enabled": true,
+      "schema": "./mixdb.schema.json"
+    }
+  },
+  "extensions": {
+    "dashboard": {
+      "widgets": [
+        {
+          "id": "blogs-summary",
+          "title": "Blog Summary",
+          "description": "Shows a summary of blog posts and analytics",
+          "size": "normal",
+          "permissions": ["blogs.view"]
+        },
+        {
+          "id": "recent-posts",
+          "title": "Recent Posts",
+          "description": "Shows recent blog posts",
+          "size": "normal",
+          "permissions": ["blogs.view"]
+        },
+        {
+          "id": "post-analytics",
+          "title": "Post Analytics",
+          "description": "Shows analytics for blog posts",
+          "size": "large",
+          "permissions": ["blogs.view", "blogs.admin"]
+        }
+      ]
+    },
+    "contextMenu": {
+      "items": [
+        {
+          "id": "open-in-blogs",
+          "title": "Open in Blogs",
+          "icon": "post",
+          "condition": "item.type === 'blog-post'",
+          "action": "openInApp",
+          "permissions": ["blogs.view"]
+        }
+      ]
+    }
+  },
+  "documentation": {
+    "gettingStarted": "README.md",
+    "userGuide": "docs/USER-GUIDE.md",
+    "apiReference": "docs/API-REFERENCE.md",
+    "developerGuide": "docs/DEVELOPER-GUIDE.md"
+  }
+} 

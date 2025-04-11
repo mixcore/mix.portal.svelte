@@ -1,0 +1,213 @@
+{
+  "blogAuthors": [
+    {
+      "id": "1",
+      "name": "John Doe",
+      "email": "john@example.com",
+      "bio": "John is a tech enthusiast and experienced writer with 10+ years in the industry.",
+      "avatar": "https://picsum.photos/id/1005/300/300",
+      "website": "https://johndoe.com",
+      "twitter": "johndoe",
+      "facebook": "johndoe",
+      "linkedin": "johndoe",
+      "role": "Administrator"
+    },
+    {
+      "id": "2",
+      "name": "Jane Smith",
+      "email": "jane@example.com",
+      "bio": "Jane is a product designer and content strategist focused on user experience.",
+      "avatar": "https://picsum.photos/id/1011/300/300",
+      "website": "https://janesmith.com",
+      "twitter": "janesmith",
+      "facebook": "janesmith",
+      "linkedin": "janesmith",
+      "role": "Editor"
+    },
+    {
+      "id": "3",
+      "name": "Alex Johnson",
+      "email": "alex@example.com",
+      "bio": "Alex is a developer and open source contributor who loves working with web technologies.",
+      "avatar": "https://picsum.photos/id/1012/300/300",
+      "website": "https://alexjohnson.com",
+      "twitter": "alexjohnson",
+      "facebook": "alexjohnson",
+      "linkedin": "alexjohnson",
+      "role": "Author"
+    }
+  ],
+  "blogCategories": [
+    {
+      "id": "1",
+      "name": "Technology",
+      "slug": "technology",
+      "description": "Latest news and updates in technology",
+      "featuredImage": "https://picsum.photos/id/0/800/400",
+      "color": "#3498db"
+    },
+    {
+      "id": "2",
+      "name": "Design",
+      "slug": "design",
+      "description": "Insights on UX/UI and product design",
+      "featuredImage": "https://picsum.photos/id/1/800/400",
+      "color": "#e74c3c"
+    },
+    {
+      "id": "3",
+      "name": "Web Development",
+      "slug": "web-development",
+      "description": "Tutorials and resources for web developers",
+      "featuredImage": "https://picsum.photos/id/2/800/400",
+      "color": "#2ecc71",
+      "parentId": "1"
+    },
+    {
+      "id": "4",
+      "name": "CMS",
+      "slug": "cms",
+      "description": "Content Management Systems and publishing platforms",
+      "featuredImage": "https://picsum.photos/id/3/800/400",
+      "color": "#9b59b6",
+      "parentId": "1"
+    }
+  ],
+  "blogTags": [
+    {
+      "id": "1",
+      "name": "React",
+      "slug": "react",
+      "description": "React JavaScript library"
+    },
+    {
+      "id": "2",
+      "name": "Next.js",
+      "slug": "nextjs",
+      "description": "React framework for production"
+    },
+    {
+      "id": "3",
+      "name": "Mixcore",
+      "slug": "mixcore",
+      "description": "Mixcore CMS platform"
+    },
+    {
+      "id": "4",
+      "name": "Responsive Design",
+      "slug": "responsive-design",
+      "description": "Design that works on all devices"
+    },
+    {
+      "id": "5",
+      "name": "API",
+      "slug": "api",
+      "description": "Application Programming Interfaces"
+    },
+    {
+      "id": "6",
+      "name": "UI/UX",
+      "slug": "ui-ux",
+      "description": "User Interface and User Experience"
+    },
+    {
+      "id": "7",
+      "name": "TypeScript",
+      "slug": "typescript",
+      "description": "Typed JavaScript"
+    },
+    {
+      "id": "8",
+      "name": "Headless CMS",
+      "slug": "headless-cms",
+      "description": "Content management system with a decoupled architecture"
+    }
+  ],
+  "blogPosts": [
+    {
+      "id": "1",
+      "title": "Getting Started with Mixcore CMS",
+      "slug": "getting-started-with-mixcore-cms",
+      "status": "published",
+      "content": "# Getting Started with Mixcore CMS\n\nMixcore CMS is a powerful, open-source content management system built on .NET Core. It provides a modern and flexible platform for creating websites, blogs, and applications.\n\n## Key Features\n\n- **Modular Architecture**: Build your site with reusable components\n- **Headless CMS Capabilities**: Use Mixcore as a headless CMS with its robust API\n- **Multi-tenant Support**: Manage multiple sites from a single installation\n- **Extensible**: Create custom plugins and extensions\n\n## Installation\n\nGetting started with Mixcore is easy. You can install it via Docker, direct download, or by cloning the repository.\n\n```bash\n# Using Docker\ndocker pull mixcore/mix.core:latest\ndocker run -p 5000:80 mixcore/mix.core\n```\n\n## Next Steps\n\nAfter installation, you can log in to the admin dashboard and start building your site. The intuitive interface makes it easy to create and manage content.\n\nCheck out the [documentation](https://docs.mixcore.org) for more information on how to use Mixcore CMS.",
+      "excerpt": "Learn how to get started with Mixcore CMS, an open-source, modular content management system with headless capabilities.",
+      "featuredImage": "https://picsum.photos/id/0/1200/630",
+      "authorId": "1",
+      "categoryIds": ["4"],
+      "tagIds": ["3", "8"],
+      "isFeatured": true,
+      "publishedDate": "2024-03-15T10:00:00Z",
+      "readTime": 5,
+      "metaTitle": "Getting Started with Mixcore CMS - A Comprehensive Guide",
+      "metaDescription": "Learn how to install and configure Mixcore CMS, an open-source, modular content management system with headless capabilities."
+    },
+    {
+      "id": "2",
+      "title": "Building Blog Functionality with Next.js and Mixcore API",
+      "slug": "building-blog-functionality-with-nextjs-and-mixcore-api",
+      "status": "published",
+      "content": "# Building Blog Functionality with Next.js and Mixcore API\n\nIn this tutorial, we'll explore how to build a modern blog using Next.js as the frontend framework and Mixcore CMS API for content management.\n\n## Setting Up Next.js\n\nFirst, let's create a new Next.js project:\n\n```bash\nnpx create-next-app my-blog-app\ncd my-blog-app\n```\n\n## Connecting to Mixcore API\n\nMixcore CMS provides a RESTful API that allows us to fetch content programmatically. Here's how to connect to it:\n\n```typescript\n// lib/api.ts\nconst API_URL = process.env.MIXCORE_API_URL || 'https://api.example.com';\n\nexport async function fetchPosts() {\n  const res = await fetch(`${API_URL}/api/v2/rest/mixcore/post-content`);\n  const data = await res.json();\n  return data.items;\n}\n\nexport async function fetchPostBySlug(slug: string) {\n  const res = await fetch(\n    `${API_URL}/api/v2/rest/mixcore/post-content?filter=slug eq '${slug}'`\n  );\n  const data = await res.json();\n  return data.items[0];\n}\n```\n\n## Creating Blog Pages\n\nWith our API connection set up, we can now create pages to display our blog posts:\n\n```jsx\n// pages/blog/index.js\nimport { fetchPosts } from '@/lib/api';\n\nexport default function BlogIndex({ posts }) {\n  return (\n    <div>\n      <h1>Blog</h1>\n      <div className=\"post-grid\">\n        {posts.map(post => (\n          <article key={post.id}>\n            <h2>{post.title}</h2>\n            <p>{post.excerpt}</p>\n            <a href={`/blog/${post.slug}`}>Read more</a>\n          </article>\n        ))}\n      </div>\n    </div>\n  );\n}\n\nexport async function getStaticProps() {\n  const posts = await fetchPosts();\n  return {\n    props: { posts },\n    revalidate: 60\n  };\n}\n```\n\n## Conclusion\n\nBy combining Next.js and Mixcore API, we've created a powerful blog platform with excellent performance and flexibility. This approach gives you the benefits of both worlds: the flexibility of a headless CMS and the performance of a modern React framework.",
+      "excerpt": "Learn how to build a modern blog using Next.js as the frontend framework and Mixcore CMS API for content management.",
+      "featuredImage": "https://picsum.photos/id/160/1200/630",
+      "authorId": "3",
+      "categoryIds": ["1", "3", "4"],
+      "tagIds": ["1", "2", "3", "5", "7"],
+      "isFeatured": true,
+      "publishedDate": "2024-03-18T14:30:00Z",
+      "readTime": 8,
+      "metaTitle": "Building Blog Functionality with Next.js and Mixcore API",
+      "metaDescription": "A step-by-step guide to creating a high-performance blog using Next.js and Mixcore CMS API."
+    },
+    {
+      "id": "3",
+      "title": "Modern UI Design Patterns for Content-Rich Applications",
+      "slug": "modern-ui-design-patterns-for-content-rich-applications",
+      "status": "published",
+      "content": "# Modern UI Design Patterns for Content-Rich Applications\n\nWhen building content-rich applications like blogs, news sites, or documentation platforms, certain UI design patterns have proven to be effective. In this post, we'll explore these patterns and how to implement them.\n\n## 1. Card-Based Layout\n\nCard-based layouts organize content into distinct containers, making it easier for users to scan and digest information. Each card typically includes:\n\n- A featured image\n- A title\n- A brief excerpt\n- Metadata (author, date, categories)\n- Call-to-action\n\n## 2. Content Grids\n\nContent grids arrange multiple content pieces in a structured layout. They work well for:\n\n- Blog post listings\n- Image galleries\n- Product catalogs\n\n## 3. Infinite Scroll vs. Pagination\n\nBoth approaches have their merits:\n\n- **Infinite Scroll**: Better for discovery and browsing\n- **Pagination**: Better for search and returning to specific content\n\n## 4. Dark Mode\n\nOffering a dark mode can improve readability and reduce eye strain, especially for content consumed at night. Implementation tips:\n\n- Use CSS variables for color schemes\n- Consider automatic switching based on system preferences\n- Ensure sufficient contrast ratios\n\n## 5. Responsive Typography\n\nTypography should scale gracefully across devices:\n\n```css\n:root {\n  --font-size-base: 1rem;\n  --line-height-base: 1.5;\n  --font-size-h1: clamp(2rem, 5vw, 3rem);\n  --font-size-h2: clamp(1.5rem, 4vw, 2.25rem);\n}\n\nh1 {\n  font-size: var(--font-size-h1);\n  line-height: 1.2;\n}\n```\n\n## Conclusion\n\nThese design patterns provide a foundation for building user-friendly, content-rich applications. When implementing them, always prioritize readability, accessibility, and performance to create the best experience for your users.",
+      "excerpt": "Discover effective UI design patterns for content-rich applications like blogs, news sites, and documentation platforms.",
+      "featuredImage": "https://picsum.photos/id/180/1200/630",
+      "authorId": "2",
+      "categoryIds": ["2"],
+      "tagIds": ["4", "6"],
+      "isFeatured": false,
+      "publishedDate": "2024-03-20T09:15:00Z",
+      "readTime": 6,
+      "metaTitle": "Modern UI Design Patterns for Content-Rich Applications",
+      "metaDescription": "Explore effective UI design patterns and techniques for building user-friendly content-rich applications like blogs and news sites."
+    },
+    {
+      "id": "4",
+      "title": "Implementing a Headless Blog with Mixcore and React",
+      "slug": "implementing-a-headless-blog-with-mixcore-and-react",
+      "status": "draft",
+      "content": "# Implementing a Headless Blog with Mixcore and React\n\nThis is a draft post about implementing a headless blog architecture using Mixcore CMS and React. The content will be expanded with code examples and detailed explanations.\n\n## Planned Sections\n\n1. Understanding Headless CMS Architecture\n2. Setting up Mixcore as a Content Backend\n3. Building a React Frontend\n4. Content Fetching and Caching Strategies\n5. SEO Considerations\n6. Deployment Options",
+      "excerpt": "Learn how to implement a headless blog architecture using Mixcore CMS as the backend and React for the frontend.",
+      "featuredImage": "https://picsum.photos/id/20/1200/630",
+      "authorId": "3",
+      "categoryIds": ["1", "3", "4"],
+      "tagIds": ["1", "3", "8"],
+      "isFeatured": false,
+      "scheduledDate": "2024-05-01T12:00:00Z",
+      "readTime": 10,
+      "metaTitle": "Implementing a Headless Blog with Mixcore and React",
+      "metaDescription": "A comprehensive guide to building a headless blog using Mixcore CMS as the backend and React for the frontend."
+    },
+    {
+      "id": "5",
+      "title": "Content Optimization Strategies for Blogs",
+      "slug": "content-optimization-strategies-for-blogs",
+      "status": "scheduled",
+      "content": "# Content Optimization Strategies for Blogs\n\nCreating high-quality content is just the first step. To ensure your blog posts reach the right audience and perform well, you need effective content optimization strategies.\n\n## 1. SEO Best Practices\n\n- Use descriptive, keyword-rich titles\n- Optimize meta descriptions\n- Include relevant keywords naturally throughout the content\n- Use proper heading structure (H1, H2, H3, etc.)\n- Optimize images with alt text\n\n## 2. Readability Improvements\n\n- Use short paragraphs (3-4 sentences max)\n- Include subheadings to break up content\n- Use bullet points and numbered lists\n- Incorporate relevant images and diagrams\n- Utilize whitespace effectively\n\n## 3. Content Structure\n\n- Start with a compelling introduction\n- Present the main content in a logical flow\n- Include examples and case studies\n- End with a clear conclusion and call-to-action\n\n## 4. Technical Optimization\n\n- Ensure fast loading times\n- Make content mobile-friendly\n- Use responsive images\n- Implement proper schema markup\n- Set up canonical URLs\n\n## 5. Content Update Strategy\n\n- Regularly audit existing content\n- Update outdated information\n- Expand thin content\n- Consolidate similar topics\n- Repurpose successful content for different formats\n\n## Conclusion\n\nContent optimization is an ongoing process. By implementing these strategies, you can improve the performance of your blog posts and provide a better experience for your readers.",
+      "excerpt": "Discover effective strategies to optimize your blog content for better reach, engagement, and conversion.",
+      "featuredImage": "https://picsum.photos/id/42/1200/630",
+      "authorId": "2",
+      "categoryIds": ["2", "4"],
+      "tagIds": ["6", "8"],
+      "isFeatured": false,
+      "scheduledDate": "2024-04-10T08:00:00Z",
+      "readTime": 7,
+      "metaTitle": "Content Optimization Strategies for Blogs",
+      "metaDescription": "Learn practical strategies to optimize your blog content for better reach, engagement, and conversion rates."
+    }
+  ]
+} 

@@ -1,0 +1,233 @@
+/* WhatsApp Template Styles */
+.canvasWrapper {
+  height: 600px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--slate-50);
+  position: relative;
+}
+
+/* Custom node styles for this template */
+.whatsappNode {
+  border: 2px solid #25D366;
+  background-color: white;
+}
+
+.whatsappNode .nodeIcon {
+  background-color: #25D366;
+}
+
+.aiNode {
+  border: 2px solid #74aa9c;
+  background-color: white;
+}
+
+.aiNode .nodeIcon {
+  background-color: #74aa9c;
+}
+
+.sheetsNode {
+  border: 2px solid #0f9d58;
+  background-color: white;
+}
+
+.sheetsNode .nodeIcon {
+  background-color: #0f9d58;
+}
+
+.routerNode {
+  border: 2px solid #4285f4;
+  background-color: white;
+}
+
+.routerNode .nodeIcon {
+  background-color: #4285f4;
+}
+
+/* Animation for the flow */
+.flowAnimation {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    stroke-opacity: 0.3;
+  }
+  50% {
+    stroke-opacity: 0.8;
+  }
+  100% {
+    stroke-opacity: 0.3;
+  }
+}
+
+/* Preview controls */
+.previewControls {
+  position: absolute;
+  bottom: 16px;
+  right: 16px;
+  background: white;
+  padding: 8px;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  display: flex;
+  gap: 8px;
+}
+
+.runButton {
+  background-color: #25D366;
+  color: white;
+  border: none;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.editButton {
+  background-color: white;
+  color: #4285f4;
+  border: 1px solid #4285f4;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Settings section */
+.settingsSection {
+  margin-top: 24px;
+  padding: 16px;
+  background-color: var(--slate-50);
+  border-radius: 8px;
+}
+
+.settingsTitle {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.settingsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+
+.settingCard {
+  background: white;
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.settingName {
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.settingValue {
+  color: var(--muted-foreground);
+}
+
+/* Flow animation effects */
+.nodeAnimation {
+  transition: all 0.3s ease;
+}
+
+.nodeAnimation:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Template stats */
+.statsList {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.statItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.statLabel {
+  font-size: 12px;
+  color: var(--muted-foreground);
+}
+
+.statValue {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* Tooltip styles */
+.tooltip {
+  position: absolute;
+  background: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 1000;
+  max-width: 200px;
+}
+
+/* N8N specific styling */
+.n8nCanvas {
+  --color-background-light: #f9f9f9;
+  --color-background-xlight: #ffffff;
+  --color-foreground-dark: #333;
+  --color-primary: #ff6d5a;
+  --color-success: #1cb28c;
+  --color-warning: #ffcb00;
+  --color-error: #e84855;
+  
+  background-color: var(--color-background-light);
+}
+
+.n8nNode {
+  border-radius: 4px;
+  border: 2px solid transparent;
+  overflow: hidden;
+}
+
+.n8nNodeHeader {
+  padding: 8px;
+  font-weight: 600;
+  color: white;
+}
+
+.n8nNodeContent {
+  padding: 8px;
+  background-color: var(--color-background-xlight);
+}
+
+.n8nEdge {
+  stroke: #999;
+  stroke-width: 2;
+  stroke-dasharray: none;
+}
+
+.n8nEdgeAnimated {
+  stroke-dasharray: 5;
+  animation: dashdraw 0.5s linear infinite;
+}
+
+@keyframes dashdraw {
+  from {
+    stroke-dashoffset: 10;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+} 

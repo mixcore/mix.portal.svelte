@@ -1,0 +1,190 @@
+{
+  "schemas": [
+    {
+      "name": "workflow",
+      "label": "Workflow",
+      "description": "Automated workflow definition",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "searchable": true
+        },
+        {
+          "name": "active",
+          "label": "Active",
+          "type": "boolean",
+          "default": false
+        },
+        {
+          "name": "nodes",
+          "label": "Nodes",
+          "type": "json"
+        },
+        {
+          "name": "edges",
+          "label": "Edges",
+          "type": "json"
+        },
+        {
+          "name": "schedule",
+          "label": "Schedule",
+          "type": "object",
+          "fields": [
+            {
+              "name": "enabled",
+              "label": "Enabled",
+              "type": "boolean",
+              "default": false
+            },
+            {
+              "name": "cron",
+              "label": "Cron Expression",
+              "type": "string"
+            }
+          ]
+        },
+        {
+          "name": "createdBy",
+          "label": "Created By",
+          "type": "reference",
+          "reference": "user",
+          "readOnly": true
+        },
+        {
+          "name": "modifiedBy",
+          "label": "Modified By",
+          "type": "reference",
+          "reference": "user",
+          "readOnly": true
+        },
+        {
+          "name": "lastExecution",
+          "label": "Last Execution",
+          "type": "date",
+          "readOnly": true
+        },
+        {
+          "name": "executionStatus",
+          "label": "Execution Status",
+          "type": "select",
+          "options": ["idle", "running", "completed", "failed"],
+          "default": "idle",
+          "readOnly": true
+        }
+      ]
+    },
+    {
+      "name": "workflowExecution",
+      "label": "Workflow Execution",
+      "description": "Record of workflow execution",
+      "fields": [
+        {
+          "name": "workflow",
+          "label": "Workflow",
+          "type": "reference",
+          "reference": "workflow",
+          "required": true
+        },
+        {
+          "name": "startTime",
+          "label": "Start Time",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "endTime",
+          "label": "End Time",
+          "type": "date"
+        },
+        {
+          "name": "status",
+          "label": "Status",
+          "type": "select",
+          "options": ["running", "completed", "failed"],
+          "default": "running"
+        },
+        {
+          "name": "trigger",
+          "label": "Trigger",
+          "type": "string"
+        },
+        {
+          "name": "error",
+          "label": "Error",
+          "type": "text"
+        },
+        {
+          "name": "steps",
+          "label": "Execution Steps",
+          "type": "json"
+        },
+        {
+          "name": "input",
+          "label": "Input Data",
+          "type": "json"
+        },
+        {
+          "name": "output",
+          "label": "Output Data",
+          "type": "json"
+        }
+      ]
+    },
+    {
+      "name": "workflowTemplate",
+      "label": "Workflow Template",
+      "description": "Pre-defined workflow template",
+      "fields": [
+        {
+          "name": "name",
+          "label": "Name",
+          "type": "string",
+          "required": true,
+          "searchable": true
+        },
+        {
+          "name": "description",
+          "label": "Description",
+          "type": "text",
+          "searchable": true
+        },
+        {
+          "name": "category",
+          "label": "Category",
+          "type": "string",
+          "searchable": true
+        },
+        {
+          "name": "nodes",
+          "label": "Nodes",
+          "type": "json"
+        },
+        {
+          "name": "edges",
+          "label": "Edges",
+          "type": "json"
+        },
+        {
+          "name": "thumbnail",
+          "label": "Thumbnail",
+          "type": "string"
+        },
+        {
+          "name": "featured",
+          "label": "Featured",
+          "type": "boolean",
+          "default": false
+        }
+      ]
+    }
+  ]
+} 

@@ -1,0 +1,122 @@
+{
+  "data": [
+    {
+      "schema": "mixdb_tables",
+      "records": [
+        {
+          "id": "demo_customers",
+          "name": "demo_customers",
+          "displayName": "Customers",
+          "description": "Sample customer data for demonstration",
+          "createdDate": "2023-08-01T00:00:00Z",
+          "createdBy": "system",
+          "isSystem": false
+        },
+        {
+          "id": "demo_products",
+          "name": "demo_products",
+          "displayName": "Products",
+          "description": "Sample product data for demonstration",
+          "createdDate": "2023-08-01T00:00:00Z",
+          "createdBy": "system",
+          "isSystem": false
+        }
+      ]
+    },
+    {
+      "schema": "mixdb_fields",
+      "records": [
+        {
+          "id": "cust_id",
+          "tableId": "demo_customers",
+          "name": "id",
+          "displayName": "ID",
+          "type": "string",
+          "isRequired": true,
+          "isPrimary": true,
+          "isSearchable": false,
+          "sortOrder": 0
+        },
+        {
+          "id": "cust_name",
+          "tableId": "demo_customers",
+          "name": "name",
+          "displayName": "Name",
+          "type": "string",
+          "isRequired": true,
+          "isPrimary": false,
+          "isSearchable": true,
+          "sortOrder": 1
+        },
+        {
+          "id": "cust_email",
+          "tableId": "demo_customers",
+          "name": "email",
+          "displayName": "Email",
+          "type": "string",
+          "isRequired": true,
+          "isPrimary": false,
+          "isSearchable": true,
+          "sortOrder": 2
+        },
+        {
+          "id": "cust_status",
+          "tableId": "demo_customers",
+          "name": "status",
+          "displayName": "Status",
+          "type": "string",
+          "isRequired": true,
+          "isPrimary": false,
+          "isSearchable": false,
+          "defaultValue": "active",
+          "sortOrder": 3
+        },
+        {
+          "id": "prod_id",
+          "tableId": "demo_products",
+          "name": "id",
+          "displayName": "ID",
+          "type": "string",
+          "isRequired": true,
+          "isPrimary": true,
+          "isSearchable": false,
+          "sortOrder": 0
+        },
+        {
+          "id": "prod_name",
+          "tableId": "demo_products",
+          "name": "name",
+          "displayName": "Product Name",
+          "type": "string",
+          "isRequired": true,
+          "isPrimary": false,
+          "isSearchable": true,
+          "sortOrder": 1
+        },
+        {
+          "id": "prod_price",
+          "tableId": "demo_products",
+          "name": "price",
+          "displayName": "Price",
+          "type": "number",
+          "isRequired": true,
+          "isPrimary": false,
+          "isSearchable": false,
+          "sortOrder": 2
+        },
+        {
+          "id": "prod_stock",
+          "tableId": "demo_products",
+          "name": "inStock",
+          "displayName": "In Stock",
+          "type": "boolean",
+          "isRequired": true,
+          "isPrimary": false,
+          "isSearchable": false,
+          "defaultValue": "true",
+          "sortOrder": 3
+        }
+      ]
+    }
+  ]
+} 
