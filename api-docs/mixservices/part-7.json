@@ -1,0 +1,2649 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "mixcore - MixCore Services API endpoints (Part 7)",
+    "version": "v2"
+  },
+  "paths": {
+    "/api/v2/rest/mix-portal/mix-module-data": {
+      "post": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "parameters": [
+          {
+            "name": "LoadNestedData",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MixDatabaseName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PagingState",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Conjunction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixConjunction"
+            }
+          },
+          {
+            "name": "Direction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.MixContentStatus"
+            }
+          },
+          {
+            "name": "SearchMethod",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixCompareOperator"
+            }
+          },
+          {
+            "name": "Columns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchColumns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "After",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Before",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Queries",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.MixQueryField"
+              }
+            }
+          },
+          {
+            "name": "SortByFields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Heart.Model.MixSortByColumn"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModuleDataViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModuleDataViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModuleDataViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-module-data/{id}": {
+      "put": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-module-data/remove-cache/{id}": {
+      "delete": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-module-data/patch-many": {
+      "patch": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-module-data/save-many": {
+      "post": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-module-data/filter": {
+      "post": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModuleDataViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModuleDataViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModuleDataViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-module-data/default": {
+      "get": {
+        "tags": [
+          "Portal - mix Module Data"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModuleDataViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post/search": {
+      "get": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "parameters": [
+          {
+            "name": "ParentId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "ChildId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "LoadNestedData",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MixDatabaseName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PagingState",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Conjunction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixConjunction"
+            }
+          },
+          {
+            "name": "Direction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.MixContentStatus"
+            }
+          },
+          {
+            "name": "SearchMethod",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixCompareOperator"
+            }
+          },
+          {
+            "name": "Columns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchColumns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "After",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Before",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Queries",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.MixQueryField"
+              }
+            }
+          },
+          {
+            "name": "SortByFields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Heart.Model.MixSortByColumn"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post": {
+      "post": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "parameters": [
+          {
+            "name": "LoadNestedData",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MixDatabaseName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PagingState",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Conjunction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixConjunction"
+            }
+          },
+          {
+            "name": "Direction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.MixContentStatus"
+            }
+          },
+          {
+            "name": "SearchMethod",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixCompareOperator"
+            }
+          },
+          {
+            "name": "Columns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchColumns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "After",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Before",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Queries",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.MixQueryField"
+              }
+            }
+          },
+          {
+            "name": "SortByFields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Heart.Model.MixSortByColumn"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post/{id}": {
+      "put": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post/remove-cache/{id}": {
+      "delete": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post/patch-many": {
+      "patch": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post/save-many": {
+      "post": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post/filter": {
+      "post": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel, mix.portal, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/module-post/default": {
+      "get": {
+        "tags": [
+          "Portal - mix Module Post"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Portal.Domain.ViewModels.MixModulePostAssociationViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page": {
+      "post": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "parameters": [
+          {
+            "name": "LoadNestedData",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MixDatabaseName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PagingState",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Conjunction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixConjunction"
+            }
+          },
+          {
+            "name": "Direction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.MixContentStatus"
+            }
+          },
+          {
+            "name": "SearchMethod",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixCompareOperator"
+            }
+          },
+          {
+            "name": "Columns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchColumns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "After",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Before",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Queries",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.MixQueryField"
+              }
+            }
+          },
+          {
+            "name": "SortByFields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Heart.Model.MixSortByColumn"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page/{id}": {
+      "put": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page/remove-cache/{id}": {
+      "delete": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page/patch-many": {
+      "patch": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page/save-many": {
+      "post": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page/filter": {
+      "post": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page/default": {
+      "get": {
+        "tags": [
+          "Portal - mix Page"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content/duplicate/{id}": {
+      "get": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content": {
+      "post": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "parameters": [
+          {
+            "name": "LoadNestedData",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MixDatabaseName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PagingState",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Conjunction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixConjunction"
+            }
+          },
+          {
+            "name": "Direction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.MixContentStatus"
+            }
+          },
+          {
+            "name": "SearchMethod",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixCompareOperator"
+            }
+          },
+          {
+            "name": "Columns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchColumns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "After",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Before",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Queries",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.MixQueryField"
+              }
+            }
+          },
+          {
+            "name": "SortByFields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Heart.Model.MixSortByColumn"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content/{id}": {
+      "put": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content/remove-cache/{id}": {
+      "delete": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content/patch-many": {
+      "patch": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content/save-many": {
+      "post": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content/filter": {
+      "post": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.SearchRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Lib.ViewModels.MixPageContentViewModel, mix.library, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mix-portal/mix-page-content/default": {
+      "get": {
+        "tags": [
+          "Portal - mix Page Content"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Lib.ViewModels.MixPageContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

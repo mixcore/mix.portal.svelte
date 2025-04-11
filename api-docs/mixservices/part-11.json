@@ -1,0 +1,1535 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "mixcore - MixCore Services API endpoints (Part 11)",
+    "version": "v2"
+  },
+  "paths": {
+    "/api/v2/rest/mixcore/post-content/{id}": {
+      "get": {
+        "tags": [
+          "PostContentApi"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mixcore.Domain.ViewModels.PostContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mixcore.Domain.ViewModels.PostContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mixcore.Domain.ViewModels.PostContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/mixcore/post-content/default": {
+      "get": {
+        "tags": [
+          "PostContentApi"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mixcore.Domain.ViewModels.PostContentViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mixcore.Domain.ViewModels.PostContentViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mixcore.Domain.ViewModels.PostContentViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/job-schedule/default": {
+      "get": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/trigger/{name}": {
+      "get": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/trigger/pause/{name}": {
+      "get": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/trigger/resume/{name}": {
+      "get": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/trigger/create": {
+      "post": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/execute/{jobName}": {
+      "get": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "parameters": [
+          {
+            "name": "jobName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/schedule": {
+      "post": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/reschedule": {
+      "post": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Quartz.Models.JobSchedule"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/job": {
+      "get": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/trigger": {
+      "get": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/scheduler/job/{jobName}": {
+      "delete": {
+        "tags": [
+          "Scheduler - api Quartz"
+        ],
+        "parameters": [
+          {
+            "name": "jobName",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/my-shopping-cart": {
+      "get": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/my-orders": {
+      "get": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "Statuses",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Enums.OrderStatus"
+              }
+            }
+          },
+          {
+            "name": "LoadNestedData",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MixDatabaseName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PagingState",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Conjunction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixConjunction"
+            }
+          },
+          {
+            "name": "Direction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.MixContentStatus"
+            }
+          },
+          {
+            "name": "SearchMethod",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixCompareOperator"
+            }
+          },
+          {
+            "name": "Columns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchColumns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "After",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Before",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Queries",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.MixQueryField"
+              }
+            }
+          },
+          {
+            "name": "SortByFields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Heart.Model.MixSortByColumn"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/my-orders/{id}": {
+      "get": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/guest-order/{id}": {
+      "get": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/cancel-order/{id}": {
+      "get": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/add-to-cart": {
+      "post": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/selected-cart-item": {
+      "post": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.CartItemDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/remove-from-cart/{itemId}": {
+      "delete": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/checkout/{gateway}": {
+      "post": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "gateway",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Enums.PaymentGateway"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/checkout-guest/{gateway}": {
+      "post": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "gateway",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Enums.PaymentGateway"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/mix/ecommerce/payment-response": {
+      "get": {
+        "tags": [
+          "Services.ecommerce - api Ecommerce"
+        ],
+        "parameters": [
+          {
+            "name": "orderId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/ecommerce/order-detail/update-order-status/{id}": {
+      "post": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.UpdateOrderStatusDto"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.UpdateOrderStatusDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.UpdateOrderStatusDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.Dtos.UpdateOrderStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/ecommerce/order-detail": {
+      "post": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "object",
+                "additionalProperties": {
+                  "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "parameters": [
+          {
+            "name": "LoadNestedData",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "MixDatabaseName",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Keyword",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Culture",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "FromDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "ToDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "PageIndex",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "PagingState",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SortBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "OrderBy",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "Conjunction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixConjunction"
+            }
+          },
+          {
+            "name": "Direction",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.SortDirection"
+            }
+          },
+          {
+            "name": "Status",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Heart.Enums.MixContentStatus"
+            }
+          },
+          {
+            "name": "SearchMethod",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/Mix.Constant.Enums.MixCompareOperator"
+            }
+          },
+          {
+            "name": "Columns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "SearchColumns",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "After",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Before",
+            "in": "query",
+            "schema": {}
+          },
+          {
+            "name": "Queries",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Shared.Dtos.MixQueryField"
+              }
+            }
+          },
+          {
+            "name": "SortByFields",
+            "in": "query",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/Mix.Heart.Model.MixSortByColumn"
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel, mix.services.ecommerce.lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel, mix.services.ecommerce.lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Heart.Models.PagingResponseModel`1[[Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel, mix.services.ecommerce.lib, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/ecommerce/order-detail/{id}": {
+      "put": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v2/rest/ecommerce/order-detail/remove-cache/{id}": {
+      "delete": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/ecommerce/order-detail/patch-many": {
+      "patch": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "$ref": "#/components/schemas/Newtonsoft.Json.Linq.JToken"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/v2/rest/ecommerce/order-detail/save-many": {
+      "post": {
+        "tags": [
+          "Services.ecommerce - order Detail"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json-patch+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            },
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Mix.Services.Ecommerce.Lib.ViewModels.OrderViewModel"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  }
+}

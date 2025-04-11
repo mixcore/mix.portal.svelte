@@ -1,0 +1,8 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "mixcore",
+    "version": "v2"
+  },
+  "paths": {}
+}
