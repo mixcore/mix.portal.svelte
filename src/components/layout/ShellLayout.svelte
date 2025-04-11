@@ -7,9 +7,11 @@
     // Components
     import Header from './Header.svelte';
     import Sidebar from './Sidebar.svelte';
+    import MiniAppLoader from '../../lib/mini-app/MiniAppLoader.svelte';
     
     // Stores & Types
     import { type AppContext } from '$lib/stores/navigationStore';
+    import { miniAppRegistry } from '../../lib/mini-app/MiniAppRegistry';
     
     // Props - Layout settings
     export let isDarkMode: boolean = false;
@@ -33,6 +35,12 @@
     }>;
     export let condensed: boolean = false; // When true, content is constrained to max width
     export let hideHeader: boolean = false;
+    
+    // Mini-app related props
+    export let miniAppId: string | null = null;
+    export let miniAppUrl: string | null = null;
+    export let miniAppProps: Record<string, any> = {};
+    export let showMiniApp: boolean = false;
     
     // Function props (events)
     export let toggleTheme: () => void;
@@ -58,6 +66,9 @@
         overlayClick: void;
         ready: void;
         resize: { width: number; height: number };
+        miniAppLoad: { appId: string, config: any };
+        miniAppError: { error: Error, appId: string | null };
+        miniAppUnload: { appId: string | null };
     }>();
     
     // Handle overlay click to close the mobile menu
@@ -69,6 +80,19 @@
     function handleSidebarToggle(event: CustomEvent<boolean>) {
         sidebarCollapsed = event.detail;
         updateShellDimensions();
+    }
+    
+    // Handle mini-app events
+    function handleMiniAppLoad(event: CustomEvent<{ appId: string, config: any }>) {
+        dispatch('miniAppLoad', event.detail);
+    }
+    
+    function handleMiniAppError(event: CustomEvent<{ error: Error, appId: string | null }>) {
+        dispatch('miniAppError', event.detail);
+    }
+    
+    function handleMiniAppUnload(event: CustomEvent<{ appId: string | null }>) {
+        dispatch('miniAppUnload', event.detail);
     }
     
     // Initialize shell when mounted
@@ -254,8 +278,20 @@
                 
                 <!-- Page layout wrapper -->
                 <div class={cn("h-full w-full", condensed && "container max-w-7xl mx-auto")}>
-                    <!-- Content is passed via slot -->
-                    <slot />
+                    <!-- Mini-app loader (shown if showMiniApp is true) -->
+                    {#if showMiniApp}
+                        <MiniAppLoader 
+                            appId={miniAppId}
+                            appUrl={miniAppUrl}
+                            appProps={miniAppProps}
+                            on:load={handleMiniAppLoad}
+                            on:error={handleMiniAppError}
+                            on:unload={handleMiniAppUnload}
+                        />
+                    <!-- Regular content slot -->
+                    {:else}
+                        <slot />
+                    {/if}
                 </div>
             </main>
         </div>
