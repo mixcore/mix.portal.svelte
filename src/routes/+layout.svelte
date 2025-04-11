@@ -2,6 +2,7 @@
 	import '../app.css';
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
+	import { initializeThemeVariables } from '$lib/utils';
 	
 	// Layouts & Providers
 	import ShellLayout from '../components/layout/ShellLayout.svelte';
@@ -19,6 +20,7 @@
 	// Initialize the theme based on user preference
 	onMount(() => {
 		initializeTheme();
+		initializeThemeVariables();
 		
 		// Restore layout preferences if any
 		if (browser) {
@@ -105,5 +107,17 @@
 <style>
 	:global(html) {
 		@apply antialiased;
+	}
+	
+	/* Define global CSS variables for sidebar theme */
+	:global(:root) {
+		--sidebar-foreground: theme('colors.foreground');
+		--sidebar-background: theme('colors.background');
+		--sidebar-border: theme('colors.border');
+		--sidebar-accent: theme('colors.accent.DEFAULT');
+		--sidebar-accent-foreground: theme('colors.accent.foreground');
+		--sidebar-ring: theme('colors.ring');
+		--sidebar-primary: theme('colors.primary.DEFAULT');
+		--sidebar-primary-foreground: theme('colors.primary.foreground');
 	}
 </style>

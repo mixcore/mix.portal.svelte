@@ -22,6 +22,13 @@
             name: string;
             path: string;
             icon: any;
+            badge?: number;
+            external?: boolean;
+            items?: {
+                name: string;
+                path: string;
+                badge?: number;
+            }[];
         }[];
     }>;
     export let condensed: boolean = false; // When true, content is constrained to max width
@@ -38,6 +45,13 @@
     let shellReady = false;
     let headerHeight = 56; // Default header height in pixels
     let sidebarCollapsed = false; // Track sidebar collapsed state
+    
+    // User info - in a real app, this would come from a store or API
+    let userFullName = 'John Doe';
+    let userEmail = 'john.doe@example.com';
+    let userAvatar = '';
+    let userInitials = 'JD';
+    let notificationCount = 3; // Notification count example
     
     // Event dispatcher
     const dispatch = createEventDispatcher<{
@@ -93,6 +107,32 @@
             const savedCollapsedState = localStorage.getItem('mixcore_sidebar_collapsed');
             if (savedCollapsedState !== null) {
                 sidebarCollapsed = savedCollapsedState === 'true';
+            }
+        }
+        
+        // Load user info from localStorage or API
+        if (typeof window !== 'undefined') {
+            try {
+                const storedUserName = localStorage.getItem('mixcore_user_name');
+                const storedUserEmail = localStorage.getItem('mixcore_user_email');
+                const storedUserAvatar = localStorage.getItem('mixcore_user_avatar');
+                
+                if (storedUserName) userFullName = storedUserName;
+                if (storedUserEmail) userEmail = storedUserEmail;
+                if (storedUserAvatar) userAvatar = storedUserAvatar;
+                
+                // Generate initials from full name
+                if (userFullName) {
+                    const nameParts = userFullName.split(' ');
+                    if (nameParts.length >= 2) {
+                        userInitials = nameParts[0][0] + nameParts[nameParts.length - 1][0];
+                    } else if (nameParts.length === 1) {
+                        userInitials = nameParts[0].substring(0, 2);
+                    }
+                    userInitials = userInitials.toUpperCase();
+                }
+            } catch (error) {
+                console.warn('Failed to load user data:', error);
             }
         }
         
@@ -161,8 +201,14 @@
             isMobileMenuOpen={isMobileMenuOpen}
             activeNavItems={activeNavItems}
             isCollapsed={sidebarCollapsed}
+            userFullName={userFullName}
+            userEmail={userEmail}
+            userAvatar={userAvatar}
+            userInitials={userInitials}
+            notificationCount={notificationCount}
             on:overlayClick={handleOverlayClick}
             on:toggleCollapsed={handleSidebarToggle}
+            on:userAction={(e) => console.log('User action:', e.detail)}
         />
         
         <!-- Main content container including header and scrollable content -->

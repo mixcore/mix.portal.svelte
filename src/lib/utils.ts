@@ -1,10 +1,37 @@
-import { clsx, type ClassValue } from 'clsx';
+import { type ClassValue, clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 import { cubicOut } from 'svelte/easing';
 import type { TransitionConfig } from 'svelte/transition';
 
+/**
+ * Combine class names with Tailwind CSS utility classes
+ */
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
+}
+
+/**
+ * Initialize CSS variables required for the app
+ * This should be called once when the app is initialized
+ */
+export function initializeThemeVariables() {
+	if (typeof document !== 'undefined') {
+		// Set sidebar width variables
+		document.documentElement.style.setProperty('--sidebar-width', '250px');
+		document.documentElement.style.setProperty('--sidebar-width-icon', '60px');
+		
+		// Set sidebar theming variables
+		document.documentElement.style.setProperty('--sidebar-foreground', 'hsl(var(--foreground))');
+		document.documentElement.style.setProperty('--sidebar-background', 'hsl(var(--background))');
+		document.documentElement.style.setProperty('--sidebar-border', 'hsl(var(--border))');
+		document.documentElement.style.setProperty('--sidebar-accent', 'hsl(var(--accent))');
+		document.documentElement.style.setProperty('--sidebar-accent-foreground', 'hsl(var(--accent-foreground))');
+		document.documentElement.style.setProperty('--sidebar-primary', 'hsl(var(--primary))');
+		document.documentElement.style.setProperty('--sidebar-primary-foreground', 'hsl(var(--primary-foreground))');
+		document.documentElement.style.setProperty('--sidebar-ring', 'hsl(var(--ring))');
+		
+		// Any other theme variables that need to be set
+	}
 }
 
 type FlyAndScaleParams = {

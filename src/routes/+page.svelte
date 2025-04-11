@@ -1,95 +1,148 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
-	import PageContainer from '../components/layout/PageContainer.svelte';
-	import LayoutContainer from '../components/layout/LayoutContainer.svelte';
-	import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from '$lib/components/ui/card';
+	import { page } from '$app/stores';
+	import ShellLayout from '../components/layout/ShellLayout.svelte';
+	import { writable } from 'svelte/store';
+	import { 
+		Home,
+		SquareTerminal,
+		Bot,
+		BookOpen,
+		Settings2,
+		Frame,
+		PieChart, 
+		Map,
+		Gallery,
+		GalleryVerticalEnd,
+		Settings
+	} from 'lucide-svelte';
 	
-	// State
-	let isLoading = true;
-	let hasError = false;
-	let errorMessage = '';
+	// Example user state
+	const isDarkMode = writable(false);
+	let isMobileMenuOpen = false;
 	
-	// Breadcrumbs
-	const breadcrumbs = [
-		{ label: 'Dashboard', href: '/' }
+	// App contexts for demo
+	const activeContext = {id: 'acme', name: 'Acme Inc', icon: GalleryVerticalEnd};
+	const appContexts = [
+		{id: 'acme', name: 'Acme Inc', icon: GalleryVerticalEnd},
+		{id: 'personal', name: 'Personal', icon: Home},
+		{id: 'team', name: 'Team Workspace', icon: Frame}
 	];
 	
-	// Load dashboard data
-	onMount(() => {
-		// Simulate API loading
-		setTimeout(() => {
-			try {
-				// Simulate data loaded successfully
-				isLoading = false;
-			} catch (error) {
-				isLoading = false;
-				hasError = true;
-				errorMessage = error instanceof Error ? error.message : 'Failed to load dashboard data';
-			}
-		}, 1000);
-	});
+	// Mock navigation structure matching the reference image
+	const activeNavItems = [
+		{
+			section: "Platform",
+			items: [
+				{
+					name: "Playground",
+					path: "/playground",
+					icon: SquareTerminal,
+					items: [
+						{
+							name: "History",
+							path: "/playground/history"
+						},
+						{
+							name: "Starred",
+							path: "/playground/starred"
+						},
+						{
+							name: "Settings",
+							path: "/playground/settings"
+						}
+					]
+				},
+				{
+					name: "Models",
+					path: "/models",
+					icon: Bot
+				},
+				{
+					name: "Documentation",
+					path: "/docs",
+					icon: BookOpen,
+					external: true
+				},
+				{
+					name: "Settings",
+					path: "/settings",
+					icon: Settings2
+				}
+			]
+		},
+		{
+			section: "Projects",
+			items: [
+				{
+					name: "Design Engineering",
+					path: "/projects/design",
+					icon: Frame,
+					badge: 3
+				},
+				{
+					name: "Sales & Marketing",
+					path: "/projects/sales",
+					icon: PieChart
+				},
+				{
+					name: "Travel",
+					path: "/projects/travel",
+					icon: Map
+				}
+			]
+		}
+	];
+	
+	// Toggle functions
+	function toggleTheme() {
+		isDarkMode.update(v => !v);
+	}
+	
+	function toggleMobileMenu() {
+		isMobileMenuOpen = !isMobileMenuOpen;
+	}
+	
+	function setContext(contextId: string) {
+		console.log('Setting context:', contextId);
+	}
 </script>
 
-<PageContainer
-	title="Dashboard"
-	description="Welcome to Mixcore CMS"
-	breadcrumbs={breadcrumbs}
-	isLoading={isLoading}
-	hasError={hasError}
-	errorMessage={errorMessage}
-	headerBorder={true}
-	size="lg"
+<ShellLayout
+	isDarkMode={$isDarkMode}
+	{isMobileMenuOpen}
+	{activeContext}
+	{appContexts}
+	{activeNavItems}
+	{toggleTheme}
+	{toggleMobileMenu}
+	{setContext}
 >
-	<div slot="header">
-		<button class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
-			Refresh
-		</button>
-	</div>
-	
-	<LayoutContainer padded={false} shadowed={false}>
-		<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-			<Card>
-				<CardHeader>
-					<CardTitle>Content</CardTitle>
-					<CardDescription>Manage your content</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<p>You have 5 pages and 10 posts.</p>
-				</CardContent>
-				<CardFooter>
-					<a href="/content" class="text-sm text-primary hover:underline">View content</a>
-				</CardFooter>
-			</Card>
-			
-			<Card>
-				<CardHeader>
-					<CardTitle>Design</CardTitle>
-					<CardDescription>Customize your site</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<p>You have 2 active themes.</p>
-				</CardContent>
-				<CardFooter>
-					<a href="/design" class="text-sm text-primary hover:underline">Manage design</a>
-				</CardFooter>
-			</Card>
-			
-			<Card>
-				<CardHeader>
-					<CardTitle>Users</CardTitle>
-					<CardDescription>Manage your users</CardDescription>
-				</CardHeader>
-				<CardContent>
-					<p>You have 3 active users.</p>
-				</CardContent>
-				<CardFooter>
-					<a href="/users" class="text-sm text-primary hover:underline">Manage users</a>
-				</CardFooter>
-			</Card>
+	<div class="flex items-center justify-center h-full w-full">
+		<div class="max-w-md mx-auto p-6 bg-card rounded-lg shadow-lg border">
+			<h1 class="text-2xl font-bold mb-4">Welcome to Acme Inc</h1>
+			<p class="mb-4">This is a demonstration of the enhanced sidebar navigation based on the reference image.</p>
+			<p class="mb-4">Features:</p>
+			<ul class="list-disc pl-6 mb-4 space-y-2">
+				<li>Nested navigation items with collapsible sections</li>
+				<li>Improved visual styling matching modern design patterns</li>
+				<li>Badge notifications on menu items</li>
+				<li>External link indicators</li>
+				<li>Keyboard navigation with Alt+number shortcuts</li>
+				<li>Mobile-friendly responsive design</li>
+			</ul>
+			<div class="flex justify-center mt-6">
+				<button class="px-4 py-2 bg-primary text-primary-foreground rounded-md hover:bg-primary/90">
+					Get Started
+				</button>
+			</div>
 		</div>
-	</LayoutContainer>
-	
-	<div slot="footer" class="text-center text-sm text-muted-foreground">
-		<p>Mixcore CMS - Modern Content Management System</p>
 	</div>
-</PageContainer>
+</ShellLayout>
+
+<style>
+	:global(html, body) {
+		height: 100%;
+		margin: 0;
+		padding: 0;
+	}
+</style>
