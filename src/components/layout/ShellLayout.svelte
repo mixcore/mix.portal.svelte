@@ -53,11 +53,16 @@
     let userInitials = 'JD';
     let notificationCount = 3; // Notification count example
     
+    // Detect if current route is a mini-app
+    $: isMiniApp = $page.url.pathname.startsWith('/dashboard/apps/');
+    $: miniAppId = isMiniApp ? $page.url.pathname.split('/')[3] : null;
+    
     // Event dispatcher
     const dispatch = createEventDispatcher<{
         overlayClick: void;
         ready: void;
         resize: { width: number; height: number };
+        appLoaded: { appId: string };
     }>();
     
     // Handle overlay click to close the mobile menu
@@ -80,6 +85,11 @@
         void tick().then(() => {
             updateShellDimensions();
             shellReady = true;
+            
+            // Notify when a mini-app is loaded
+            if (isMiniApp && miniAppId) {
+                dispatch('appLoaded', { appId: miniAppId });
+            }
         });
         
         // Add resize listener
@@ -239,9 +249,11 @@
             <main 
                 id="main-content"
                 class={cn(
-                    "flex-1 overflow-auto relative p-4 md:p-6"
+                    "flex-1 overflow-auto relative",
+                    isMiniApp ? "p-0" : "p-4 md:p-6" 
                 )}
                 data-app-context={activeContext.id}
+                data-mini-app={isMiniApp ? miniAppId : null}
                 bind:this={mainElement}
             >
                 <!-- Skip to content link for accessibility -->
@@ -252,23 +264,48 @@
                     Skip to content
                 </a>
                 
-                <!-- Page layout wrapper -->
-                <div class={cn("h-full w-full", condensed && "container max-w-7xl mx-auto")}>
+                <!-- Standard content or mini-app container -->
+                {#if isMiniApp}
+                    <!-- Mini-App Shell Container -->
+                    <div class="mini-app-container h-full overflow-hidden flex flex-col">
+                        <slot />
+                    </div>
+                {:else}
+                    <!-- Standard content -->
                     <slot />
-                </div>
+                {/if}
             </main>
         </div>
     </div>
 </div>
 
 <style>
-    /* Shell-specific global styles */
-    :global(body) {
-        @apply overflow-hidden;
+    /* Shell styles */
+    :global(.shell-ready) {
+        opacity: 1;
+        transition: opacity 0.3s ease-in-out;
     }
     
-    /* Focus styles for keyboard navigation */
-    :global(:focus-visible) {
-        @apply outline-2 outline-offset-2 outline-primary;
+    :global(.shell-loading) {
+        opacity: 0;
+    }
+    
+    /* Mini-app container styles */
+    .mini-app-container {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        border-radius: 0;
+        background-color: var(--app-background, inherit);
+    }
+    
+    /* Animation for mini-app transitions */
+    @keyframes fadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+    
+    .mini-app-container {
+        animation: fadeIn 0.3s ease-in-out;
     }
 </style> 

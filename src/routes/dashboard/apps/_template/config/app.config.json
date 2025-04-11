@@ -1,0 +1,74 @@
+{
+  "appId": "template",
+  "version": "1.0.0",
+  "displayName": "Template App",
+  "description": "A starter template for creating Mixcore mini-apps",
+  "category": "development",
+  "icon": "database",
+  "author": {
+    "name": "Mixcore Team",
+    "email": "hello@mixcore.org",
+    "url": "https://mixcore.org"
+  },
+  "license": "MIT",
+  "entryPoint": "+page.svelte",
+  "init": {
+    "initOnInstall": true,
+    "schemaFile": "./mixdb.schema.json",
+    "demoDataFile": "./demo-data.json",
+    "createDefaultPermissions": true
+  },
+  "mainStyles": "app-globals.css",
+  "navigation": {
+    "position": "main",
+    "priority": 5,
+    "menuItem": {
+      "title": "Template App",
+      "icon": "database",
+      "url": "/dashboard/apps/template",
+      "badge": null,
+      "contextId": "template"
+    }
+  },
+  "permissions": [
+    {
+      "name": "template.view",
+      "displayName": "View Template App",
+      "description": "Allows viewing the Template App"
+    },
+    {
+      "name": "template.edit",
+      "displayName": "Edit Template Data",
+      "description": "Allows editing data in the Template App"
+    },
+    {
+      "name": "template.admin",
+      "displayName": "Template Admin",
+      "description": "Full administrative access to the Template App"
+    }
+  ],
+  "settings": {
+    "defaultTab": "dashboard",
+    "enableNotifications": true,
+    "enableDataSync": true,
+    "themeColor": "#3b82f6"
+  },
+  "integrations": {
+    "cms": {
+      "enabled": true,
+      "createContentTypes": true
+    },
+    "mixdb": {
+      "enabled": true
+    },
+    "authentication": {
+      "enabled": true,
+      "requiredRoles": ["Administrator", "Editor"]
+    },
+    "localization": {
+      "enabled": true,
+      "defaultCulture": "en-US",
+      "supportedCultures": ["en-US", "fr-FR", "es-ES", "ar-SA"]
+    }
+  }
+} 

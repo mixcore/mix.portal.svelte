@@ -1,0 +1,189 @@
+{
+  "schemaVersion": "1.0",
+  "collections": [
+    {
+      "name": "template_items",
+      "displayName": "Template Items",
+      "description": "Sample collection for template mini-app",
+      "fields": [
+        {
+          "name": "title",
+          "type": "string",
+          "required": true,
+          "displayName": "Title",
+          "description": "Item title",
+          "validation": {
+            "minLength": 3,
+            "maxLength": 200
+          }
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false,
+          "displayName": "Description",
+          "description": "Item description"
+        },
+        {
+          "name": "status",
+          "type": "string",
+          "required": true,
+          "displayName": "Status",
+          "description": "Item status",
+          "defaultValue": "draft",
+          "options": [
+            { "value": "draft", "label": "Draft" },
+            { "value": "published", "label": "Published" },
+            { "value": "archived", "label": "Archived" }
+          ]
+        },
+        {
+          "name": "priority",
+          "type": "number",
+          "required": false,
+          "displayName": "Priority",
+          "description": "Item priority (0-100)",
+          "validation": {
+            "min": 0,
+            "max": 100
+          }
+        },
+        {
+          "name": "category",
+          "type": "reference",
+          "required": false,
+          "displayName": "Category",
+          "description": "Item category",
+          "reference": {
+            "collection": "template_categories",
+            "displayField": "name"
+          }
+        },
+        {
+          "name": "tags",
+          "type": "array",
+          "required": false,
+          "displayName": "Tags",
+          "description": "Item tags",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "createdDate",
+          "type": "datetime",
+          "required": true,
+          "displayName": "Created Date",
+          "description": "Date when item was created",
+          "defaultValue": "now()"
+        },
+        {
+          "name": "modifiedDate",
+          "type": "datetime",
+          "required": false,
+          "displayName": "Modified Date",
+          "description": "Date when item was last modified"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "template_items_title_idx",
+          "fields": ["title"],
+          "unique": false
+        },
+        {
+          "name": "template_items_status_idx",
+          "fields": ["status"],
+          "unique": false
+        }
+      ],
+      "permissions": [
+        {
+          "role": "Administrator",
+          "actions": ["create", "read", "update", "delete"]
+        },
+        {
+          "role": "Editor",
+          "actions": ["create", "read", "update"]
+        },
+        {
+          "role": "Viewer",
+          "actions": ["read"]
+        }
+      ]
+    },
+    {
+      "name": "template_categories",
+      "displayName": "Template Categories",
+      "description": "Categories for template items",
+      "fields": [
+        {
+          "name": "name",
+          "type": "string",
+          "required": true,
+          "displayName": "Name",
+          "description": "Category name",
+          "validation": {
+            "minLength": 2,
+            "maxLength": 50
+          }
+        },
+        {
+          "name": "description",
+          "type": "text",
+          "required": false,
+          "displayName": "Description",
+          "description": "Category description"
+        },
+        {
+          "name": "color",
+          "type": "string",
+          "required": false,
+          "displayName": "Color",
+          "description": "Category color (hex)",
+          "defaultValue": "#3b82f6"
+        },
+        {
+          "name": "icon",
+          "type": "string",
+          "required": false,
+          "displayName": "Icon",
+          "description": "Category icon name",
+          "defaultValue": "folder"
+        },
+        {
+          "name": "parentCategory",
+          "type": "reference",
+          "required": false,
+          "displayName": "Parent Category",
+          "description": "Parent category reference",
+          "reference": {
+            "collection": "template_categories",
+            "displayField": "name"
+          }
+        }
+      ],
+      "indexes": [
+        {
+          "name": "template_categories_name_idx",
+          "fields": ["name"],
+          "unique": true
+        }
+      ],
+      "permissions": [
+        {
+          "role": "Administrator",
+          "actions": ["create", "read", "update", "delete"]
+        },
+        {
+          "role": "Editor",
+          "actions": ["create", "read", "update"]
+        },
+        {
+          "role": "Viewer",
+          "actions": ["read"]
+        }
+      ]
+    }
+  ]
+} 

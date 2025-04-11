@@ -1,0 +1,118 @@
+{
+  "collections": {
+    "template_categories": [
+      {
+        "name": "Development",
+        "description": "Development-related items",
+        "color": "#3b82f6",
+        "icon": "code"
+      },
+      {
+        "name": "Design",
+        "description": "Design-related items",
+        "color": "#8b5cf6",
+        "icon": "paint-brush"
+      },
+      {
+        "name": "Content",
+        "description": "Content-related items",
+        "color": "#10b981",
+        "icon": "file-text"
+      },
+      {
+        "name": "Marketing",
+        "description": "Marketing-related items",
+        "color": "#f59e0b",
+        "icon": "megaphone"
+      },
+      {
+        "name": "Administration",
+        "description": "System administration items",
+        "color": "#ef4444",
+        "icon": "settings"
+      }
+    ],
+    "template_items": [
+      {
+        "title": "Setup Development Environment",
+        "description": "Configure the local development environment with all required tools and dependencies.",
+        "status": "published",
+        "priority": 90,
+        "category": { "reference": "template_categories", "value": "Development" },
+        "tags": ["setup", "development", "environment"],
+        "createdDate": "2023-01-15T10:30:00Z",
+        "modifiedDate": "2023-01-16T14:45:00Z"
+      },
+      {
+        "title": "Create Wireframes",
+        "description": "Design initial wireframes for the new user interface components.",
+        "status": "published",
+        "priority": 80,
+        "category": { "reference": "template_categories", "value": "Design" },
+        "tags": ["design", "ui", "wireframes"],
+        "createdDate": "2023-01-20T09:15:00Z",
+        "modifiedDate": "2023-01-22T11:30:00Z"
+      },
+      {
+        "title": "Write Documentation",
+        "description": "Create comprehensive documentation for the API endpoints and integration options.",
+        "status": "draft",
+        "priority": 70,
+        "category": { "reference": "template_categories", "value": "Content" },
+        "tags": ["documentation", "api", "guides"],
+        "createdDate": "2023-01-25T13:45:00Z",
+        "modifiedDate": null
+      },
+      {
+        "title": "Plan Marketing Campaign",
+        "description": "Develop the marketing strategy for the upcoming product launch.",
+        "status": "draft",
+        "priority": 85,
+        "category": { "reference": "template_categories", "value": "Marketing" },
+        "tags": ["marketing", "campaign", "strategy"],
+        "createdDate": "2023-02-01T11:00:00Z",
+        "modifiedDate": null
+      },
+      {
+        "title": "Configure User Permissions",
+        "description": "Set up role-based access control and user permissions for the application.",
+        "status": "published",
+        "priority": 95,
+        "category": { "reference": "template_categories", "value": "Administration" },
+        "tags": ["security", "users", "permissions", "roles"],
+        "createdDate": "2023-02-05T15:30:00Z",
+        "modifiedDate": "2023-02-07T10:15:00Z"
+      },
+      {
+        "title": "Create Component Library",
+        "description": "Build a reusable component library following the design system guidelines.",
+        "status": "published",
+        "priority": 75,
+        "category": { "reference": "template_categories", "value": "Development" },
+        "tags": ["components", "ui", "library"],
+        "createdDate": "2023-02-10T09:00:00Z",
+        "modifiedDate": "2023-02-12T14:30:00Z"
+      },
+      {
+        "title": "Design System Icons",
+        "description": "Create a comprehensive icon set for the application's design system.",
+        "status": "draft",
+        "priority": 65,
+        "category": { "reference": "template_categories", "value": "Design" },
+        "tags": ["design", "icons", "design-system"],
+        "createdDate": "2023-02-15T13:15:00Z",
+        "modifiedDate": null
+      },
+      {
+        "title": "Setup Analytics",
+        "description": "Implement analytics tracking to measure user engagement and conversion rates.",
+        "status": "archived",
+        "priority": 60,
+        "category": { "reference": "template_categories", "value": "Marketing" },
+        "tags": ["analytics", "tracking", "metrics"],
+        "createdDate": "2023-02-20T10:45:00Z",
+        "modifiedDate": "2023-03-01T09:30:00Z"
+      }
+    ]
+  }
+} 

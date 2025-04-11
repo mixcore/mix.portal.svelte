@@ -1,0 +1,142 @@
+/* Template Mini-App Global Styles */
+
+/* Custom CSS Variables */
+:root {
+    --app-primary: #3b82f6;
+    --app-primary-rgb: 59, 130, 246;
+    --app-secondary: #6366f1;
+    --app-success: #22c55e;
+    --app-error: #ef4444;
+    --app-warning: #f59e0b;
+    --app-info: #3b82f6;
+    
+    /* Background and UI */
+    --app-bg-light: #f8fafc;
+    --app-bg-dark: #0f172a;
+    --app-card-bg-light: #ffffff;
+    --app-card-bg-dark: #1e293b;
+}
+
+/* Dark mode overrides */
+.dark {
+    --app-bg-light: var(--app-bg-dark);
+    --app-card-bg-light: var(--app-card-bg-dark);
+}
+
+/* Typography */
+.template-app h1 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.template-app h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.template-app h3 {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+/* Button overrides for app consistency */
+.template-app .btn-primary {
+    background-color: var(--app-primary);
+    color: white;
+    border: none;
+}
+
+.template-app .btn-primary:hover {
+    background-color: color-mix(in srgb, var(--app-primary) 85%, black);
+}
+
+.template-app .btn-secondary {
+    background-color: var(--app-secondary);
+    color: white;
+    border: none;
+}
+
+/* Card styles */
+.template-app .card {
+    background-color: var(--app-card-bg-light);
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.2s ease-in-out;
+}
+
+.template-app .card:hover {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation utilities */
+.template-app .animate-fade-in {
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.template-app .animate-slide-in {
+    animation: slideIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideIn {
+    from { transform: translateY(10px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Progress bar styles */
+.template-app .progress {
+    height: 0.5rem;
+    border-radius: 9999px;
+    overflow: hidden;
+    background-color: rgba(var(--app-primary-rgb), 0.2);
+}
+
+.template-app .progress-bar {
+    height: 100%;
+    background-color: var(--app-primary);
+    transition: width 0.3s ease-in-out;
+}
+
+/* Status indicators */
+.template-app .status-indicator {
+    display: inline-block;
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+}
+
+.template-app .status-active {
+    background-color: var(--app-success);
+}
+
+.template-app .status-pending {
+    background-color: var(--app-warning);
+}
+
+.template-app .status-inactive {
+    background-color: var(--app-error);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .template-app .mobile-hidden {
+        display: none;
+    }
+    
+    .template-app .mobile-stack {
+        flex-direction: column;
+    }
+}
+
+/* Accessibility focus styles */
+.template-app *:focus-visible {
+    outline: 2px solid var(--app-primary);
+    outline-offset: 2px;
+} 
