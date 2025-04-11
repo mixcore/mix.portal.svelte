@@ -4,9 +4,9 @@ This document provides detailed tracking of the Mixcore migration progress, serv
 
 ## Migration Status Summary
 
-- **Overall Progress**: ~40% Complete
+- **Overall Progress**: ~45% Complete
 - **Current Phase**: Phase 2 - Content Management
-- **Current Focus**: Posts Management Implementation
+- **Current Focus**: Mini-App Framework and Media Management Implementation
 
 ## Component Status
 
@@ -27,7 +27,7 @@ This document provides detailed tracking of the Mixcore migration progress, serv
 | Dialog/Modal | ✅ Complete | Added for confirmations | 2023-04-25 |
 | Checkbox | ❌ Not Started | Needed for forms | - |
 | Radio Group | ❌ Not Started | Needed for forms | - |
-| Tabs | ❌ Not Started | Needed for settings pages | - |
+| Tabs | ✅ Complete | Used in mini-app pages | 2023-06-10 |
 | Toast | ✅ Complete | For notifications | 2023-04-12 |
 | Sheet | ✅ Complete | For mobile navigation | 2023-04-10 |
 
@@ -43,6 +43,7 @@ This document provides detailed tracking of the Mixcore migration progress, serv
 | Footer | ✅ Complete | App footer | 2023-04-10 |
 | Breadcrumbs | ❌ Not Started | For navigation hierarchy | - |
 | PageHeader | ✅ Complete | Standard page headers | 2023-04-15 |
+| ShellLayout | ✅ Complete | Layout component for mini-apps | 2023-06-10 |
 
 ### Feature Components
 
@@ -57,6 +58,17 @@ This document provides detailed tracking of the Mixcore migration progress, serv
 | FileUploader | ❌ Not Started | For media uploads | - |
 | FormBuilder | ❌ Not Started | For dynamic forms | - |
 | Gantt Chart | ✅ Complete | Project management visualization with shadcn UI toolbar | 2023-06-05 |
+| ErrorDisplay | ✅ Complete | Component for displaying error states | 2023-06-10 |
+
+### Mini-App Framework
+
+| Component | Status | Notes | Last Updated |
+|-----------|--------|-------|-------------|
+| MiniAppRegistry | ✅ Complete | Core registry for managing mini-apps | 2023-06-10 |
+| MiniAppLoader | ✅ Complete | Component for loading and rendering mini-apps | 2023-06-10 |
+| ShellLayout | ✅ Complete | Layout component for mini-apps | 2023-06-10 |
+| Apps Marketplace | ✅ Complete | Marketplace UI for browsing and loading mini-apps | 2023-06-10 |
+| Template App | ✅ Complete | Reference implementation for mini-app developers | 2023-06-10 |
 
 ### Mini-App Components
 
@@ -69,6 +81,7 @@ This document provides detailed tracking of the Mixcore migration progress, serv
 | Task | ✅ Complete | Task display component with progress tracking | 2023-06-03 |
 | TaskBoard | 🔄 In Progress | Kanban board for task management | 2023-06-04 |
 | Calendar View | 🔄 In Progress | Calendar visualization of projects | 2023-06-04 |
+| Template App | ✅ Complete | Example mini-app with persistent state | 2023-06-10 |
 
 ## Pages Status
 
@@ -87,6 +100,7 @@ This document provides detailed tracking of the Mixcore migration progress, serv
 |------|-----------|----------------|-------|----------|
 | Main Dashboard | ✅ Complete | 🔄 In Progress | Stats data needs integration | High |
 | Analytics Dashboard | ❌ Not Started | ❌ Not Started | Low priority for now | Low |
+| Apps Marketplace | ✅ Complete | ✅ Complete | Mini-app browsing and loading | High |
 
 ### Content Management - Pages
 
@@ -156,19 +170,33 @@ This document provides detailed tracking of the Mixcore migration progress, serv
 | Form Builder | ❌ Not Started | Visual form designer | - |
 | API Documentation | ✅ Complete | Auto-generated API docs | 2023-05-14 |
 
+## Mini-App Framework Status
+
+| Feature | Status | Notes | Last Updated |
+|---------|--------|-------|-------------|
+| Registry System | ✅ Complete | Core system for app registration and management | 2023-06-10 |
+| App Loader | ✅ Complete | Dynamic loading of mini-apps | 2023-06-10 |
+| App Marketplace | ✅ Complete | UI for browsing and launching apps | 2023-06-10 |
+| State Persistence | ✅ Complete | Support for app state persistence | 2023-06-10 |
+| Styling System | ✅ Complete | Support for app-specific styles | 2023-06-10 |
+| Template App | ✅ Complete | Reference implementation for developers | 2023-06-10 |
+| Developer Documentation | 🔄 In Progress | Guidelines for mini-app development | 2023-06-10 |
+
 ## Sprint Tracking
 
-### Current Sprint (2023-06-01 to 2023-06-15)
+### Current Sprint (2023-06-10 to 2023-06-25)
 
 | Task | Assignee | Status | Due Date |
 |------|----------|--------|----------|
 | Standardize UI components in mini-apps | | ✅ Complete | 2023-06-05 |
 | Update GanttView toolbar with shadcn/ui | | ✅ Complete | 2023-06-05 |
 | Implement dark mode support for all views | | ✅ Complete | 2023-06-05 |
-| Complete Calendar View UI | | 🔄 In Progress | 2023-06-10 |
-| Complete TaskBoard UI | | 🔄 In Progress | 2023-06-10 |
-| Implement Media List | | 🔜 Planned | 2023-06-12 |
-| Create File Upload Component | | 🔜 Planned | 2023-06-15 |
+| Complete Mini-App Framework implementation | | ✅ Complete | 2023-06-10 |
+| Document Mini-App development guidelines | | 🔄 In Progress | 2023-06-15 |
+| Complete Calendar View UI | | 🔄 In Progress | 2023-06-15 |
+| Complete TaskBoard UI | | 🔄 In Progress | 2023-06-15 |
+| Implement Media List | | 🔜 Planned | 2023-06-20 |
+| Create File Upload Component | | 🔜 Planned | 2023-06-25 |
 
 ## Status Legend
 

@@ -14,6 +14,7 @@ docs/
 │   ├── API-GUIDE.md         # API integration guidelines
 │   ├── ANGULAR-TO-SVELTE-PATTERNS.md  # Migration patterns
 │   ├── CODING-STANDARDS.md  # Coding standards & best practices
+│   ├── mini-app-framework.md  # Mini-App development guide
 │   └── ...
 ├── tracking/                # Progress tracking documents
 │   ├── IMPLEMENTATION-PLAN.md # Overall implementation plan
@@ -36,6 +37,7 @@ To work on the migration:
    - [API Guide](./guides/API-GUIDE.md) for API integration
    - [AngularJS-to-Svelte Patterns](./guides/ANGULAR-TO-SVELTE-PATTERNS.md) for conversion patterns
    - [Coding Standards](./guides/CODING-STANDARDS.md) for implementation standards
+   - [Mini-App Framework Guide](./guides/mini-app-framework.md) for mini-app development
 
 ## Helper Script
 
@@ -115,290 +117,181 @@ export const navigationItems = [
 
 ## Mini-App Architecture
 
-Each mini-app in Mixcore should be designed as a self-contained mini-application that can be hot-loaded into the main application. This modular approach allows for better separation of concerns and improved performance through code splitting.
+Mixcore implements a robust Mini-App Framework that enables the creation of modular, pluggable applications that can be dynamically loaded and integrated into the main portal. This architecture provides a standardized way to extend the platform's functionality while maintaining consistency in the user experience.
 
-### Key Concepts
+### Key Components
 
-- **Hot-Loading**: mini-apps load dynamically without requiring full page reloads
-- **Isolated Shell Layouts**: Each mini-app has its own shell layout displayed within the `<main>` element of /dashboard/apps/
-- **Contextual UI**: UI elements adapt based on the active app
-- **Code Splitting**: Only load code necessary for the current app
-- **Authentication Integration**: Built-in authentication sync with dashboard
-- **Role-Based Access Control**: Support for role and permission-based UI adaption
-- **Internationalization**: Multi-language support with culture handling
-- **API Integration**: Standardized API client for consistent data access
+The Mini-App Framework consists of several core components:
 
-### Mini-App Template
+1. **MiniAppRegistry**: A centralized store for registering and managing mini-apps
+   - Implemented as a Svelte store with state persistence
+   - Provides methods for app registration, activation, and dynamic loading
+   - Maintains the state of all registered apps and the currently active app
 
-To accelerate mini-app development, we've created a comprehensive starter template located at `/src/routes/dashboard/apps/_template`. This template provides all the essential components and infrastructure needed to build a fully functional mini-app with minimal setup.
+2. **MiniAppLoader**: A component for loading and rendering mini-apps
+   - Handles asynchronous loading of mini-app modules
+   - Provides error handling and loading states
+   - Exposes events for app lifecycle management
 
-#### Template Features
+3. **ShellLayout**: A container component that provides common UI elements for mini-apps
+   - Creates a consistent layout structure for mini-apps
+   - Adapts to the mini-app's specific requirements
 
-- **Complete Project Structure**: Pre-organized directories for components, layouts, stores, and libraries
-- **Authentication System**: Ready-to-use authentication with role-based access control
-- **Internationalization**: Built-in localization with culture-aware formatting 
-- **API Client**: Type-safe MixDB API client with automatic auth and culture integration
-- **Modern UI Components**: DaisyUI based components with light/dark mode support
-- **Documentation**: Comprehensive README with usage examples and best practices
+### Implementation Details
 
-#### Template Structure
+The Mini-App system is implemented with the following files:
+
+- `src/lib/mini-app/MiniAppRegistry.ts`: Core registry and state management
+- `src/lib/mini-app/MiniAppLoader.svelte`: App loading and rendering component
+- `src/routes/dashboard/apps/`: Directory containing all mini-apps
+- `src/routes/dashboard/apps/_template/`: Reference implementation for mini-app developers
+
+### Mini-App Structure
+
+Each mini-app should be structured as follows:
 
 ```
-mini-app/
-├── app-globals.css          # App-specific styles
+src/routes/dashboard/apps/[app-name]/
 ├── +page.svelte             # Main entry point
-├── +layout.svelte           # App layout
-├── components/              # UI components
-│   └── Dashboard.svelte     # Main dashboard component
-├── config/                  # Configuration files
-│   ├── app.config.json      # App configuration
-│   ├── demo-data.json       # Demo data
-│   └── mixdb.schema.json    # Database schema
-├── stores/                  # Svelte stores
-│   ├── app-store.js         # App state management
-│   └── settings-store.js    # App settings management
-├── lib/                     # Utility functions and types
-│   ├── mixdb-api.js         # MixDB API client for data access
-│   ├── auth.js              # Authentication and authorization
-│   ├── culture.js           # Localization and culture handling
-│   ├── types.js             # Common types for API interaction
-│   └── index.js             # Exports all utilities for easy importing
+├── components/              # App-specific components
+├── stores/                  # App-specific stores
+└── lib/                     # App-specific utilities
 ```
 
-#### Authentication & Role-Based Access Control
+### Mini-App Configuration
 
-The template includes a robust authentication system that integrates with Mixcore Dashboard:
+Mini-apps are registered with the registry using a standardized configuration object:
 
-```javascript
-// Initialize the auth service
-import { createAuthStore } from '$lib/auth';
-
-const authStore = createAuthStore({
-  authEndpoint: '/api/auth',
-  persistToken: true
-});
-
-// Check if user has a role
-$: isAdmin = $authStore.hasRole('Admin');
-
-// Check if user has a permission
-$: canEditProducts = $authStore.hasPermission('products.edit');
-
-// Create reusable permission guards
-const checkEditPermission = (permission) => $authStore.hasPermission(permission);
-```
-
-#### Internationalization & Culture Support
-
-The template includes comprehensive internationalization:
-
-```javascript
-// Initialize the culture service
-import { createCultureStore } from '$lib/culture';
-
-const culture = createCultureStore({
-  defaultCulture: 'en-US'
-});
-
-// Create a translator function
-import { _ } from '$lib/i18n';
-const greeting = _('hello', 'Hello');
-
-// Format dates and numbers according to culture
-$: formattedDate = $culture.formatDate(new Date());
-$: formattedNumber = $culture.formatNumber(1234.56);
-$: formattedCurrency = $culture.formatCurrency(99.99, 'EUR');
-```
-
-#### API Integration
-
-The template includes a comprehensive MixDB API client:
-
-```javascript
-// Initialize the API client with auth and culture services
-import { createApiStore } from '$lib/api';
-import { authStore } from '$lib/auth';
-import { cultureStore } from '$lib/culture';
-
-const api = createApiStore({
-  basePath: '/api/v2/mixdb',
-  authStore,         // Automatic auth integration
-  cultureStore,      // Automatic culture integration
-  includeCulture: true  // Include culture in requests
-});
-
-// Get paginated data (auth headers and culture are automatically included)
-$: apiCall = async () => {
-  try {
-    const products = await $api.getItems('product', {
-      page: 1,
-      pageSize: 10,
-      filter: { status: 'Published' }
-    });
-    return products;
-  } catch (error) {
-    console.error('Failed to fetch products', error);
-    return [];
-  }
+```typescript
+interface MiniAppConfig {
+  appId: string;           // Unique identifier
+  version: string;         // Version number
+  displayName: string;     // Human-readable name
+  description: string;     // Short description
+  category: string;        // Category for grouping
+  icon: string;            // Icon path or name
+  entryPoint: string;      // Main entry point path
+  mainStyles?: string;     // Optional CSS file path
+  permissions?: Array<{    // Optional permissions
+    name: string;
+    displayName: string;
+    description: string;
+  }>;
+  navigation?: {           // Optional navigation settings
+    position: string;
+    priority: number;
+    menuItem: {
+      title: string;
+      icon: string;
+      url: string;
+      badge?: number | null;
+      contextId: string;
+    };
+  };
+  author?: {               // Optional author information
+    name: string;
+    email: string;
+    url: string;
+  };
+  settings?: Record<string, any>;      // Optional app settings
+  integrations?: Record<string, any>;  // Optional integrations
 }
 ```
 
-### Implementation
+### Mini-App Registration
 
-1. **App Module Structure**:
-```
-/src/routes/dashboard/apps
-  /cms
-    /components
-    /stores
-    +page.svelte    # Main entry point
-    +layout.svelte  # App-specific shell layout
-    /lib
-      /auth.js      # Authentication utilities
-      /culture.js   # Localization utilities
-      /mixdb-api.js # API client
-      /types.js     # Type definitions
-      /index.js     # Library exports
-  /mixdb
-    ...
-  /design
-    ...
-```
+To register a mini-app, use the following pattern in your app's main component:
 
-2. **App Loading**:
 ```svelte
-<!-- routes/dashboard/apps/[app-name]/+layout.svelte -->
-<script>
-  import { onMount } from 'svelte';
-  import { page } from '$app/stores';
-  import { appStore } from '$lib/stores/app-store';
-  import LoadingSpinner from '$components/LoadingSpinner.svelte';
-
-  let isLoading = true;
-  let error = null;
-
-  onMount(async () => {
-    try {
-      await appStore.initialize();
-      isLoading = false;
-    } catch (err) {
-      error = err;
-      isLoading = false;
-    }
+<script lang="ts">
+  import { onMount, onDestroy } from 'svelte';
+  import { browser } from '$app/environment';
+  import { miniAppRegistry } from '$lib/mini-app/MiniAppRegistry';
+  
+  // Mini-app metadata
+  const APP_ID = 'my-app';
+  const APP_NAME = 'My App';
+  const APP_VERSION = '1.0.0';
+  
+  // Register the app on mount
+  onMount(() => {
+    if (!browser) return;
+    
+    miniAppRegistry.registerApp({
+      config: {
+        appId: APP_ID,
+        version: APP_VERSION,
+        displayName: APP_NAME,
+        description: 'My awesome mini-app',
+        category: 'Tools',
+        icon: '/icons/my-app.svg',
+        entryPoint: '/dashboard/apps/my-app'
+      },
+      default: MyAppComponent, // Component reference
+      styles: '.my-app { color: blue; }' // Optional inline styles
+    });
+    
+    // Set as active app
+    miniAppRegistry.setActiveApp(APP_ID);
+  });
+  
+  // Clean up on destroy
+  onDestroy(() => {
+    if (!browser) return;
+    // Any cleanup code
   });
 </script>
-
-{#if isLoading}
-  <LoadingSpinner />
-{:else if error}
-  <div class="error">Failed to load app: {error.message}</div>
-{:else}
-  <div class="app-shell">
-    <!-- App shell UI -->
-    <slot />
-  </div>
-{/if}
 ```
 
-### Mini-App Requirements
+### State Persistence
 
-Each mini-app must include the following files and features to ensure proper integration with the Mixcore system:
+Mini-apps can persist state using localStorage. Here's a recommended pattern:
 
-#### Required Files
-
-1. **app-globals.css**: App-specific styles that override or extend the global styles
-   ```
-   /src/routes/dashboard/apps/[app-name]/app-globals.css
-   ```
-
-2. **Configuration Files**: Located in the config directory
-   ```
-   /src/routes/dashboard/apps/[app-name]/config/
-   ├── app.config.json      # App configuration
-   ├── demo-data.json       # Sample data for initialization
-   └── mixdb.schema.json    # MixDB schema definition
-   ```
-
-3. **Core Store Files**: For authentication, API, and internationalization
-   ```
-   /src/routes/dashboard/apps/[app-name]/stores/
-   ├── auth-store.js        # Authentication store
-   ├── api-store.js         # API communication
-   └── settings-store.js    # App settings
-   ```
-
-4. **Documentation**: Basic usage and development guides
-   ```
-   /src/routes/dashboard/apps/[app-name]/README.md
-   ```
-
-#### Configuration Schema
-
-The `app.config.json` should follow this structure:
-
-```json
-{
-  "appId": "[unique-app-id]",
-  "version": "1.0.0",
-  "displayName": "App Display Name",
-  "description": "App description",
-  "category": "category",
-  "icon": "material_icon_name",
-  "author": {
-    "name": "Author Name",
-    "email": "email@example.com",
-    "url": "https://example.com"
-  },
-  "license": "MIT",
-  "entryPoint": "+page.svelte",
-  "init": {
-    "initOnInstall": true,
-    "schemaFile": "./mixdb.schema.json",
-    "demoDataFile": "./demo-data.json",
-    "createDefaultPermissions": true
-  },
-  "mainStyles": "app-globals.css",
-  "navigation": {
-    "position": "main",
-    "priority": 5,
-    "menuItem": {
-      "title": "App Name",
-      "icon": "icon_name",
-      "url": "/dashboard/apps/[app-id]",
-      "badge": null,
-      "contextId": "[app-id]"
-    }
-  },
-  "permissions": [
-    {
-      "name": "[app-id].action",
-      "displayName": "Action Name",
-      "description": "Action description"
-    }
-  ],
-  "settings": {
-    // App-specific settings
-  },
-  "integrations": {
-    "cms": {
-      "enabled": true,
-      "createContentTypes": true
-    },
-    "mixdb": {
-      "enabled": true
-    },
-    "authentication": {
-      "enabled": true,
-      "requiredRoles": ["Administrator", "Editor"]
-    },
-    "localization": {
-      "enabled": true,
-      "defaultCulture": "en-US",
-      "supportedCultures": ["en-US", "fr-FR", "es-ES", "ar-SA"]
+```javascript
+// Load state on mount
+onMount(() => {
+  if (browser) {
+    const savedState = localStorage.getItem(`${APP_ID}_state`);
+    if (savedState) {
+      try {
+        myState = JSON.parse(savedState).state || defaultState;
+      } catch (e) {
+        console.error('Failed to load state', e);
+      }
     }
   }
-}
+});
+
+// Save state on destroy
+onDestroy(() => {
+  if (browser) {
+    localStorage.setItem(`${APP_ID}_state`, JSON.stringify({
+      state: myState,
+      lastUpdated: new Date().toISOString()
+    }));
+  }
+});
 ```
+
+### Mini-App Loading
+
+The `MiniAppLoader` component provides a simple way to load mini-apps:
+
+```svelte
+<MiniAppLoader 
+  appId="my-app"             <!-- App ID to load -->
+  appUrl="/path/to/app"      <!-- URL to load if app isn't registered -->
+  autoLoad={true}            <!-- Auto-load on mount -->
+  appProps={{ key: 'value' }} <!-- Props to pass to app -->
+  on:load={handleLoad}       <!-- Event handlers -->
+  on:error={handleError}
+  on:unload={handleUnload}
+/>
+```
+
+### For More Information
+
+For detailed documentation on creating and using mini-apps, refer to the [Mini-App Framework Guide](./guides/mini-app-framework.md).
 
 ## Component Templates
 
@@ -667,63 +560,8 @@ For more information, please refer to:
 
 We are currently in **Phase 2: Content Management** with the following priorities:
 
-- Complete the Pages feature (including edit functionality)
-- Implement Posts management
-- Refine authentication system
+- Complete the Mini-App Framework documentation
+- Implement Media Management features
+- Begin User Management implementation
 
 For detailed status, see the [Progress Tracker](./tracking/PROGRESS-TRACKER.md). 
-
-## UI Component Standardization
-
-To ensure a consistent user experience across the application, all mini-apps and components should use the UI component library based on DaisyUI. This helps maintain a cohesive design language throughout the application.
-
-### Key UI Standardization Requirements
-
-1. **Use DaisyUI Components**: Rather than building custom UI elements, leverage the DaisyUI components for all common UI needs.
-   - Buttons, inputs, selects, and dialogs should use DaisyUI implementations
-   - Toolbars and control panels should be built from DaisyUI primitives
-   
-2. **Dark Mode Support**: All components must support both light and dark themes.
-   - Use theme tokens instead of hardcoded colors
-   - Test all components in both light and dark mode
-   
-3. **Responsive Design**: Components should adapt gracefully to different screen sizes.
-   - Mobile-first approach
-   - Use fluid layouts and responsive spacing
-   
-4. **Accessibility**: Ensure all UI components meet accessibility standards.
-   - Proper keyboard navigation
-   - Screen reader compatibility
-   - Sufficient color contrast
-
-### Example: Toolbar Implementation
-
-When implementing toolbars, such as those in the Gantt chart component:
-
-```svelte
-<!-- ❌ Avoid custom implementations -->
-<div class="toolbar">
-  <button class="custom-button">
-    <span class="icon">+</span>
-    Add
-  </button>
-</div>
-
-<!-- ✅ Use DaisyUI components -->
-<div class="flex items-center gap-2">
-  <button class="btn btn-outline btn-sm">
-    <svg class="w-4 h-4 mr-1" viewBox="0 0 24 24">
-      <path d="M12 4v16m-8-8h16" />
-    </svg>
-    Add
-  </button>
-  <div class="divider divider-horizontal"></div>
-  <div class="btn-group btn-group-horizontal">
-    <button class="btn btn-sm">Day</button>
-    <button class="btn btn-sm btn-active">Week</button>
-    <button class="btn btn-sm">Month</button>
-  </div>
-</div>
-```
-
-By following these standards, we ensure that all parts of the application look and feel consistent, which improves user experience and makes maintenance easier. 

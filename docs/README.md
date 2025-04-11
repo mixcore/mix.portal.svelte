@@ -11,6 +11,7 @@ docs/
 │   ├── API-GUIDE.md         # API integration guidelines
 │   ├── ANGULAR-TO-REACT-PATTERNS.md  # Migration patterns
 │   ├── CODING-STANDARDS.md  # Coding standards & best practices
+│   ├── mini-app-framework.md # Mini-App Framework developer guide
 │   └── ...
 ├── tracking/                # Progress tracking documents
 │   ├── IMPLEMENTATION-PLAN.md # Overall implementation plan
@@ -96,7 +97,8 @@ When working on the migration, follow these steps:
 3. Review the [API Guide](./guides/API-GUIDE.md) if implementing API integration
 4. Follow the [Coding Standards](./guides/CODING-STANDARDS.md) for implementation
 5. Use the [AngularJS-to-React Patterns](./guides/ANGULAR-TO-REACT-PATTERNS.md) for converting existing components
-6. Update the relevant tracking documents as you complete work
+6. If developing mini-apps, refer to the [Mini-App Framework Guide](./guides/mini-app-framework.md)
+7. Update the relevant tracking documents as you complete work
 
 ## Updating Documentation
 
@@ -111,4 +113,5 @@ As the project evolves, it's important to keep this documentation up to date:
 - [Next.js Documentation](https://nextjs.org/docs) - Official Next.js documentation
 - [Tailwind CSS Documentation](https://tailwindcss.com/docs) - Official Tailwind CSS documentation
 - [shadcn/ui Documentation](https://ui.shadcn.com/docs) - shadcn/ui component documentation
-- [React Hook Form Documentation](https://react-hook-form.com/get-started) - Form handling library docs 
+- [React Hook Form Documentation](https://react-hook-form.com/get-started) - Form handling library docs
+- [Svelte Documentation](https://svelte.dev/docs) - Official Svelte documentation 

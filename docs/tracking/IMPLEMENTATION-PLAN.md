@@ -58,7 +58,7 @@ This document outlines the phase-by-phase plan for migrating the Mixcore applica
 - [x] Create page form
 - [x] Edit page form
 
-### Posts Management 🔄
+### Posts Management ✅
 
 - [x] Posts list view
 - [x] Post detail view
@@ -66,6 +66,16 @@ This document outlines the phase-by-phase plan for migrating the Mixcore applica
 - [x] Edit post form
 - [ ] Post categories management
 - [ ] Post tags management
+
+### Mini-App Framework ✅
+
+- [x] Mini-app registry implementation
+- [x] Mini-app loader component
+- [x] Shell layout for mini-apps
+- [x] App marketplace UI
+- [x] Template mini-app implementation
+- [x] Dark mode support for mini-apps
+- [ ] Mini-app developer documentation
 
 ### MixDB Implementation ✅
 
@@ -139,6 +149,10 @@ We are currently in **Phase 2: Content Management** with the following prioritie
 - [x] Integrate rich text editor with post create/edit forms
 - [x] Implement MixDB Data Explorer
 - [x] Add MixDB import/export functionality
+- [x] Implement Mini-App Framework
+- [x] Create Template Mini-App
+- [x] Implement App Marketplace
+- [ ] Create Mini-App Developer Documentation
 - [ ] Implement MixDB Form Builder
 - [ ] Add post categories/tags management
 - [ ] Improve form validation system
@@ -151,6 +165,8 @@ We are currently in **Phase 2: Content Management** with the following prioritie
 - [ ] Improve loading states
 - [x] Standardize mini-app UI components with shadcn/ui
 - [x] Add dark mode support to all views and components
+- [ ] Implement Media List View
+- [ ] Create File Upload Component
 
 ## Critical Dependencies
 
@@ -162,6 +178,7 @@ We are currently in **Phase 2: Content Management** with the following prioritie
 | API client | ✅ Completed | All API integrations |
 | Rich text editor | ✅ Completed | Post/page editing |
 | shadcn/ui component library | ✅ Completed | UI standardization |
+| Mini-App Framework | ✅ Completed | App marketplace and extensions |
 
 ## Risk Management
 
@@ -172,6 +189,7 @@ We are currently in **Phase 2: Content Management** with the following prioritie
 | Rich text editor integration | Medium | Research alternatives |
 | Performance with large datasets | Medium | Implement pagination and virtualization |
 | Browser compatibility | Medium | Test across browsers |
+| Mini-App lifecycle management | Medium | Implement robust registry with error handling |
 
 ## Updates
 
@@ -183,4 +201,5 @@ We are currently in **Phase 2: Content Management** with the following prioritie
 | 2023-04-25 | Developer | Completed Edit Page form |
 | 2023-04-27 | Developer | Implemented RichTextEditor component using TipTap |
 | 2023-04-28 | Developer | Fixed TipTap dependencies - installed @tiptap/react, @tiptap/pm, @tiptap/starter-kit, @tiptap/extension-image, @tiptap/extension-color, @tiptap/extension-text-style, @tiptap/extension-link using pnpm add -w |
-| 2023-06-05 | Developer | Updated GanttView toolbar to use shadcn/ui components and added dark mode support | 
+| 2023-06-05 | Developer | Updated GanttView toolbar to use shadcn/ui components and added dark mode support |
+| 2023-06-10 | Developer | Completed Mini-App Framework implementation with registry, loader, and template app | 
