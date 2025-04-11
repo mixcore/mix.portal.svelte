@@ -1,13 +1,13 @@
 {
-  "appId": "template",
+  "appId": "sample-app",
   "version": "1.0.0",
-  "displayName": "Template App",
-  "description": "A starter template for creating Mixcore mini-apps",
-  "category": "development",
-  "icon": "database",
+  "displayName": "Sample App",
+  "description": "Sample mini-app template for Mixcore",
+  "category": "tools",
+  "icon": "tool",
   "author": {
     "name": "Mixcore Team",
-    "email": "hello@mixcore.org",
+    "email": "info@mixcore.org",
     "url": "https://mixcore.org"
   },
   "license": "MIT",
@@ -23,35 +23,29 @@
     "position": "main",
     "priority": 5,
     "menuItem": {
-      "title": "Template App",
-      "icon": "database",
-      "url": "/dashboard/apps/template",
+      "title": "Sample App",
+      "icon": "tool",
+      "url": "/dashboard/apps/sample-app",
       "badge": null,
-      "contextId": "template"
+      "contextId": "sample-app"
     }
   },
   "permissions": [
     {
-      "name": "template.view",
-      "displayName": "View Template App",
-      "description": "Allows viewing the Template App"
+      "name": "sample-app.view",
+      "displayName": "View Sample App",
+      "description": "Allows viewing the Sample App"
     },
     {
-      "name": "template.edit",
-      "displayName": "Edit Template Data",
-      "description": "Allows editing data in the Template App"
-    },
-    {
-      "name": "template.admin",
-      "displayName": "Template Admin",
-      "description": "Full administrative access to the Template App"
+      "name": "sample-app.edit",
+      "displayName": "Edit in Sample App",
+      "description": "Allows editing data in the Sample App"
     }
   ],
   "settings": {
-    "defaultTab": "dashboard",
-    "enableNotifications": true,
-    "enableDataSync": true,
-    "themeColor": "#3b82f6"
+    "theme": "system",
+    "pageSize": 10,
+    "enableNotifications": true
   },
   "integrations": {
     "cms": {
