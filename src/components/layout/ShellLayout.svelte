@@ -1,7 +1,8 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import { cn } from '$lib/utils';
-    import { onMount, createEventDispatcher } from 'svelte';
+    import { onMount, createEventDispatcher, tick } from 'svelte';
+    import { browser } from '$app/environment';
     
     // Components
     import Header from './Header.svelte';
@@ -23,20 +24,108 @@
             icon: any;
         }[];
     }>;
+    export let condensed: boolean = false; // When true, content is constrained to max width
+    export let hideHeader: boolean = false;
     
     // Function props (events)
     export let toggleTheme: () => void;
     export let toggleMobileMenu: () => void;
     export let setContext: (contextId: AppContext) => void;
     
+    // State
+    let mainElement: HTMLElement;
+    let shellContainer: HTMLElement;
+    let shellReady = false;
+    let headerHeight = 56; // Default header height in pixels
+    let sidebarCollapsed = false; // Track sidebar collapsed state
+    
     // Event dispatcher
     const dispatch = createEventDispatcher<{
         overlayClick: void;
+        ready: void;
+        resize: { width: number; height: number };
     }>();
     
     // Handle overlay click to close the mobile menu
     function handleOverlayClick() {
         dispatch('overlayClick');
+    }
+    
+    // Handle sidebar toggle
+    function handleSidebarToggle(event: CustomEvent<boolean>) {
+        sidebarCollapsed = event.detail;
+        updateShellDimensions();
+    }
+    
+    // Initialize shell when mounted
+    onMount(() => {
+        // Skip browser-specific code during SSR
+        if (!browser) return;
+        
+        // Initialize shell
+        void tick().then(() => {
+            updateShellDimensions();
+            shellReady = true;
+        });
+        
+        // Add resize listener
+        const resizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                if (entry.target === shellContainer) {
+                    updateShellDimensions();
+                    dispatch('resize', {
+                        width: entry.contentRect.width,
+                        height: entry.contentRect.height
+                    });
+                }
+            }
+        });
+        
+        resizeObserver.observe(shellContainer);
+        
+        // Initialize keyboard navigation
+        if (shellContainer) {
+            shellContainer.addEventListener('keydown', handleKeyDown);
+        }
+        
+        // Load sidebar collapsed state from localStorage
+        if (typeof window !== 'undefined') {
+            const savedCollapsedState = localStorage.getItem('mixcore_sidebar_collapsed');
+            if (savedCollapsedState !== null) {
+                sidebarCollapsed = savedCollapsedState === 'true';
+            }
+        }
+        
+        // Cleanup on destroy
+        return () => {
+            resizeObserver.disconnect();
+            if (shellContainer) {
+                shellContainer.removeEventListener('keydown', handleKeyDown);
+            }
+        };
+    });
+    
+    // Update shell dimensions for responsive layouts
+    function updateShellDimensions() {
+        if (mainElement) {
+            mainElement.style.height = hideHeader 
+                ? '100%' 
+                : `calc(100% - ${headerHeight}px)`;
+        }
+    }
+    
+    // Handle keyboard navigation
+    function handleKeyDown(e: KeyboardEvent) {
+        // Close menu on Escape
+        if (e.key === 'Escape' && isMobileMenuOpen) {
+            handleOverlayClick();
+        }
+        
+        // Toggle sidebar with keyboard shortcut (Alt+S)
+        if (e.altKey && e.key === 's') {
+            toggleMobileMenu();
+            e.preventDefault();
+        }
     }
     
     // Performance optimization - memoize/cache context data
@@ -47,42 +136,78 @@
         }
         return cachedPagePath === path;
     };
+    
+    $: {
+        // Update shell when these reactive values change
+        if (shellReady && (isDarkMode || isMobileMenuOpen || hideHeader)) {
+            updateShellDimensions();
+        }
+    }
 </script>
 
-<div class={cn(
-    "h-screen overflow-hidden",
-    "bg-background text-foreground",
-    isDarkMode ? "dark" : ""
-)}>
-    <div class="flex h-full flex-col md:flex-row">
+<div 
+    id="shell" 
+    class={cn(
+        "flex h-screen flex-col overflow-hidden bg-background font-sans antialiased",
+        condensed ? "shell-condensed" : "",
+        isDarkMode ? "dark" : "",
+        shellReady ? "shell-ready" : "shell-loading"
+    )}
+    bind:this={shellContainer}
+>
+    <div class="relative flex flex-1 overflow-hidden">
         <!-- Sidebar - hidden by default on mobile, always visible on desktop -->
         <Sidebar 
             isMobileMenuOpen={isMobileMenuOpen}
             activeNavItems={activeNavItems}
+            isCollapsed={sidebarCollapsed}
             on:overlayClick={handleOverlayClick}
+            on:toggleCollapsed={handleSidebarToggle}
         />
         
         <!-- Main content container including header and scrollable content -->
-        <div class="flex flex-1 flex-col md:ml-[250px] w-full">
+        <div 
+            class={cn(
+                "flex flex-1 flex-col w-full transition-all duration-300",
+                !hideHeader && !sidebarCollapsed && "md:ml-[250px]",
+                !hideHeader && sidebarCollapsed && "md:ml-[60px]"
+            )}
+        >
             <!-- Header - fixed at top -->
-            <Header 
-                isDarkMode={isDarkMode}
-                isMobileMenuOpen={isMobileMenuOpen}
-                activeContext={activeContext}
-                appContexts={appContexts} 
-                toggleTheme={toggleTheme}
-                toggleMobileMenu={toggleMobileMenu}
-                setContext={setContext}
-            />
+            {#if !hideHeader}
+                <div bind:clientHeight={headerHeight}>
+                    <Header 
+                        isDarkMode={isDarkMode}
+                        isMobileMenuOpen={isMobileMenuOpen}
+                        activeContext={activeContext}
+                        appContexts={appContexts} 
+                        toggleTheme={toggleTheme}
+                        toggleMobileMenu={toggleMobileMenu}
+                        setContext={setContext}
+                        condensed={condensed}
+                    />
+                </div>
+            {/if}
             
             <!-- Main scrollable content area -->
             <main 
                 id="main-content"
-                class="flex-1 overflow-auto p-4 md:p-6"
+                class={cn(
+                    "flex-1 overflow-auto relative p-4 md:p-6"
+                )}
                 data-app-context={activeContext.id}
+                bind:this={mainElement}
             >
+                <!-- Skip to content link for accessibility -->
+                <a 
+                    href="#main-content" 
+                    class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-primary focus:text-primary-foreground focus:outline-none"
+                >
+                    Skip to content
+                </a>
+                
                 <!-- Page layout wrapper -->
-                <div class="container mx-auto">
+                <div class={cn("h-full w-full", condensed && "container max-w-7xl mx-auto")}>
                     <slot />
                 </div>
             </main>
@@ -94,5 +219,10 @@
     /* Shell-specific global styles */
     :global(body) {
         @apply overflow-hidden;
+    }
+    
+    /* Focus styles for keyboard navigation */
+    :global(:focus-visible) {
+        @apply outline-2 outline-offset-2 outline-primary;
     }
 </style> 

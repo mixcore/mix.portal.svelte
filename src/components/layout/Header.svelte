@@ -1,6 +1,8 @@
 <script lang="ts">
     import { page } from '$app/stores';
     import { cn } from '$lib/utils';
+    import { onMount, createEventDispatcher } from 'svelte';
+    import { fade, scale } from 'svelte/transition';
     import { 
         Search, 
         Bell, 
@@ -9,24 +11,212 @@
         Sun, 
         Menu, 
         X,
-        ChevronDown
+        ChevronDown,
+        Settings,
+        LogOut,
+        HelpCircle,
+        PanelLeft,
+        Keyboard,
+        Command,
+        Clock,
+        Home,
+        MessageSquare,
+        ChevronRight,
+        CheckCircle
     } from 'lucide-svelte';
     import type { AppContext } from '$lib/stores/navigationStore';
+    import DropdownMenu from '$lib/components/ui/dropdown/DropdownMenu.svelte';
 
     // Props
     export let isDarkMode: boolean;
     export let isMobileMenuOpen: boolean;
-    export let activeContext: {id: string, name: string, icon: any};
+    export let activeContext: {id: string, name: string, icon: any, isChanging?: boolean};
     export let appContexts: {id: string, name: string, icon: any}[];
+    export let condensed: boolean = false; // When true, use a constrained layout
     
     // Function props (events)
     export let toggleTheme: () => void;
     export let toggleMobileMenu: () => void;
     export let setContext: (contextId: AppContext) => void;
+    
+    // Local state
+    let isSearchOpen = false;
+    let isContextMenuOpen = false;
+    let isNotificationsOpen = false;
+    let isUserMenuOpen = false;
+    let searchQuery = '';
+    let searchResults: any[] = [];
+    let isSearching = false;
+    let headerElement: HTMLElement;
+    let showHeaderShadow = false;
+    let userFullName = 'John Doe';
+    let userEmail = 'john.doe@example.com';
+    let userInitials = 'JD';
+    let userRole = 'Administrator';
+    let userAvatar = '';
+    
+    // Mock notifications
+    const notifications = [
+        { id: 1, title: 'New comment', message: 'Jane Doe commented on your post', time: '2 min ago', read: false, type: 'comment' },
+        { id: 2, title: 'System update', message: 'Mixcore CMS has been updated to version 2.0.0', time: '1 hour ago', read: false, type: 'system' },
+        { id: 3, title: 'Server notice', message: 'Server maintenance scheduled for tomorrow', time: '3 hours ago', read: true, type: 'alert' },
+        { id: 4, title: 'New user', message: 'A new user has registered', time: '1 day ago', read: true, type: 'user' }
+    ];
+    
+    // Create event dispatcher
+    const dispatch = createEventDispatcher<{
+        search: string;
+        contextChange: AppContext;
+        userMenuAction: string;
+        notificationRead: number;
+        keyboardShortcutsOpen: void;
+    }>();
+
+    // Listen to scroll to add shadow on header when scrolled
+    onMount(() => {
+        const handleScroll = () => {
+            if (!headerElement) return;
+            showHeaderShadow = window.scrollY > 0;
+        };
+        
+        window.addEventListener('scroll', handleScroll);
+        
+        // Get user info from local storage or API
+        try {
+            const storedUserName = localStorage.getItem('mixcore_user_name');
+            const storedUserEmail = localStorage.getItem('mixcore_user_email');
+            const storedUserAvatar = localStorage.getItem('mixcore_user_avatar');
+            
+            if (storedUserName) userFullName = storedUserName;
+            if (storedUserEmail) userEmail = storedUserEmail;
+            if (storedUserAvatar) userAvatar = storedUserAvatar;
+            
+            // Generate initials from full name
+            if (userFullName) {
+                const nameParts = userFullName.split(' ');
+                if (nameParts.length >= 2) {
+                    userInitials = nameParts[0][0] + nameParts[nameParts.length - 1][0];
+                } else if (nameParts.length === 1) {
+                    userInitials = nameParts[0].substring(0, 2);
+                }
+                userInitials = userInitials.toUpperCase();
+            }
+        } catch (error) {
+            console.warn('Failed to load user data:', error);
+        }
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    });
+    
+    // Toggle search dialog
+    function handleSearchToggle() {
+        isSearchOpen = !isSearchOpen;
+        if (isSearchOpen) {
+            // Focus search input when opened
+            setTimeout(() => {
+                const searchInput = document.getElementById('global-search-input');
+                if (searchInput) searchInput.focus();
+            }, 100);
+        }
+    }
+    
+    // Handle search
+    function handleSearch() {
+        if (!searchQuery.trim()) return;
+        isSearching = true;
+        
+        // Mock search results - in a real app, this would be an API call
+        setTimeout(() => {
+            searchResults = [
+                { id: 1, title: 'Dashboard', type: 'page', url: '/' },
+                { id: 2, title: 'User Management', type: 'page', url: '/users' },
+                { id: 3, title: 'Site Settings', type: 'settings', url: '/settings' }
+            ].filter(item => item.title.toLowerCase().includes(searchQuery.toLowerCase()));
+            isSearching = false;
+        }, 500);
+        
+        dispatch('search', searchQuery);
+    }
+    
+    // Handle keyboard shortcut
+    function handleKeyboardShortcut(event: KeyboardEvent) {
+        // Cmd/Ctrl + K to open search
+        if ((event.metaKey || event.ctrlKey) && event.key === 'k') {
+            event.preventDefault();
+            handleSearchToggle();
+        }
+        // Esc to close search
+        if (event.key === 'Escape' && isSearchOpen) {
+            event.preventDefault();
+            isSearchOpen = false;
+        }
+    }
+    
+    // Set app context
+    function handleContextChange(contextId: AppContext) {
+        setContext(contextId);
+        isContextMenuOpen = false;
+        dispatch('contextChange', contextId);
+    }
+    
+    // Handle user menu item click
+    function handleUserMenuAction(action: string) {
+        isUserMenuOpen = false;
+        dispatch('userMenuAction', action);
+    }
+    
+    // Mark notification as read
+    function markNotificationAsRead(id: number) {
+        // Update notifications in a real app
+        // Here we're just updating the UI
+        const index = notifications.findIndex(n => n.id === id);
+        if (index !== -1) {
+            notifications[index].read = true;
+            dispatch('notificationRead', id);
+        }
+    }
+    
+    // Handle keyboard shortcuts dialog
+    function openKeyboardShortcuts() {
+        dispatch('keyboardShortcutsOpen');
+    }
+    
+    // Watch for key events
+    function handleKeydown(event: KeyboardEvent) {
+        handleKeyboardShortcut(event);
+    }
+    
+    // Close the context menu
+    function closeContextMenu() {
+        isContextMenuOpen = false;
+    }
+    
+    // Close the notifications
+    function closeNotifications() {
+        isNotificationsOpen = false;
+    }
+    
+    // Close the user menu
+    function closeUserMenu() {
+        isUserMenuOpen = false;
+    }
 </script>
 
-<header class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-    <div class="container flex h-14 items-center">
+<svelte:window on:keydown={handleKeydown} />
+
+<header 
+    class={cn(
+        "sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 transition-all duration-200",
+        showHeaderShadow && "shadow-sm"
+    )}
+    bind:this={headerElement}
+>
+    <div class={cn(
+        "flex h-14 items-center px-4",
+        condensed && "container max-w-7xl mx-auto"
+    )}>
         <!-- Mobile menu button -->
         <div class="mr-4 flex md:hidden">
             <button 
@@ -37,9 +227,13 @@
                 class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
                 {#if isMobileMenuOpen}
-                    <X class="h-5 w-5" aria-hidden="true" />
+                    <div in:scale={{duration: 200}}>
+                        <X class="h-5 w-5" aria-hidden="true" />
+                    </div>
                 {:else}
-                    <Menu class="h-5 w-5" aria-hidden="true" />
+                    <div in:scale={{duration: 200}}>
+                        <Menu class="h-5 w-5" aria-hidden="true" />
+                    </div>
                 {/if}
                 <span class="sr-only">{isMobileMenuOpen ? 'Close menu' : 'Open menu'}</span>
             </button>
@@ -47,48 +241,80 @@
         
         <!-- Logo -->
         <div class="mr-4 hidden md:flex">
-            <a href="/" class="flex items-center space-x-2">
-                <img src="/logo.png" alt="Mixcore CMS Logo" class="h-6 w-6" />
-                <span class="font-bold">Mixcore CMS</span>
+            <a href="/" class="flex items-center space-x-2 transition-opacity hover:opacity-80">
+                <img src="/logo.png" alt="Mixcore CMS Logo" class="h-7 w-7" />
+                <span class="font-bold text-lg">Mixcore</span>
             </a>
         </div>
 
         <!-- App Context Selector -->
         <div class="flex-1 items-center md:flex">
-            <div class="relative inline-block text-left">
-                <div>
-                    <button 
-                        type="button" 
-                        id="app-context-button"
-                        aria-haspopup="true"
-                        aria-expanded="false"
-                        class="inline-flex items-center justify-center rounded-md px-3 py-2 text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground"
-                    >
-                        <svelte:component this={activeContext.icon} class="mr-2 h-4 w-4" aria-hidden="true" />
-                        {activeContext.name}
-                        <ChevronDown class="ml-2 h-4 w-4" aria-hidden="true" />
-                    </button>
-                </div>
+            <div class="relative">
+                <button 
+                    type="button" 
+                    id="app-context-button"
+                    aria-haspopup="true"
+                    aria-expanded={isContextMenuOpen}
+                    on:click={() => isContextMenuOpen = !isContextMenuOpen}
+                    class={cn(
+                        "inline-flex items-center justify-center rounded-md px-3 py-1.5 text-sm font-medium",
+                        "ring-offset-background transition-colors",
+                        "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+                        "disabled:pointer-events-none disabled:opacity-50",
+                        "hover:bg-accent hover:text-accent-foreground",
+                        "border border-input bg-background shadow-sm",
+                        isContextMenuOpen && "bg-accent text-accent-foreground"
+                    )}
+                >
+                    <svelte:component this={activeContext.icon} class="mr-2 h-4 w-4" aria-hidden="true" />
+                    <span>{activeContext.name}</span>
+                    <ChevronDown class={cn("ml-2 h-4 w-4 transition-transform", isContextMenuOpen && "rotate-180")} aria-hidden="true" />
+                </button>
                 
-                <!-- App Context Dropdown would go here -->
-                <!-- We'll just include a placeholder structure for now -->
-                <!-- <div class="absolute left-0 z-10 mt-2 w-56 rounded-md bg-popover shadow-lg ring-1 ring-black ring-opacity-5">
-                    <div class="p-1" role="menu" aria-orientation="vertical" aria-labelledby="app-context-button">
+                <!-- App Context Dropdown Menu -->
+                <DropdownMenu open={isContextMenuOpen} align="left" onClose={closeContextMenu}>
+                    <div class="p-1.5 space-y-0.5" role="none">
                         {#each appContexts as context}
                             <button 
-                                on:click={() => setContext(context.id)}
+                                on:click={() => handleContextChange(context.id as AppContext)}
                                 class={cn(
-                                    "flex w-full items-center rounded-md px-2 py-2 text-sm text-foreground",
-                                    context.id === activeContext.id ? "bg-accent text-accent-foreground" : "hover:bg-accent hover:text-accent-foreground"
+                                    "flex w-full items-center rounded-md px-3 py-2 text-sm",
+                                    context.id === activeContext.id 
+                                        ? "bg-primary/10 text-primary font-medium" 
+                                        : "text-popover-foreground hover:bg-accent hover:text-accent-foreground"
                                 )}
                                 role="menuitem"
                             >
                                 <svelte:component this={context.icon} class="mr-2 h-4 w-4" aria-hidden="true" />
-                                {context.name}
+                                <span class="flex-1 text-left">{context.name}</span>
+                                {#if context.id === activeContext.id}
+                                    <CheckCircle class="ml-2 h-4 w-4" />
+                                {/if}
                             </button>
                         {/each}
                     </div>
-                </div> -->
+                    
+                    <!-- Recent locations -->
+                    <div class="border-t my-1 pt-1 px-2">
+                        <h3 class="text-xs font-medium text-muted-foreground mb-1 px-2">Recent locations</h3>
+                        <div class="space-y-0.5">
+                            <a 
+                                href="/" 
+                                class="flex items-center text-sm rounded-md px-3 py-1.5 hover:bg-accent text-popover-foreground hover:text-accent-foreground"
+                            >
+                                <Home class="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+                                <span>Dashboard</span>
+                            </a>
+                            <a 
+                                href="/content" 
+                                class="flex items-center text-sm rounded-md px-3 py-1.5 hover:bg-accent text-popover-foreground hover:text-accent-foreground"
+                            >
+                                <PanelLeft class="h-3.5 w-3.5 mr-2 text-muted-foreground" />
+                                <span>Content Management</span>
+                            </a>
+                        </div>
+                    </div>
+                </DropdownMenu>
             </div>
         </div>
 
@@ -98,21 +324,103 @@
             <button 
                 type="button"
                 aria-label="Search"
+                on:click={handleSearchToggle}
                 class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
-                <Search class="h-5 w-5" aria-hidden="true" />
-                <span class="sr-only">Search</span>
+                <div class="flex items-center space-x-1 text-xs px-1">
+                    <Search class="h-4 w-4" aria-hidden="true" />
+                    <span class="hidden md:inline-flex">Search</span>
+                    <kbd class="hidden md:inline-flex items-center rounded border bg-muted px-1.5 font-mono text-[10px] text-muted-foreground">⌘K</kbd>
+                </div>
             </button>
             
             <!-- Notifications button -->
-            <button 
-                type="button"
-                aria-label="Notifications"
-                class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            >
-                <Bell class="h-5 w-5" aria-hidden="true" />
-                <span class="sr-only">Notifications</span>
-            </button>
+            <div class="relative">
+                <button 
+                    type="button"
+                    aria-label="Notifications"
+                    aria-haspopup="true"
+                    aria-expanded={isNotificationsOpen}
+                    on:click={() => isNotificationsOpen = !isNotificationsOpen}
+                    class={cn(
+                        "inline-flex items-center justify-center rounded-md p-2",
+                        "text-muted-foreground hover:bg-accent hover:text-accent-foreground",
+                        "focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                        isNotificationsOpen && "bg-accent text-accent-foreground"
+                    )}
+                >
+                    <div class="relative">
+                        <Bell class="h-5 w-5" aria-hidden="true" />
+                        {#if notifications.some(n => !n.read)}
+                            <span class="absolute -top-1 -right-1 flex h-2 w-2">
+                                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                                <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+                            </span>
+                        {/if}
+                    </div>
+                </button>
+                
+                <!-- Notifications dropdown -->
+                <DropdownMenu open={isNotificationsOpen} align="right" width="w-80" onClose={closeNotifications}>
+                    <div class="p-2 border-b">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-sm font-medium">Notifications</h3>
+                            <button class="text-xs text-primary hover:underline">Mark all as read</button>
+                        </div>
+                    </div>
+                    
+                    <div class="max-h-[350px] overflow-y-auto">
+                        {#if notifications.length === 0}
+                            <div class="p-4 text-center text-sm text-muted-foreground">
+                                <p>No notifications</p>
+                            </div>
+                        {:else}
+                            <div class="divide-y">
+                                {#each notifications as notification}
+                                    <div 
+                                        class={cn(
+                                            "p-3 hover:bg-accent/50 transition-colors cursor-pointer",
+                                            !notification.read && "bg-accent/20"
+                                        )}
+                                        on:click={() => markNotificationAsRead(notification.id)}
+                                    >
+                                        <div class="flex items-start">
+                                            <div class="flex-shrink-0 pt-0.5">
+                                                {#if notification.type === 'comment'}
+                                                    <MessageSquare class="h-5 w-5 text-blue-500" />
+                                                {:else if notification.type === 'system'}
+                                                    <Settings class="h-5 w-5 text-purple-500" />
+                                                {:else if notification.type === 'alert'}
+                                                    <Bell class="h-5 w-5 text-yellow-500" />
+                                                {:else if notification.type === 'user'}
+                                                    <User class="h-5 w-5 text-green-500" />
+                                                {/if}
+                                            </div>
+                                            <div class="ml-3 flex-1">
+                                                <p class="text-sm font-medium">{notification.title}</p>
+                                                <p class="text-xs text-muted-foreground mt-1">{notification.message}</p>
+                                                <div class="flex items-center mt-1">
+                                                    <Clock class="h-3 w-3 text-muted-foreground mr-1" />
+                                                    <span class="text-xs text-muted-foreground">{notification.time}</span>
+                                                </div>
+                                            </div>
+                                            {#if !notification.read}
+                                                <span class="ml-2 h-2 w-2 rounded-full bg-primary"></span>
+                                            {/if}
+                                        </div>
+                                    </div>
+                                {/each}
+                            </div>
+                        {/if}
+                    </div>
+                    
+                    <div class="p-2 border-t bg-muted/50">
+                        <a href="/notifications" class="block text-center text-xs text-primary hover:underline">
+                            View all notifications
+                        </a>
+                    </div>
+                </DropdownMenu>
+            </div>
             
             <!-- Theme toggle button -->
             <button 
@@ -122,27 +430,182 @@
                 class="inline-flex items-center justify-center rounded-md p-2 text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
             >
                 {#if isDarkMode}
-                    <Sun class="h-5 w-5" aria-hidden="true" />
+                    <div in:scale={{duration: 200}}>
+                        <Sun class="h-5 w-5" aria-hidden="true" />
+                    </div>
                 {:else}
-                    <Moon class="h-5 w-5" aria-hidden="true" />
+                    <div in:scale={{duration: 200}}>
+                        <Moon class="h-5 w-5" aria-hidden="true" />
+                    </div>
                 {/if}
-                <span class="sr-only">{isDarkMode ? "Switch to light mode" : "Switch to dark mode"}</span>
             </button>
             
             <!-- User menu -->
-            <div class="relative inline-block text-left">
+            <div class="relative">
                 <button 
                     type="button"
                     aria-label="User menu"
                     aria-haspopup="true"
-                    aria-expanded="false"
-                    class="inline-flex items-center justify-center rounded-full h-8 w-8 border bg-muted text-muted-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                    aria-expanded={isUserMenuOpen}
+                    on:click={() => isUserMenuOpen = !isUserMenuOpen}
+                    class={cn(
+                        "inline-flex items-center justify-center gap-2",
+                        "text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                        "group transition-colors"
+                    )}
                 >
-                    <User class="h-4 w-4" aria-hidden="true" />
-                    <span class="sr-only">User menu</span>
+                    <div 
+                        class={cn(
+                            "flex h-8 w-8 items-center justify-center rounded-full",
+                            "bg-primary/10 text-primary group-hover:bg-primary/20",
+                            userAvatar ? "p-0 overflow-hidden border" : ""
+                        )}
+                    >
+                        {#if userAvatar}
+                            <img src={userAvatar} alt={userFullName} class="h-full w-full object-cover" />
+                        {:else}
+                            <span class="text-xs font-medium">{userInitials}</span>
+                        {/if}
+                    </div>
+                    
+                    <div class="hidden md:block text-left">
+                        <p class="text-sm font-medium text-foreground">{userFullName}</p>
+                        <p class="text-xs text-muted-foreground">{userRole}</p>
+                    </div>
+                    
+                    <ChevronDown class={cn("h-4 w-4 text-muted-foreground transition-transform", isUserMenuOpen && "rotate-180")} aria-hidden="true" />
                 </button>
-                <!-- User dropdown would go here -->
+                
+                <!-- User dropdown menu -->
+                <DropdownMenu open={isUserMenuOpen} align="right" width="w-64" onClose={closeUserMenu}>
+                    <div class="p-4 border-b">
+                        <div class="flex items-start gap-3">
+                            <div 
+                                class={cn(
+                                    "flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full",
+                                    "bg-primary/10 text-primary",
+                                    userAvatar ? "p-0 overflow-hidden border" : ""
+                                )}
+                            >
+                                {#if userAvatar}
+                                    <img src={userAvatar} alt={userFullName} class="h-full w-full object-cover" />
+                                {:else}
+                                    <span class="text-sm font-medium">{userInitials}</span>
+                                {/if}
+                            </div>
+                            <div>
+                                <p class="font-medium">{userFullName}</p>
+                                <p class="text-xs text-muted-foreground mt-0.5">{userEmail}</p>
+                                <p class="text-xs bg-primary/10 text-primary px-1.5 py-0.5 rounded mt-1 inline-block">{userRole}</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="p-1">
+                        <a 
+                            href="/profile"
+                            class="flex items-center rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                        >
+                            <User class="mr-2 h-4 w-4" />
+                            Your Profile
+                            <ChevronRight class="ml-auto h-4 w-4 text-muted-foreground" />
+                        </a>
+                        <button 
+                            on:click={() => handleUserMenuAction('settings')}
+                            class="flex w-full items-center rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                        >
+                            <Settings class="mr-2 h-4 w-4" />
+                            Settings
+                            <ChevronRight class="ml-auto h-4 w-4 text-muted-foreground" />
+                        </button>
+                        <button 
+                            on:click={openKeyboardShortcuts}
+                            class="flex w-full items-center rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                        >
+                            <Keyboard class="mr-2 h-4 w-4" />
+                            Keyboard Shortcuts
+                        </button>
+                        <button 
+                            on:click={() => handleUserMenuAction('help')}
+                            class="flex w-full items-center rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                        >
+                            <HelpCircle class="mr-2 h-4 w-4" />
+                            Help & Documentation
+                        </button>
+                    </div>
+                    
+                    <div class="p-1 border-t">
+                        <button 
+                            on:click={() => handleUserMenuAction('logout')}
+                            class="flex w-full items-center rounded-md px-3 py-2 text-sm text-red-500 hover:bg-red-500/10"
+                        >
+                            <LogOut class="mr-2 h-4 w-4" />
+                            Sign out
+                        </button>
+                    </div>
+                </DropdownMenu>
             </div>
         </div>
     </div>
-</header> 
+</header>
+
+<!-- Global search dialog -->
+{#if isSearchOpen}
+    <div class="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm" transition:fade={{ duration: 100 }}>
+        <div 
+            class="fixed left-[50%] top-[40%] max-h-[85vh] w-full max-w-2xl translate-x-[-50%] translate-y-[-50%] overflow-hidden rounded-xl border bg-background p-4 shadow-lg"
+            transition:scale={{ duration: 150, start: 0.95 }}
+        >
+            <div class="flex items-center border-b pb-2">
+                <Search class="mr-2 h-4 w-4 text-muted-foreground" />
+                <input 
+                    id="global-search-input"
+                    type="text" 
+                    placeholder="Search across Mixcore..." 
+                    class="flex-1 bg-transparent text-sm outline-none placeholder:text-muted-foreground"
+                    bind:value={searchQuery}
+                    on:keydown={(e) => e.key === 'Enter' && handleSearch()}
+                />
+                <div class="flex items-center gap-1">
+                    <kbd class="inline-flex h-5 items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground">ESC</kbd>
+                    <span class="text-xs text-muted-foreground">to close</span>
+                </div>
+            </div>
+            
+            <div class="mt-2 max-h-[70vh] overflow-y-auto pb-2">
+                {#if isSearching}
+                    <div class="py-6 text-center">
+                        <div class="inline-block animate-spin rounded-full h-6 w-6 border-2 border-primary border-t-transparent"></div>
+                        <p class="mt-2 text-sm text-muted-foreground">Searching...</p>
+                    </div>
+                {:else if searchResults.length > 0}
+                    <div class="space-y-1">
+                        {#each searchResults as result}
+                            <a 
+                                href={result.url} 
+                                class="flex items-center rounded-md px-3 py-2 text-sm hover:bg-accent hover:text-accent-foreground"
+                                on:click={() => isSearchOpen = false}
+                            >
+                                {#if result.type === 'page'}
+                                    <Home class="mr-2 h-4 w-4" />
+                                {:else if result.type === 'settings'}
+                                    <Settings class="mr-2 h-4 w-4" />
+                                {/if}
+                                <span>{result.title}</span>
+                            </a>
+                        {/each}
+                    </div>
+                {:else if searchQuery && !isSearching}
+                    <div class="py-6 text-center">
+                        <p class="text-sm text-muted-foreground">No results found</p>
+                    </div>
+                {:else}
+                    <div class="py-6 text-center">
+                        <Command class="h-10 w-10 text-muted-foreground mb-2" />
+                        <p class="text-sm text-muted-foreground">Type to search across Mixcore</p>
+                    </div>
+                {/if}
+            </div>
+        </div>
+    </div>
+{/if} 
