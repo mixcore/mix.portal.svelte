@@ -75,7 +75,13 @@ export const fetchClient = {
     const token = browser ? localStorage.getItem('authToken') : null;
     
     const headers = new Headers(options.headers);
-    headers.set('Content-Type', 'application/json');
+    
+    // Use application/json-patch+json for login-unsecure endpoint
+    if (url.includes('login-unsecure')) {
+      headers.set('Content-Type', 'application/json-patch+json');
+    } else {
+      headers.set('Content-Type', 'application/json');
+    }
     
     if (token) {
       headers.set('Authorization', `Bearer ${token}`);

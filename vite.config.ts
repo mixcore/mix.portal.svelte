@@ -1,9 +1,16 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import { svelteTesting } from '@testing-library/svelte/vite';
+import { readFileSync } from 'fs';
 
 export default defineConfig({
 	plugins: [sveltekit()],
+	server: {
+		https: {
+			key: readFileSync('cert.key'),
+			cert: readFileSync('cert.crt'),
+		},
+	},
 	test: {
 		workspace: [
 			{

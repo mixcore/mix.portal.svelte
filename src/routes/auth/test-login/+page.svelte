@@ -8,6 +8,8 @@
   let password = '';
   let rememberMe = false;
   let loginMessage = '';
+  let apiResponse = '';
+  let debugInfo = '';
   
   // Redirects to dashboard if already authenticated
   $: if ($isAuthenticated) {
@@ -17,27 +19,58 @@
     }, 2000);
   }
   
-  // Debug function to test encryption
+  // Use the debug function to test encryption
   function testEncryption() {
     try {
+      debugInfo = 'Running encryption diagnostics. See console for details.';
+      CryptoService.debugEncryption();
+      loginMessage = 'Encryption test complete. Check browser console for details.';
+    } catch (error) {
+      console.error('Encryption test error:', error);
+      loginMessage = `Encryption test error: ${error}`;
+    }
+  }
+  
+  // Test a direct fetch call to the API
+  async function testFetch() {
+    try {
+      debugInfo = 'Testing direct fetch to API...';
+      
+      // Create test data in the same format as the login form
       const testData = {
-        UserName: 'testuser',
-        Password: 'testpassword',
-        RememberMe: true,
+        UserName: username || 'testuser',
+        Password: password || 'testpassword',
+        RememberMe: rememberMe,
         Email: '',
         ReturnUrl: ''
       };
       
-      const testDataJson = JSON.stringify(testData);
-      console.log('Original data:', testData);
+      // Encrypt the data
+      const message = CryptoService.encryptAES(JSON.stringify(testData));
       
-      const encrypted = CryptoService.encryptAES(testDataJson);
-      console.log('Encrypted:', encrypted);
+      // Send the request directly
+      const response = await fetch('/api/auth/user/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ message })
+      });
       
-      loginMessage = 'Encryption test logged to console';
+      // Get the response text
+      const responseText = await response.text();
+      apiResponse = responseText;
+      
+      // Try to parse as JSON
+      try {
+        const responseJson = JSON.parse(responseText);
+        debugInfo = `API Response (status ${response.status}): ${JSON.stringify(responseJson, null, 2)}`;
+      } catch (e) {
+        debugInfo = `API Response (status ${response.status}) - Could not parse as JSON: ${responseText}`;
+      }
     } catch (error) {
-      console.error('Encryption test error:', error);
-      loginMessage = `Encryption test error: ${error}`;
+      console.error('Test fetch error:', error);
+      debugInfo = `Test fetch error: ${error}`;
     }
   }
   
@@ -49,6 +82,7 @@
     }
     
     loginMessage = 'Logging in...';
+    debugInfo = '';
     
     try {
       const success = await authStore.login(username, password, rememberMe);
@@ -56,6 +90,10 @@
         loginMessage = 'Login successful!';
       } else {
         loginMessage = $authError ? $authError.message : 'Login failed';
+        // Add more details
+        if ($authError) {
+          debugInfo = `Error details: ${JSON.stringify($authError)}`;
+        }
       }
     } catch (error) {
       console.error('Login error:', error);
@@ -140,6 +178,21 @@
       >
         Test Encryption
       </button>
+      
+      <button 
+        type="button" 
+        on:click={testFetch}
+        class="py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+      >
+        Test API
+      </button>
     </div>
   </form>
+  
+  {#if debugInfo}
+    <div class="mt-6">
+      <h3 class="text-sm font-medium text-gray-700">Debug Information</h3>
+      <pre class="mt-2 p-4 bg-gray-100 rounded text-xs overflow-auto max-h-60">{debugInfo}</pre>
+    </div>
+  {/if}
 </div> 

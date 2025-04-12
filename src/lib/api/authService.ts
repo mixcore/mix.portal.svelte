@@ -34,38 +34,51 @@ export const AuthService = {
   login: async (
     username: string,
     password: string,
-    rememberMe = false
+    rememberMe = false,
+    email = '',
+    phoneNumber = '',
+    returnUrl = ''
   ): Promise<AuthResult<LoginResponse>> => {
     try {
       // Format data according to Mixcore API requirements
       const data = {
-        UserName: username,
-        Password: password,
-        RememberMe: rememberMe,
-        Email: '',
-        ReturnUrl: ''
+        email: email,
+        userName: username,
+        phoneNumber: phoneNumber,
+        password: password,
+        rememberMe: rememberMe,
+        returnUrl: returnUrl
       };
 
       console.log('[Auth] Login data:', data);
       
-      // Encrypt the data to match AngularJS implementation
-      const message = CryptoService.encryptAES(JSON.stringify(data));
-      console.log('[Auth] Encrypted message created:', message ? 'success' : 'failed');
-      
-      const endpoint = getApiEndpoint('/api/v2/rest/auth/user/login');
+      const endpoint = 'https://mixcore.net/api/v2/rest/auth/user/login-unsecure';
       console.log('[Auth] Using endpoint:', endpoint);
       
-      const response = await fetchClient.post<{
-        success: boolean;
-        data: LoginResponse;
-        errors?: string[];
-      }>(endpoint, { message });
+      const response = await fetchClient.post<any>(endpoint, data);
 
       console.log('[Auth] Login response:', response);
 
-      if (response && response.success) {
-        const { accessToken, refreshToken, userId, roles, permissions } = 
-          response.data;
+      if (response && response.accessToken) {
+        // Extract data from response
+        const accessToken = response.accessToken;
+        const refreshToken = response.refreshToken || '';
+        const userId = response.info?.parentId || '';
+        
+        // Extract roles from JWT token
+        let roles: string[] = [];
+        try {
+          const tokenParts = accessToken.split('.');
+          if (tokenParts.length > 1) {
+            const tokenPayload = JSON.parse(atob(tokenParts[1]));
+            const roleData = tokenPayload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'];
+            roles = Array.isArray(roleData) ? roleData : [roleData];
+          }
+        } catch (e) {
+          console.error('Error parsing token:', e);
+        }
+        
+        const permissions: string[] = [];
 
         // Store tokens in localStorage
         if (browser) {
@@ -78,13 +91,20 @@ export const AuthService = {
 
         return {
           success: true,
-          data: response.data
+          data: {
+            accessToken,
+            refreshToken,
+            userId,
+            roles,
+            permissions,
+            expiresIn: response.expiresIn || 0
+          }
         };
       }
 
       return {
         success: false,
-        errors: response.errors || ['Login failed']
+        errors: ['Login failed']
       };
     } catch (error) {
       console.error('Login error:', error);
@@ -103,10 +123,11 @@ export const AuthService = {
   ): Promise<AuthResult<any>> => {
     try {
       const data = {
-        DisplayName: name,
-        UserName: email,
-        Email: email,
-        Password: password,
+        displayName: name,
+        userName: email,
+        email: email,
+        password: password,
+        phoneNumber: ''
       };
 
       // Encrypt the data
@@ -144,7 +165,7 @@ export const AuthService = {
   forgotPassword: async (email: string): Promise<AuthResult<any>> => {
     try {
       const data = {
-        Email: email
+        email: email
       };
 
       // Encrypt the data
@@ -186,9 +207,9 @@ export const AuthService = {
   ): Promise<AuthResult<any>> => {
     try {
       const data = {
-        Token: token,
-        Email: email,
-        Password: newPassword
+        token: token,
+        email: email,
+        password: newPassword
       };
 
       // Encrypt the data
@@ -225,7 +246,7 @@ export const AuthService = {
   // Get current user profile
   getCurrentUser: async (): Promise<AuthResult<User>> => {
     try {
-      const endpoint = getApiEndpoint('/api/v2/rest/auth/user/profile');
+      const endpoint = getApiEndpoint('/api/v2/rest/auth/user/my-profile');
       
       const response = await fetchClient.get<{
         success: boolean;

@@ -81,11 +81,25 @@ function createAuthStore() {
     subscribe,
     
     // Login user
-    login: async (username: string, password: string, rememberMe = false) => {
+    login: async (
+      username: string, 
+      password: string, 
+      rememberMe = false, 
+      email = '', 
+      phoneNumber = '',
+      returnUrl = ''
+    ) => {
       update(state => ({ ...state, isLoading: true, error: null }));
       
       try {
-        const response = await AuthService.login(username, password, rememberMe);
+        const response = await AuthService.login(
+          username,
+          password,
+          rememberMe,
+          email,
+          phoneNumber,
+          returnUrl
+        );
         
         if (response.success && response.data) {
           // Get user profile after successful login

@@ -106,53 +106,101 @@ export const POST: RequestHandler = async ({ params, request }) => {
 
     headers['Content-Type'] = 'application/json';
     
-    // Log the request
-    console.log(`[API Server] Sending POST request with headers:`, headers);
-    console.log(`[API Server] Sending POST request with body:`, JSON.stringify(body));
+    // Log the request details
+    console.log(`[API Server] Sending POST request to: ${mixcoreUrl}`);
+    console.log(`[API Server] Headers:`, headers);
+    console.log(`[API Server] Body:`, JSON.stringify(body));
 
-    const response = await fetch(mixcoreUrl, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(body),
-    });
+    let response;
+    try {
+      response = await fetch(mixcoreUrl, {
+        method: 'POST',
+        headers,
+        body: JSON.stringify(body),
+      });
+      
+      console.log(`[API Server] Response status:`, response.status, response.statusText);
+      console.log(`[API Server] Response headers:`, Object.fromEntries([...response.headers.entries()]));
+    } catch (fetchError) {
+      console.error(`[API Server] Fetch error:`, fetchError);
+      return json(
+        { success: false, error: 'Failed to connect to API server', details: String(fetchError) },
+        { status: 500 }
+      );
+    }
 
+    // Handle non-OK responses
     if (!response.ok) {
       console.error(`[API Server] HTTP error from Mixcore API: ${response.status} ${response.statusText}`);
+      
+      let errorText = '';
       try {
-        const errorData = await response.text();
-        console.error(`[API Server] Error response body:`, errorData);
+        errorText = await response.text();
+        console.error(`[API Server] Error response body:`, errorText);
       } catch (e) {
         console.error(`[API Server] Could not read error response body`);
       }
-    }
-
-    let data;
-    try {
-      const responseText = await response.text();
-      console.log(`[API Server] Raw response:`, responseText);
       
+      // Try to parse as JSON
+      let errorData = null;
       try {
-        data = JSON.parse(responseText);
+        errorData = JSON.parse(errorText);
       } catch (e) {
-        console.error(`[API Server] Failed to parse response as JSON:`, e);
-        data = { 
-          success: false, 
-          error: 'Invalid JSON response from API',
-          rawResponse: responseText
-        };
+        errorData = { rawError: errorText };
       }
       
-      console.log(`[API Server] Parsed response:`, data);
+      return json(
+        { 
+          success: false, 
+          error: `API server error: ${response.status} ${response.statusText}`,
+          details: errorData 
+        },
+        { status: response.status }
+      );
+    }
+
+    // Process successful response
+    let responseText = '';
+    try {
+      responseText = await response.text();
+      console.log(`[API Server] Raw response (first 500 chars):`, responseText.substring(0, 500));
     } catch (error) {
-      console.error(`[API Server] Failed to read response:`, error);
-      data = { success: false, error: 'Failed to read API response' };
+      console.error(`[API Server] Failed to read response text:`, error);
+      return json(
+        { success: false, error: 'Failed to read API response text', details: String(error) },
+        { status: 500 }
+      );
+    }
+    
+    // If empty response, return success
+    if (!responseText.trim()) {
+      console.log(`[API Server] Empty response from API, assuming success`);
+      return json({ success: true });
+    }
+    
+    // Try to parse as JSON
+    let data;
+    try {
+      data = JSON.parse(responseText);
+      console.log(`[API Server] Parsed JSON response:`, data);
+    } catch (error) {
+      console.error(`[API Server] Failed to parse response as JSON:`, error);
+      return json(
+        { 
+          success: false, 
+          error: 'Invalid JSON response from API',
+          details: String(error),
+          rawResponse: responseText.substring(0, 1000)  // First 1000 chars
+        },
+        { status: 500 }
+      );
     }
     
     return json(data);
   } catch (error) {
-    console.error(`[API Server] Error proxying to ${mixcoreUrl}:`, error);
+    console.error(`[API Server] Unhandled error:`, error);
     return json(
-      { success: false, error: 'Failed to send data to API', details: String(error) },
+      { success: false, error: 'Failed to process request', details: String(error) },
       { status: 500 }
     );
   }

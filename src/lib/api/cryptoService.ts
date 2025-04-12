@@ -6,20 +6,46 @@ import CryptoJS from 'crypto-js';
 const DEFAULT_KEY = 'mixcore';
 const KEY_SIZE = 256; // 256 bits
 
+// Basic default IV and key for fallback
+const DEFAULT_IV = CryptoJS.enc.Base64.parse('YXZ2YXZ2YXZ2YXZ2');
+const DEFAULT_KEY_PARSED = CryptoJS.enc.Base64.parse('bWl4Y29yZW1peGNvcmVtaXhjb3JlbWl4Y29yZQ==');
+
 /**
  * Parse the encryption key format used by Mixcore API
  * @param completeEncodedKey The complete encoded key string
  * @returns Object with iv and key properties
  */
 function parseKeys(completeEncodedKey: string) {
-  const keyStrings = CryptoJS.enc.Utf8.stringify(
-    CryptoJS.enc.Base64.parse(completeEncodedKey)
-  ).split(',');
-  
-  return {
-    iv: CryptoJS.enc.Base64.parse(keyStrings[0]),
-    key: CryptoJS.enc.Base64.parse(keyStrings[1])
-  };
+  try {
+    // Debug key format
+    console.log('[CryptoService] Parsing key:', completeEncodedKey);
+    
+    // First try to decode and split by comma as per AngularJS implementation
+    const keyStrings = CryptoJS.enc.Utf8.stringify(
+      CryptoJS.enc.Base64.parse(completeEncodedKey)
+    ).split(',');
+    
+    // Verify we have both parts
+    if (keyStrings.length < 2 || !keyStrings[0] || !keyStrings[1]) {
+      console.warn('[CryptoService] Invalid key format, using fallback key format');
+      return {
+        iv: DEFAULT_IV,
+        key: DEFAULT_KEY_PARSED
+      };
+    }
+    
+    return {
+      iv: CryptoJS.enc.Base64.parse(keyStrings[0]),
+      key: CryptoJS.enc.Base64.parse(keyStrings[1])
+    };
+  } catch (error) {
+    console.error('[CryptoService] Error parsing keys:', error);
+    // Fallback to default values
+    return {
+      iv: DEFAULT_IV,
+      key: DEFAULT_KEY_PARSED
+    };
+  }
 }
 
 /**
@@ -30,7 +56,22 @@ const getEncryptionKey = (key?: string): string => {
   if (browser && import.meta.env.VITE_ENCRYPTION_KEY) {
     return import.meta.env.VITE_ENCRYPTION_KEY;
   }
-  return DEFAULT_KEY;
+  
+  // If no key is available, create a properly formatted key (iv,key in base64)
+  // This is used for development only
+  console.warn('[CryptoService] No encryption key provided, using default');
+  
+  const iv = CryptoJS.lib.WordArray.random(16);
+  const keyData = CryptoJS.enc.Utf8.parse(DEFAULT_KEY);
+  
+  const ivBase64 = CryptoJS.enc.Base64.stringify(iv);
+  const keyBase64 = CryptoJS.enc.Base64.stringify(keyData);
+  
+  const formattedKey = CryptoJS.enc.Base64.stringify(
+    CryptoJS.enc.Utf8.parse(`${ivBase64},${keyBase64}`)
+  );
+  
+  return formattedKey;
 };
 
 /**
@@ -63,7 +104,7 @@ export function encryptAES(message: string, completeEncodedKey?: string): string
     // Return the ciphertext in Base64 format
     return encrypted.ciphertext.toString(CryptoJS.enc.Base64);
   } catch (error) {
-    console.error('Encryption error:', error);
+    console.error('[CryptoService] Encryption error:', error);
     
     // Fallback to simple encryption if the proper key format isn't available
     // This should only be used for development or as a last resort
@@ -114,13 +155,71 @@ export function decryptAES(ciphertext: string, completeEncodedKey?: string): str
     
     return decrypted.toString(CryptoJS.enc.Utf8);
   } catch (error) {
-    console.error('Decryption error:', error);
+    console.error('[CryptoService] Decryption error:', error);
     return ciphertext;
+  }
+}
+
+/**
+ * Debug function to help diagnose encryption issues
+ */
+export function debugEncryption(): void {
+  try {
+    console.log('[DEBUG] Starting encryption debug');
+    
+    // Get the encryption key
+    let encryptKey;
+    if (browser && import.meta.env.VITE_ENCRYPTION_KEY) {
+      encryptKey = import.meta.env.VITE_ENCRYPTION_KEY;
+      console.log('[DEBUG] Using env encryption key');
+    } else {
+      encryptKey = DEFAULT_KEY;
+      console.log('[DEBUG] Using default encryption key');
+    }
+    
+    // Test data
+    const testData = {
+      UserName: 'testuser',
+      Password: 'testpassword',
+      RememberMe: true
+    };
+    
+    console.log('[DEBUG] Test data:', testData);
+    const testJson = JSON.stringify(testData);
+    
+    // Create formatted key
+    const iv = CryptoJS.lib.WordArray.random(16);
+    const keyData = CryptoJS.enc.Utf8.parse(encryptKey);
+    
+    const ivBase64 = CryptoJS.enc.Base64.stringify(iv);
+    const keyBase64 = CryptoJS.enc.Base64.stringify(keyData);
+    
+    console.log('[DEBUG] IV Base64:', ivBase64);
+    console.log('[DEBUG] Key Base64:', keyBase64);
+    
+    const formattedKey = CryptoJS.enc.Base64.stringify(
+      CryptoJS.enc.Utf8.parse(`${ivBase64},${keyBase64}`)
+    );
+    
+    console.log('[DEBUG] Formatted key:', formattedKey);
+    
+    // Try encrypting with the formatted key
+    const encrypted = encryptAES(testJson, formattedKey);
+    console.log('[DEBUG] Encrypted data:', encrypted);
+    
+    // Create payload for API
+    const payload = { message: encrypted };
+    console.log('[DEBUG] API payload:', payload);
+    
+    console.log('[DEBUG] Encryption debug complete');
+  } catch (error) {
+    console.error('[DEBUG] Encryption debug error:', error);
   }
 }
 
 export const CryptoService = {
   encryptAES,
   decryptAES,
-  parseKeys
+  parseKeys,
+  debugEncryption
 }; 
