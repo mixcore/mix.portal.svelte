@@ -70,6 +70,12 @@
     let sortField = 'publishedDateTime';
     let sortDirection = 'desc';
     
+    // Pagination
+    let currentPage = 1;
+    let pageSize = 20;
+    let totalItems = 0;
+    let totalPages = 1;
+    
     // Posts data
     let posts: PostContent[] = [];
     
@@ -265,16 +271,15 @@
         error = '';
         
         try {
-            // Simulate API response for now
             // In a real implementation you would fetch from your API
             const response = await fetch(`${API_BASE_URL}/api/v2/rest/mix-portal/mix-post-content/filter`, {
                 method: 'POST',
                 headers: getAuthHeaders(),
                 body: JSON.stringify({
-                    pageSize: "20",
-                    pageIndex: 0,
+                    pageSize: pageSize.toString(),
+                    pageIndex: currentPage - 1,
                     status: selectedStatus === 'published' ? 'Published' : 
-                          (selectedStatus === 'draft' ? 'Draft' : null),
+                           (selectedStatus === 'draft' ? 'Draft' : null),
                     sortBy: null,
                     direction: "Desc",
                     fromDate: null,
@@ -301,6 +306,10 @@
             }
             
             const data = await response.json();
+            
+            // Update pagination data
+            totalItems = data.pagingData?.total || 0;
+            totalPages = data.pagingData?.totalPage || 1;
             
             // Map API response to our PostContent structure
             posts = data.items.map((post: any) => ({
@@ -329,6 +338,42 @@
             error = 'Failed to load posts. Please refresh the page.';
         } finally {
             loading = false;
+        }
+    }
+    
+    // Handle page change
+    function handlePageChange(newPage: number) {
+        if (newPage < 1 || newPage > totalPages || newPage === currentPage) return;
+        currentPage = newPage;
+        fetchPosts();
+    }
+    
+    // Navigate to first, previous, next, or last page
+    function goToFirstPage() {
+        if (currentPage !== 1) {
+            currentPage = 1;
+            fetchPosts();
+        }
+    }
+    
+    function goToPreviousPage() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchPosts();
+        }
+    }
+    
+    function goToNextPage() {
+        if (currentPage < totalPages) {
+            currentPage++;
+            fetchPosts();
+        }
+    }
+    
+    function goToLastPage() {
+        if (currentPage !== totalPages) {
+            currentPage = totalPages;
+            fetchPosts();
         }
     }
     
@@ -618,6 +663,124 @@
                 </tbody>
             </table>
         </div>
+        
+        <!-- Pagination for table view -->
+        {#if !loading && filteredPosts.length > 0}
+            <div class="flex items-center justify-between mt-4 px-2">
+                <div class="text-sm text-gray-700">
+                    Showing <span class="font-medium">{Math.min((currentPage - 1) * pageSize + 1, totalItems)}</span> to <span class="font-medium">{Math.min(currentPage * pageSize, totalItems)}</span> of <span class="font-medium">{totalItems}</span> results
+                </div>
+                <nav class="flex items-center space-x-2" aria-label="Pagination">
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToFirstPage}
+                        disabled={currentPage === 1}
+                        aria-label="Go to first page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToPreviousPage}
+                        disabled={currentPage === 1}
+                        aria-label="Previous page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Page number buttons -->
+                    {#if totalPages <= 7}
+                        {#each Array(totalPages) as _, i}
+                            <button 
+                                class="px-3 py-1 rounded-md text-sm {currentPage === i + 1 ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                                on:click={() => handlePageChange(i + 1)}
+                            >
+                                {i + 1}
+                            </button>
+                        {/each}
+                    {:else}
+                        <!-- First page -->
+                        <button 
+                            class="px-3 py-1 rounded-md text-sm {currentPage === 1 ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                            on:click={() => handlePageChange(1)}
+                        >
+                            1
+                        </button>
+                        
+                        <!-- Ellipsis or second page -->
+                        {#if currentPage > 3}
+                            <span class="px-2 py-1">...</span>
+                        {:else}
+                            <button 
+                                class="px-3 py-1 rounded-md text-sm {currentPage === 2 ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                                on:click={() => handlePageChange(2)}
+                            >
+                                2
+                            </button>
+                        {/if}
+                        
+                        <!-- Current page range -->
+                        {#each Array(Math.min(5, totalPages)).filter((_,i) => {
+                            const pageNum = i + Math.max(2, currentPage - 2);
+                            return pageNum > 2 && pageNum < totalPages - 1;
+                        }) as _, i}
+                            {@const pageNum = i + Math.max(2, currentPage - 2)}
+                            <button 
+                                class="px-3 py-1 rounded-md text-sm {currentPage === pageNum ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                                on:click={() => handlePageChange(pageNum)}
+                            >
+                                {pageNum}
+                            </button>
+                        {/each}
+                        
+                        <!-- Ellipsis or second-to-last page -->
+                        {#if currentPage < totalPages - 2}
+                            <span class="px-2 py-1">...</span>
+                        {:else}
+                            <button 
+                                class="px-3 py-1 rounded-md text-sm {currentPage === totalPages - 1 ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                                on:click={() => handlePageChange(totalPages - 1)}
+                            >
+                                {totalPages - 1}
+                            </button>
+                        {/if}
+                        
+                        <!-- Last page -->
+                        <button 
+                            class="px-3 py-1 rounded-md text-sm {currentPage === totalPages ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                            on:click={() => handlePageChange(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    {/if}
+                    
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToNextPage}
+                        disabled={currentPage === totalPages}
+                        aria-label="Next page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToLastPage}
+                        disabled={currentPage === totalPages}
+                        aria-label="Go to last page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        {/if}
     {:else}
         <!-- Grid view -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -705,5 +868,104 @@
                 {/each}
             {/if}
         </div>
+        
+        <!-- Pagination for grid view -->
+        {#if !loading && filteredPosts.length > 0}
+            <div class="flex items-center justify-between mt-6 px-2">
+                <div class="text-sm text-gray-700">
+                    Showing <span class="font-medium">{Math.min((currentPage - 1) * pageSize + 1, totalItems)}</span> to <span class="font-medium">{Math.min(currentPage * pageSize, totalItems)}</span> of <span class="font-medium">{totalItems}</span> results
+                </div>
+                <nav class="flex items-center space-x-2" aria-label="Pagination">
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToFirstPage}
+                        disabled={currentPage === 1}
+                        aria-label="Go to first page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToPreviousPage}
+                        disabled={currentPage === 1}
+                        aria-label="Previous page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    
+                    <!-- Page number buttons - simplified for grid view -->
+                    {#if totalPages <= 5}
+                        {#each Array(totalPages) as _, i}
+                            <button 
+                                class="px-3 py-1 rounded-md text-sm {currentPage === i + 1 ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                                on:click={() => handlePageChange(i + 1)}
+                            >
+                                {i + 1}
+                            </button>
+                        {/each}
+                    {:else}
+                        <!-- First page -->
+                        <button 
+                            class="px-3 py-1 rounded-md text-sm {currentPage === 1 ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                            on:click={() => handlePageChange(1)}
+                        >
+                            1
+                        </button>
+                        
+                        <!-- Ellipsis or page numbers -->
+                        {#if currentPage > 3}
+                            <span class="px-2 py-1">...</span>
+                        {/if}
+                        
+                        <!-- Current page (if not first or last) -->
+                        {#if currentPage > 1 && currentPage < totalPages}
+                            <button 
+                                class="px-3 py-1 rounded-md text-sm bg-blue-600 text-white"
+                            >
+                                {currentPage}
+                            </button>
+                        {/if}
+                        
+                        <!-- Ellipsis or page numbers -->
+                        {#if currentPage < totalPages - 2}
+                            <span class="px-2 py-1">...</span>
+                        {/if}
+                        
+                        <!-- Last page -->
+                        <button 
+                            class="px-3 py-1 rounded-md text-sm {currentPage === totalPages ? 'bg-blue-600 text-white' : 'border text-gray-700 hover:bg-gray-50'}"
+                            on:click={() => handlePageChange(totalPages)}
+                        >
+                            {totalPages}
+                        </button>
+                    {/if}
+                    
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToNextPage}
+                        disabled={currentPage === totalPages}
+                        aria-label="Next page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10l-3.293-3.293a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                    <button 
+                        class="p-2 rounded-md border text-gray-500 {currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'hover:bg-gray-50'}"
+                        on:click={goToLastPage}
+                        disabled={currentPage === totalPages}
+                        aria-label="Go to last page"
+                    >
+                        <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </nav>
+            </div>
+        {/if}
     {/if}
 </div> 
