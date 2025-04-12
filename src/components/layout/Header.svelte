@@ -39,6 +39,13 @@
     export let toggleMobileMenu: () => void;
     export let setContext: (contextId: AppContext) => void;
     
+    // User props
+    export let userFullName = 'John Doe';
+    export let userEmail = 'john.doe@example.com';
+    export let userInitials = 'JD';
+    export let userAvatar = '';
+    export let isAuthenticated = false;
+    
     // Local state
     let isSearchOpen = false;
     let isContextMenuOpen = false;
@@ -49,11 +56,7 @@
     let isSearching = false;
     let headerElement: HTMLElement;
     let showHeaderShadow = false;
-    let userFullName = 'John Doe';
-    let userEmail = 'john.doe@example.com';
-    let userInitials = 'JD';
     let userRole = 'Administrator';
-    let userAvatar = '';
     
     // Mock notifications
     const notifications = [
@@ -67,7 +70,7 @@
     const dispatch = createEventDispatcher<{
         search: string;
         contextChange: AppContext;
-        userMenuAction: string;
+        userAction: string;
         notificationRead: number;
         keyboardShortcutsOpen: void;
     }>();
@@ -81,30 +84,6 @@
         
         window.addEventListener('scroll', handleScroll);
         
-        // Get user info from local storage or API
-        try {
-            const storedUserName = localStorage.getItem('mixcore_user_name');
-            const storedUserEmail = localStorage.getItem('mixcore_user_email');
-            const storedUserAvatar = localStorage.getItem('mixcore_user_avatar');
-            
-            if (storedUserName) userFullName = storedUserName;
-            if (storedUserEmail) userEmail = storedUserEmail;
-            if (storedUserAvatar) userAvatar = storedUserAvatar;
-            
-            // Generate initials from full name
-            if (userFullName) {
-                const nameParts = userFullName.split(' ');
-                if (nameParts.length >= 2) {
-                    userInitials = nameParts[0][0] + nameParts[nameParts.length - 1][0];
-                } else if (nameParts.length === 1) {
-                    userInitials = nameParts[0].substring(0, 2);
-                }
-                userInitials = userInitials.toUpperCase();
-            }
-        } catch (error) {
-            console.warn('Failed to load user data:', error);
-        }
-
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -164,7 +143,7 @@
     // Handle user menu item click
     function handleUserMenuAction(action: string) {
         isUserMenuOpen = false;
-        dispatch('userMenuAction', action);
+        dispatch('userAction', action);
     }
     
     // Mark notification as read

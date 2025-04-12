@@ -4,6 +4,7 @@
   import { authStore, isAuthenticated, isLoading, authError } from '$lib/stores/authStore';
   import { AuthService } from '$lib/api/authService';
   import { CryptoService } from '$lib/api/cryptoService';
+  import { page } from '$app/stores';
   
   // Form data
   let username = '';
@@ -17,9 +18,22 @@
   let isDirectLogin = false;
   let loginMethod = 'username'; // 'username', 'email', or 'phone'
   
+  // Get return URL from query params
+  $: if ($page.url.searchParams) {
+    const queryReturnUrl = $page.url.searchParams.get('returnUrl');
+    if (queryReturnUrl) {
+      returnUrl = decodeURIComponent(queryReturnUrl);
+    }
+  }
+  
   // Redirects to dashboard if already authenticated
   $: if ($isAuthenticated) {
-    goto('/dashboard');
+    // If we have a return URL, go there
+    if (returnUrl) {
+      goto(returnUrl);
+    } else {
+      goto('/dashboard');
+    }
   }
   
   // Load external providers on mount
@@ -49,7 +63,11 @@
       
       if (success) {
         loginStatus = 'Login successful! Redirecting...';
-        goto('/dashboard');
+        if (returnUrl) {
+          goto(returnUrl);
+        } else {
+          goto('/dashboard');
+        }
       } else {
         loginStatus = $authError ? $authError.message : 'Login failed. Please check your credentials.';
       }

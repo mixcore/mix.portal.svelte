@@ -12,6 +12,7 @@
     // Stores & Types
     import { type AppContext } from '$lib/stores/navigationStore';
     import { miniAppRegistry } from '../../lib/mini-app/MiniAppRegistry';
+    import { authStore, currentUser } from '$lib/stores/authStore';
     
     // Props - Layout settings
     export let isDarkMode: boolean = false;
@@ -54,12 +55,30 @@
     let headerHeight = 56; // Default header height in pixels
     let sidebarCollapsed = false; // Track sidebar collapsed state
     
-    // User info - in a real app, this would come from a store or API
-    let userFullName = 'John Doe';
-    let userEmail = 'john.doe@example.com';
+    // User info - will be populated from auth store
+    let userFullName = '';
+    let userEmail = '';
     let userAvatar = '';
-    let userInitials = 'JD';
-    let notificationCount = 3; // Notification count example
+    let userInitials = '';
+    let notificationCount = 0; // Notification count example
+    
+    // Watch for changes in the currentUser store
+    $: if ($currentUser) {
+        userFullName = $currentUser.displayName || $currentUser.userName;
+        userEmail = $currentUser.email;
+        userAvatar = $currentUser.avatarUrl || '';
+        
+        // Generate initials from full name
+        if (userFullName) {
+            const nameParts = userFullName.split(' ');
+            if (nameParts.length >= 2) {
+                userInitials = nameParts[0][0] + nameParts[nameParts.length - 1][0];
+            } else if (nameParts.length === 1) {
+                userInitials = nameParts[0].substring(0, 2);
+            }
+            userInitials = userInitials.toUpperCase();
+        }
+    }
     
     // Event dispatcher
     const dispatch = createEventDispatcher<{
@@ -69,6 +88,7 @@
         miniAppLoad: { appId: string, config: any };
         miniAppError: { error: Error, appId: string | null };
         miniAppUnload: { appId: string | null };
+        logout: void;
     }>();
     
     // Handle overlay click to close the mobile menu
@@ -80,6 +100,24 @@
     function handleSidebarToggle(event: CustomEvent<boolean>) {
         sidebarCollapsed = event.detail;
         updateShellDimensions();
+        
+        // Save collapsed state to localStorage
+        if (browser) {
+            localStorage.setItem('mixcore_sidebar_collapsed', String(sidebarCollapsed));
+        }
+    }
+    
+    // Handle user action event from sidebar
+    function handleUserAction(event: CustomEvent<string>) {
+        const action = event.detail;
+        
+        if (action === 'logout') {
+            // Log out the user
+            authStore.logout();
+            dispatch('logout');
+        } else {
+            console.log('User action:', action);
+        }
     }
     
     // Handle mini-app events
@@ -131,32 +169,6 @@
             const savedCollapsedState = localStorage.getItem('mixcore_sidebar_collapsed');
             if (savedCollapsedState !== null) {
                 sidebarCollapsed = savedCollapsedState === 'true';
-            }
-        }
-        
-        // Load user info from localStorage or API
-        if (typeof window !== 'undefined') {
-            try {
-                const storedUserName = localStorage.getItem('mixcore_user_name');
-                const storedUserEmail = localStorage.getItem('mixcore_user_email');
-                const storedUserAvatar = localStorage.getItem('mixcore_user_avatar');
-                
-                if (storedUserName) userFullName = storedUserName;
-                if (storedUserEmail) userEmail = storedUserEmail;
-                if (storedUserAvatar) userAvatar = storedUserAvatar;
-                
-                // Generate initials from full name
-                if (userFullName) {
-                    const nameParts = userFullName.split(' ');
-                    if (nameParts.length >= 2) {
-                        userInitials = nameParts[0][0] + nameParts[nameParts.length - 1][0];
-                    } else if (nameParts.length === 1) {
-                        userInitials = nameParts[0].substring(0, 2);
-                    }
-                    userInitials = userInitials.toUpperCase();
-                }
-            } catch (error) {
-                console.warn('Failed to load user data:', error);
             }
         }
         
@@ -230,9 +242,10 @@
             userAvatar={userAvatar}
             userInitials={userInitials}
             notificationCount={notificationCount}
+            isAuthenticated={$authStore.isAuthenticated}
             on:overlayClick={handleOverlayClick}
             on:toggleCollapsed={handleSidebarToggle}
-            on:userAction={(e) => console.log('User action:', e.detail)}
+            on:userAction={handleUserAction}
         />
         
         <!-- Main content container including header and scrollable content -->
@@ -255,6 +268,12 @@
                         toggleMobileMenu={toggleMobileMenu}
                         setContext={setContext}
                         condensed={condensed}
+                        userFullName={userFullName}
+                        userEmail={userEmail}
+                        userAvatar={userAvatar}
+                        userInitials={userInitials}
+                        isAuthenticated={$authStore.isAuthenticated}
+                        on:userAction={handleUserAction}
                     />
                 </div>
             {/if}

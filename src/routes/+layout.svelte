@@ -4,6 +4,7 @@
 	import { browser } from '$app/environment';
 	import { page } from '$app/stores';
 	import { initializeThemeVariables } from '$lib/utils';
+	import { goto } from '$app/navigation';
 	
 	// Layouts & Providers
 	import ShellLayout from '../components/layout/ShellLayout.svelte';
@@ -13,6 +14,7 @@
 	import { currentContext, getNavigationItems, getActiveContext, type AppContext, appContexts } from '$lib/stores/navigationStore';
 	import { isDarkMode, toggleTheme, initializeTheme } from '$lib/stores/themeStore';
 	import { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } from '$lib/stores/mobileMenuStore';
+	import { authStore } from '$lib/stores/authStore';
 	
 	// Layout configuration
 	let condensedLayout = false;
@@ -84,6 +86,12 @@
 	function handleShellReady() {
 		console.log('Shell UI is ready');
 	}
+	
+	// Handle logout event
+	function handleLogout() {
+		// Navigate to login page after logout
+		goto('/auth/login');
+	}
 </script>
 
 {#if isAuthRoute}
@@ -110,6 +118,7 @@
 			setContext={setContext}
 			on:overlayClick={handleOverlayClick}
 			on:ready={handleShellReady}
+			on:logout={handleLogout}
 		>
 			<slot />
 		</ShellLayout>

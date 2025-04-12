@@ -50,6 +50,7 @@
     export let userAvatar = '';
     export let userInitials = 'JD';
     export let notificationCount = 0;
+    export let isAuthenticated = false;
     
     // Create stores to track expanded sections and items
     const expandedSections = writable<Record<string, boolean>>({});
