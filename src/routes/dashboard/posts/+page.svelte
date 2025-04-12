@@ -9,6 +9,7 @@
     
     // Create a simple date formatter function
     function formatDate(dateString: string): string {
+        if (!dateString) return 'N/A';
         const date = new Date(dateString);
         const month = date.toLocaleString('default', { month: 'short' });
         const day = date.getDate();
@@ -35,21 +36,22 @@
     interface PostContent {
         id: string;
         title: string;
-        excerpt: string;
+        excerpt?: string;
         content: string;
         status: string;
         createdDateTime: string;
         createdBy: string;
         publishedDateTime?: string;
-        thumbnail?: string;
-        template: string;
-        seoName: string;
-        seoTitle: string;
-        seoDescription: string;
-        seoKeywords: string;
-        source: string;
-        views: number;
-        type: string;
+        image?: string; // API returns image instead of thumbnail
+        template?: string;
+        seoName?: string;
+        seoTitle?: string;
+        seoDescription?: string;
+        seoKeywords?: string;
+        source?: string;
+        views?: number;
+        type?: string;
+        detailUrl?: string;
         postCategories?: string[];
         postTags?: string[];
         author?: {
@@ -163,7 +165,7 @@
     async function handleDeletePost(id: string) {
         try {
             // API call to delete post
-            const response = await fetch(`${API_BASE_URL}/api/v2/rest/mixcore/post-content/${id}`, {
+            const response = await fetch(`${API_BASE_URL}/api/v2/rest/mix-portal/mix-post-content/${id}`, {
                 method: 'DELETE',
                 headers: getAuthHeaders()
             });
@@ -185,7 +187,7 @@
         try {
             // Delete each selected post individually
             const deletePromises = selectedPosts.map(id => 
-                fetch(`${API_BASE_URL}/api/v2/rest/mixcore/post-content/${id}`, {
+                fetch(`${API_BASE_URL}/api/v2/rest/mix-portal/mix-post-content/${id}`, {
                     method: 'DELETE',
                     headers: getAuthHeaders()
                 })
@@ -212,14 +214,14 @@
             // Update each post individually
             const updatePromises = ids.map(id => {
                 // First fetch the post
-                return fetch(`${API_BASE_URL}/api/v2/rest/mixcore/post-content/${id}`, {
+                return fetch(`${API_BASE_URL}/api/v2/rest/mix-portal/mix-post-content/${id}`, {
                     headers: getAuthHeaders()
                 })
                     .then(res => res.json())
                     .then(post => {
                         // Then update with new status
                         const updatedPost = { ...post, status };
-                        return fetch(`${API_BASE_URL}/api/v2/rest/mixcore/post-content/${id}`, {
+                        return fetch(`${API_BASE_URL}/api/v2/rest/mix-portal/mix-post-content/${id}`, {
                             method: 'PUT',
                             headers: getAuthHeaders(),
                             body: JSON.stringify(updatedPost)
@@ -263,15 +265,16 @@
         error = '';
         
         try {
-            // Use the filter endpoint with the specified payload format
-            const response = await fetch(`${API_BASE_URL}/api/v2/rest/mixcore/post-content/filter`, {
+            // Simulate API response for now
+            // In a real implementation you would fetch from your API
+            const response = await fetch(`${API_BASE_URL}/api/v2/rest/mix-portal/mix-post-content/filter`, {
                 method: 'POST',
                 headers: getAuthHeaders(),
                 body: JSON.stringify({
                     pageSize: "20",
                     pageIndex: 0,
                     status: selectedStatus === 'published' ? 'Published' : 
-                           (selectedStatus === 'draft' ? 'Draft' : null),
+                          (selectedStatus === 'draft' ? 'Draft' : null),
                     sortBy: null,
                     direction: "Desc",
                     fromDate: null,
@@ -301,13 +304,24 @@
             
             // Map API response to our PostContent structure
             posts = data.items.map((post: any) => ({
-                ...post,
-                // Add default values for potentially missing fields
-                postCategories: post.postCategories || [],
-                postTags: post.postTags || [],
+                id: post.id.toString(),
+                title: post.title || 'Untitled',
+                excerpt: post.content ? extractExcerpt(post.content) : '',
+                content: post.content || '',
+                status: post.status || 'Draft',
+                createdDateTime: post.createdDateTime,
+                createdBy: post.createdBy || 'Unknown',
+                publishedDateTime: post.publishedDateTime || post.createdDateTime,
+                image: post.image || '',
+                template: post.template?.fileName || '',
+                detailUrl: post.detailUrl || '',
+                seoName: post.seoName || '',
+                views: 0, // API doesn't provide views count
+                postCategories: [], // API doesn't provide categories
+                postTags: [], // API doesn't provide tags
                 author: {
                     name: post.createdBy || 'Unknown',
-                    avatar: post.avatar || '/avatars/default.png'
+                    avatar: '/avatars/default.png'
                 }
             }));
         } catch (err) {
@@ -318,6 +332,14 @@
         }
     }
     
+    // Helper function to extract excerpt from HTML content
+    function extractExcerpt(htmlContent: string, maxLength: number = 150): string {
+        // Remove HTML tags and extract the first few characters
+        const plainText = htmlContent.replace(/<[^>]*>/g, '');
+        if (plainText.length <= maxLength) return plainText;
+        return plainText.substring(0, maxLength) + '...';
+    }
+    
     // Check authentication before loading
     $: if ($isAuthenticated === false) {
         goto('/auth/login?returnUrl=' + encodeURIComponent(window.location.pathname));
@@ -325,7 +347,7 @@
     
     // Apply filters when search query or status changes
     $: {
-        if (!loading) {
+        if (!loading && (searchQuery || selectedStatus !== 'all')) {
             fetchPosts();
         }
     }
@@ -513,17 +535,24 @@
                                     />
                                 </td>
                                 <td class="p-4">
-                                    <div class="font-medium truncate max-w-xs">
-                                        {post.title || 'Untitled'}
+                                    <div class="flex items-start gap-3">
+                                        {#if post.image}
+                                            <img src={post.image} alt={post.title} class="w-10 h-10 object-cover rounded" />
+                                        {/if}
+                                        <div>
+                                            <div class="font-medium truncate max-w-xs">
+                                                {post.title || 'Untitled'}
+                                            </div>
+                                            <div class="text-xs text-gray-500 truncate max-w-xs">
+                                                {post.excerpt || ''}
+                                            </div>
+                                            {#if post.template === 'featured'}
+                                                <span class="mt-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100">
+                                                    Featured
+                                                </span>
+                                            {/if}
+                                        </div>
                                     </div>
-                                    <div class="text-xs text-gray-500 truncate max-w-xs">
-                                        {post.excerpt || ''}
-                                    </div>
-                                    {#if post.template === 'featured'}
-                                        <span class="mt-1 inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100">
-                                            Featured
-                                        </span>
-                                    {/if}
                                 </td>
                                 <td class="p-4">
                                     <span class={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${post.status === 'Published' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>
@@ -561,11 +590,11 @@
                                 </td>
                                 <td class="p-4">{post.views?.toLocaleString() || '0'}</td>
                                 <td class="p-4">
-                                    <div class="relative">
+                                    <div class="relative group">
                                         <button class="p-1 rounded-full hover:bg-gray-100">
                                             <MoreHorizontal class="h-4 w-4" />
                                         </button>
-                                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden">
+                                        <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg hidden group-hover:block z-10">
                                             <div class="py-1">
                                                 <button class="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center" on:click={() => handleViewPost(post.id)}>
                                                     <EyeIcon class="h-4 w-4 mr-2" />
@@ -614,6 +643,11 @@
             {:else}
                 {#each filteredPosts as post (post.id)}
                     <div class="border rounded-md overflow-hidden group hover:shadow-md transition-shadow">
+                        {#if post.image}
+                            <div class="h-40 overflow-hidden">
+                                <img src={post.image} alt={post.title} class="w-full h-full object-cover" />
+                            </div>
+                        {/if}
                         <div class="p-5">
                             <div class="flex items-start gap-2 mb-2">
                                 <input 
